@@ -103,7 +103,7 @@ pub async fn run() {
  }))
  .map(|reply| {
   // TODO#584: remove this workaround
-  warp::reply::with_header(reply, "Sec-WebSocket-Protocol", "graphql-ws")
+  warp::reply::with_header(reply, "Sec-WebSocket-Protocol", "graphql-ws") // transport-
  })
  .or(warp::post().and(warp::path("graphql")).and(qm_graphql_filter))
  .or(
