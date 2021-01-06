@@ -25,6 +25,9 @@ jobs:
       - uses: hecrj/setup-rust-action@v1
         with:
           rust-version: ${{ matrix.rust }}
-      
+
+      - run: npm install
+        working-directory: 'electron'
+
       - run: npx electron-build-env neon build
         working-directory: 'electron'
