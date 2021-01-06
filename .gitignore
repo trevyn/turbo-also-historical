@@ -1,0 +1,9 @@
+target
+electron/native/index.node
+electron/native/artifacts.json
+**/*~
+**/node_modules
+**/.DS_Store
+
+# /.cargo/config.toml uses zld linker for speed while developing, but it shouldn't be used for release builds
+/.cargo/config.toml

@@ -1,0 +1,5 @@
+{
+ "typescript.tsdk": "frontend/node_modules/typescript/lib",
+ "rust-analyzer.inlayHints.enable": false,
+ "rust-analyzer.linkedProjects": ["electron/native/Cargo.toml"]
+}

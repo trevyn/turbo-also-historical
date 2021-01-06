@@ -1,0 +1,27 @@
+[package]
+authors = ["Eden <github@eden2.com>"]
+build = "build.rs"
+edition = "2018"
+exclude = ["artifacts.json", "index.node"]
+license = "MIT"
+name = "turbo2"
+version = "0.1.0"
+
+[lib]
+crate-type = ["cdylib"]
+name = "turbo2"
+
+[build-dependencies]
+neon-build = "=0.7.0"
+
+[dependencies]
+env_logger = "0.8.2"
+futures = "0.3.8"
+juniper = "=0.15.1"
+juniper_graphql_ws = "=0.2.1"
+juniper_warp = {version = "=0.6.0", features = ["subscriptions"]}
+log = "0.4.11"
+neon = {version = "=0.7.0", features = ["proc-macros"]}
+tokio = {version = "=0.2.24", features = ["rt-core", "macros"]}
+turbosql = {path = "../../../turbosql/turbosql", git = "https://github.com/trevyn/turbosql"}
+warp = {version = "=0.2.5"}

@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+  {
+   "type": "npm",
+   "script": "start",
+   "path": "electron/",
+   "problemMatcher": [],
+   "label": "npm: start - electron",
+   "detail": "electron-build-env neon build && electron .",
+   "group": {
+    "kind": "build",
+    "isDefault": true
+   }
+  }
+ ]
+}
