@@ -28,6 +28,12 @@ jobs:
           rust-version: ${{ matrix.rust }}
 
       - run: npm install
+        working-directory: 'frontend'
+
+      - run: npx react-scripts build
+        working-directory: 'frontend'
+
+      - run: npm install
         working-directory: 'electron'
 
       - run: npx electron-build-env neon build
