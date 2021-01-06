@@ -59,7 +59,7 @@ const client = new Client({
 // };
 
 function MyApp() {
- let bla = codegen.useUsersSubscriptionSubscription({}, () => {
+ codegen.useUsersSubscriptionSubscription({}, () => {
   console.log("hello");
  });
 
