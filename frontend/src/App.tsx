@@ -58,10 +58,17 @@ const client = new Client({
 //  return [response.newMessages, ...messages];
 // };
 
+// SubscriptionHandler<T, R> = (prev: R | undefined, data: T) => R;
+
+// SubscriptionHandler<UsersSubscriptionSubscription, TData>
+
 function MyApp() {
- codegen.useUsersSubscriptionSubscription({}, () => {
-  console.log("hello");
- });
+ codegen.useUsersSubscriptionSubscription(
+  {},
+  (_: void, data: codegen.UsersSubscriptionSubscription) => {
+   console.log("got subscription data", data.usersSubscription);
+  }
+ );
 
  return (
   <div className="App">
