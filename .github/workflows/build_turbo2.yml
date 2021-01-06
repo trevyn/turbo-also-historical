@@ -1,0 +1,30 @@
+name: build_turbo2
+
+on:
+  push:
+    branches:
+      - main
+      
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+
+  build:
+    name: build rust ${{ matrix.rust }}
+    runs-on: ubuntu-18.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        rust: [stable, beta, nightly]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: hecrj/setup-rust-action@v1
+        with:
+          rust-version: ${{ matrix.rust }}
+      
+      - run: npx electron-build-env neon build
+        working-directory: 'electron'
