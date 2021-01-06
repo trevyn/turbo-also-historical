@@ -1,0 +1,16 @@
+subscription usersSubscription {
+ usersSubscription
+ {
+  id
+  name
+ }
+}
+
+query users($id: Int!) {
+ users(id: $id)
+ {
+  id
+  name
+ }
+}
+

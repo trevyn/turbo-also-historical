@@ -50,7 +50,7 @@ struct Subscription;
 
 #[graphql_subscription(context = JuniperContext)]
 impl Subscription {
- async fn users() -> UsersStream {
+ async fn users_subscription() -> UsersStream {
   let mut counter = 0;
   let stream = tokio::time::interval(Duration::from_secs(5)).map(move |_| {
    counter += 1;

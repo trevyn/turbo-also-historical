@@ -1,0 +1,13 @@
+type Pdf {
+  id: Int
+  name: String
+}
+
+type Query {
+  users(id: Int!): [Pdf!]!
+}
+
+type Subscription {
+  usersSubscription: Pdf!
+}
+
