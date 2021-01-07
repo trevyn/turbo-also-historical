@@ -83,7 +83,7 @@ function MyApp() {
     <div>
      <button onClick={() => addPdf({ content: `${Date.now()}` })}>Add PDF</button>
      <button onClick={() => reload()}>Reload</button>
-     {data && data.listPdfs.map(item => <div>{JSON.stringify(item)}</div>)}
+     {data && data.listPdfs.map((item, i) => <div key={i}>{JSON.stringify(item)}</div>)}
      Edit <code>src/App.tsx</code> and save to reload.
     </div>
     <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
