@@ -2,7 +2,9 @@ mutation addPdf($content: String!) {
  addPdf(content: $content)
  {
   id
+  filesize
   name
+  content
  }
 }
 
@@ -10,15 +12,19 @@ subscription usersSubscription {
  usersSubscription
  {
   id
+  filesize
   name
+  content
  }
 }
 
-query users($id: Int!) {
- users(id: $id)
+query listPdfs {
+ listPdfs
  {
   id
+  filesize
   name
+  content
  }
 }
 

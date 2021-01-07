@@ -12,6 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** i53: 53-bit signed integer; represented as `i53`/`i64` in Rust, `Float` in GraphQL, `number` in TypeScript. */
+  i53: number;
 };
 
 export type Mutation = {
@@ -31,18 +33,16 @@ export type Subscription = {
 
 export type Query = {
   __typename?: 'Query';
-  users: Array<Pdf>;
+  listPdfs: Array<Pdf>;
 };
 
-
-export type QueryUsersArgs = {
-  id: Scalars['Int'];
-};
 
 export type Pdf = {
   __typename?: 'Pdf';
   id?: Maybe<Scalars['Int']>;
+  filesize?: Maybe<Scalars['i53']>;
   name?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
 };
 
 export type AddPdfMutationVariables = Exact<{
@@ -54,7 +54,7 @@ export type AddPdfMutation = (
   { __typename?: 'Mutation' }
   & { addPdf: (
     { __typename?: 'Pdf' }
-    & Pick<Pdf, 'id' | 'name'>
+    & Pick<Pdf, 'id' | 'filesize' | 'name' | 'content'>
   ) }
 );
 
@@ -65,20 +65,18 @@ export type UsersSubscriptionSubscription = (
   { __typename?: 'Subscription' }
   & { usersSubscription: (
     { __typename?: 'Pdf' }
-    & Pick<Pdf, 'id' | 'name'>
+    & Pick<Pdf, 'id' | 'filesize' | 'name' | 'content'>
   ) }
 );
 
-export type UsersQueryVariables = Exact<{
-  id: Scalars['Int'];
-}>;
+export type ListPdfsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = (
+export type ListPdfsQuery = (
   { __typename?: 'Query' }
-  & { users: Array<(
+  & { listPdfs: Array<(
     { __typename?: 'Pdf' }
-    & Pick<Pdf, 'id' | 'name'>
+    & Pick<Pdf, 'id' | 'filesize' | 'name' | 'content'>
   )> }
 );
 
@@ -87,7 +85,9 @@ export const AddPdfDocument = gql`
     mutation addPdf($content: String!) {
   addPdf(content: $content) {
     id
+    filesize
     name
+    content
   }
 }
     `;
@@ -99,7 +99,9 @@ export const UsersSubscriptionDocument = gql`
     subscription usersSubscription {
   usersSubscription {
     id
+    filesize
     name
+    content
   }
 }
     `;
@@ -107,15 +109,17 @@ export const UsersSubscriptionDocument = gql`
 export function useUsersSubscriptionSubscription<TData = UsersSubscriptionSubscription>(options: Omit<Urql.UseSubscriptionArgs<UsersSubscriptionSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<UsersSubscriptionSubscription, TData>) {
   return Urql.useSubscription<UsersSubscriptionSubscription, TData, UsersSubscriptionSubscriptionVariables>({ query: UsersSubscriptionDocument, ...options }, handler);
 };
-export const UsersDocument = gql`
-    query users($id: Int!) {
-  users(id: $id) {
+export const ListPdfsDocument = gql`
+    query listPdfs {
+  listPdfs {
     id
+    filesize
     name
+    content
   }
 }
     `;
 
-export function useUsersQuery(options: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<UsersQuery>({ query: UsersDocument, ...options });
+export function useListPdfsQuery(options: Omit<Urql.UseQueryArgs<ListPdfsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ListPdfsQuery>({ query: ListPdfsDocument, ...options });
 };

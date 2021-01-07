@@ -1722,7 +1722,7 @@ dependencies = [
 [[package]]
 name = "turbosql"
 version = "0.0.2"
-source = "git+https://github.com/trevyn/turbosql?branch=main#b8a0b2a5e174b0c25559e84a60b019a469540406"
+source = "git+https://github.com/trevyn/turbosql?branch=main#f244d689ce8d7e8a40855a2f260639d7d6141bab"
 dependencies = [
  "anyhow",
  "itertools",
@@ -1739,7 +1739,7 @@ dependencies = [
 [[package]]
 name = "turbosql_macros"
 version = "0.0.2"
-source = "git+https://github.com/trevyn/turbosql?branch=main#b8a0b2a5e174b0c25559e84a60b019a469540406"
+source = "git+https://github.com/trevyn/turbosql?branch=main#f244d689ce8d7e8a40855a2f260639d7d6141bab"
 dependencies = [
  "fs2",
  "nom-sql",

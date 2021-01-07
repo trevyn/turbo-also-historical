@@ -1,14 +1,21 @@
+"""
+i53: 53-bit signed integer; represented as `i53`/`i64` in Rust, `Float` in GraphQL, `number` in TypeScript.
+"""
+scalar i53
+
 type Mutation {
   addPdf(content: String!): Pdf!
 }
 
 type Pdf {
   id: Int
+  filesize: i53
   name: String
+  content: String
 }
 
 type Query {
-  users(id: Int!): [Pdf!]!
+  listPdfs: [Pdf!]!
 }
 
 type Subscription {
