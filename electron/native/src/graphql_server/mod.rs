@@ -37,8 +37,9 @@ struct Query;
 
 #[graphql_object(context = JuniperContext)]
 impl Query {
- async fn users(id: i32) -> Vec<Pdf> {
-  vec![Pdf { id: Some(id), name: Some("User Name".into()), ..Default::default() }]
+ async fn list_pdfs() -> FieldResult<Vec<Pdf>> {
+  Ok(datastore::list_pdfs()?)
+  // vec![Pdf { id: Some(id), name: Some("User Name".into()), ..Default::default() }]
  }
 }
 
@@ -47,6 +48,7 @@ struct Mutation;
 #[graphql_object(context = JuniperContext)]
 impl Mutation {
  async fn add_pdf(content: String) -> FieldResult<Pdf> {
+  datastore::add_pdf(&content);
   Ok(Pdf {
    id: Some(content.len().try_into()?),
    name: Some("from addPdf".into()),

@@ -4,4 +4,13 @@ pub struct Pdf {
  pub rowid: Option<i64>,
  pub id: Option<i32>,
  pub name: Option<String>,
+ pub content: Option<String>,
+}
+
+pub fn add_pdf(content: &str) {
+ Pdf { content: Some(content.to_string()), ..Default::default() }.insert();
+}
+
+pub fn list_pdfs() -> turbosql::Result<Vec<Pdf>> {
+ turbosql::select!(Vec<Pdf>)
 }
