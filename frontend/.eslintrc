@@ -13,6 +13,6 @@
   ]
  },
  "parserOptions": {
-  "project": ["frontend/tsconfig.json"]
+  "project": ["tsconfig.json"]
  }
 }
