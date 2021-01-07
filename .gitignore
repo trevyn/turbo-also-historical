@@ -1,9 +1,14 @@
 target
 electron/native/index.node
 electron/native/artifacts.json
+electron/out
 **/*~
 **/node_modules
 **/.DS_Store
+
+**/*.sqlite
+**/*.sqlite-wal
+**/*.sqlite-shm
 
 # /.cargo/config.toml uses zld linker for speed while developing, but it shouldn't be used for release builds
 /.cargo/config.toml

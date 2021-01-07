@@ -7,14 +7,53 @@
  "license": "MIT",
  "scripts": {
   "install": "electron-build-env neon build",
-  "start": "electron-build-env neon build && electron .",
-  "build": "electron-build-env neon build"
+  "start": "electron-forge start",
+  "oldstart": "electron-build-env neon build && electron .",
+  "build": "electron-build-env neon build",
+  "build2": "electron-build-env neon build --release",
+  "package": "electron-forge package",
+  "make": "electron-forge make"
  },
  "devDependencies": {
+  "@electron-forge/cli": "^6.0.0-beta.54",
+  "@electron-forge/maker-deb": "^6.0.0-beta.54",
+  "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+  "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+  "@electron-forge/maker-zip": "^6.0.0-beta.54",
   "electron": "12.0.0-beta.12",
   "electron-build-env": "0.2.0",
-  "neon-cli": "0.7.0",
+  "neon-cli": "0.7.0"
+ },
+ "//": "NOTE: puppeteer-core 5.4.1 is for chrome 87, 5.5 series for chrome 88",
+ "dependencies": {
+  "electron-squirrel-startup": "^1.0.0",
   "puppeteer-core": "5.4.1"
  },
- "//": "NOTE: puppeteer-core 5.4.1 is for chrome 87, 5.5 series for chrome 88"
+ "config": {
+  "forge": {
+   "packagerConfig": {},
+   "makers": [
+    {
+     "name": "@electron-forge/maker-squirrel",
+     "config": {
+      "name": "turbo2"
+     }
+    },
+    {
+     "name": "@electron-forge/maker-zip",
+     "platforms": [
+      "darwin"
+     ]
+    },
+    {
+     "name": "@electron-forge/maker-deb",
+     "config": {}
+    },
+    {
+     "name": "@electron-forge/maker-rpm",
+     "config": {}
+    }
+   ]
+  }
+ }
 }
