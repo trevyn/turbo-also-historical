@@ -15,7 +15,7 @@ module.exports = {
     switch (type.name) {
      case "Query":
      case "Subscription":
-     case "Mutations":
+     case "Mutation":
       let queries = type.fields.map(field => {
        let name = field.name;
        let params1 = field.args.map(arg => {

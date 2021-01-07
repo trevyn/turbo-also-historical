@@ -1,12 +1,10 @@
 use std::{env, pin::Pin, sync::Arc, time::Duration};
 
 use futures::{FutureExt as _, Stream};
-use juniper::{
- graphql_object, graphql_subscription, DefaultScalarValue, EmptyMutation, FieldError, GraphQLEnum,
- RootNode,
-};
+use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult, RootNode};
 use juniper_graphql_ws::ConnectionConfig;
 use juniper_warp::{playground_filter, subscriptions::serve_graphql_ws};
+use std::convert::TryInto;
 use warp::{http::Response, Filter};
 
 mod datastore;
@@ -44,6 +42,19 @@ impl Query {
  }
 }
 
+struct Mutation;
+
+#[graphql_object(context = JuniperContext)]
+impl Mutation {
+ async fn add_pdf(content: String) -> FieldResult<Pdf> {
+  Ok(Pdf {
+   id: Some(content.len().try_into()?),
+   name: Some("from addPdf".into()),
+   ..Default::default()
+  })
+ }
+}
+
 type UsersStream = Pin<Box<dyn Stream<Item = Result<Pdf, FieldError>> + Send>>;
 
 struct Subscription;
@@ -61,10 +72,10 @@ impl Subscription {
  }
 }
 
-type Schema = RootNode<'static, Query, EmptyMutation<JuniperContext>, Subscription>;
+type Schema = RootNode<'static, Query, Mutation, Subscription>;
 
 fn schema() -> Schema {
- Schema::new(Query, EmptyMutation::new(), Subscription)
+ Schema::new(Query, Mutation, Subscription)
 }
 
 // @mark server

@@ -14,6 +14,16 @@ export type Scalars = {
   Float: number;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  addPdf: Pdf;
+};
+
+
+export type MutationAddPdfArgs = {
+  content: Scalars['String'];
+};
+
 export type Subscription = {
   __typename?: 'Subscription';
   usersSubscription: Pdf;
@@ -34,6 +44,19 @@ export type Pdf = {
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
 };
+
+export type AddPdfMutationVariables = Exact<{
+  content: Scalars['String'];
+}>;
+
+
+export type AddPdfMutation = (
+  { __typename?: 'Mutation' }
+  & { addPdf: (
+    { __typename?: 'Pdf' }
+    & Pick<Pdf, 'id' | 'name'>
+  ) }
+);
 
 export type UsersSubscriptionSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -60,6 +83,18 @@ export type UsersQuery = (
 );
 
 
+export const AddPdfDocument = gql`
+    mutation addPdf($content: String!) {
+  addPdf(content: $content) {
+    id
+    name
+  }
+}
+    `;
+
+export function useAddPdfMutation() {
+  return Urql.useMutation<AddPdfMutation, AddPdfMutationVariables>(AddPdfDocument);
+};
 export const UsersSubscriptionDocument = gql`
     subscription usersSubscription {
   usersSubscription {

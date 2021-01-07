@@ -1,3 +1,7 @@
+type Mutation {
+  addPdf(content: String!): Pdf!
+}
+
 type Pdf {
   id: Int
   name: String

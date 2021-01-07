@@ -1,3 +1,11 @@
+mutation addPdf($content: String!) {
+ addPdf(content: $content)
+ {
+  id
+  name
+ }
+}
+
 subscription usersSubscription {
  usersSubscription
  {
