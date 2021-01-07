@@ -82,7 +82,7 @@ function MyApp() {
     <img src={logo} className="App-logo" alt="logo" />
     <div>
      <button onClick={() => addPdf({ content: `${Date.now()}` })}>Add PDF</button>
-     <button onClick={() => reload()}>Reload</button>
+     <button onClick={() => reload({ requestPolicy: "network-only" })}>Reload</button>
      {data && data.listPdfs.map((item, i) => <div key={i}>{JSON.stringify(item)}</div>)}
      Edit <code>src/App.tsx</code> and save to reload.
     </div>
