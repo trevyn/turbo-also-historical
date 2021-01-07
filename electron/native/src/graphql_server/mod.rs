@@ -5,10 +5,9 @@ use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult, Roo
 use juniper_graphql_ws::ConnectionConfig;
 use juniper_warp::{playground_filter, subscriptions::serve_graphql_ws};
 use std::convert::TryInto;
-use warp::{http::Response, Filter};
+use warp::{http, Filter};
 
 mod datastore;
-
 use datastore::Pdf;
 
 #[derive(Clone)]
@@ -39,7 +38,6 @@ struct Query;
 impl Query {
  async fn list_pdfs() -> FieldResult<Vec<Pdf>> {
   Ok(datastore::list_pdfs()?)
-  // vec![Pdf { id: Some(id), name: Some("User Name".into()), ..Default::default() }]
  }
 }
 
@@ -48,7 +46,7 @@ struct Mutation;
 #[graphql_object(context = JuniperContext)]
 impl Mutation {
  async fn add_pdf(content: String) -> FieldResult<Pdf> {
-  datastore::add_pdf(&content);
+  datastore::add_pdf(&content)?;
   Ok(Pdf {
    id: Some(content.len().try_into()?),
    name: Some("from addPdf".into()),
@@ -88,8 +86,13 @@ pub async fn run() {
 
  let log = warp::log("warp_subscriptions");
 
+ let cors = warp::cors()
+  .allow_methods(&[http::Method::GET, http::Method::POST])
+  .allow_headers(vec![http::header::CONTENT_TYPE, http::header::AUTHORIZATION])
+  .allow_any_origin();
+
  let homepage = warp::path::end().map(|| {
-        Response::builder()
+        http::Response::builder()
             .header("content-type", "text/html")
             .body("<html><h1>juniper_subscriptions demo</h1><div>visit <a href=\"/playground\">graphql playground</a></html>".to_string())
     });
@@ -125,6 +128,7 @@ pub async fn run() {
    .and(playground_filter("/graphql", Some("/subscriptions"))),
  )
  .or(homepage)
+ .with(cors)
  .with(log);
 
  warp::serve(routes).run(([127, 0, 0, 1], 8080)).await;

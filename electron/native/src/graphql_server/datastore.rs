@@ -11,15 +11,17 @@ pub struct Pdf {
  pub content: Option<String>,
 }
 
-pub fn add_pdf(content: &str) {
- Pdf {
+pub fn add_pdf(content: &str) -> anyhow::Result<Pdf> {
+ let pdf = Pdf {
   content: Some(content.to_string()),
   name: Some(format!("a file of {} bytes", content.len())),
-  filesize: Some(content.len().try_into().unwrap()),
+  filesize: Some(content.len().try_into()?),
   ..Default::default()
- }
- .insert()
- .unwrap();
+ };
+
+ pdf.insert()?;
+
+ Ok(pdf)
 }
 
 pub fn list_pdfs() -> turbosql::Result<Vec<Pdf>> {

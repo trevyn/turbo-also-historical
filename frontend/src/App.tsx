@@ -20,7 +20,7 @@ const subscriptionClient = new SubscriptionClient("ws://localhost:8080/subscript
  reconnect: true,
 });
 const client = new Client({
- url: "/graphql",
+ url: "http://localhost:8080/graphql",
  exchanges: [
   ...defaultExchanges,
   subscriptionExchange({
@@ -69,6 +69,8 @@ function MyApp() {
    console.log("got subscription data", data.usersSubscription);
   }
  );
+
+ console.log(codegen.useListPdfsQuery());
 
  return (
   <div className="App">
