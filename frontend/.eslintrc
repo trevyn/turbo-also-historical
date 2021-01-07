@@ -15,7 +15,12 @@
    { "vars": "all", "args": "after-used", "ignoreRestSiblings": false, "varsIgnorePattern": "^_" }
   ]
  },
- "parserOptions": {
-  "project": ["tsconfig.json"]
- }
+ "overrides": [
+  {
+   "files": ["*.ts", "*.tsx"],
+   "parserOptions": {
+    "project": ["tsconfig.json"]
+   }
+  }
+ ]
 }
