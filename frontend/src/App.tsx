@@ -70,7 +70,9 @@ function MyApp() {
   }
  );
 
- let [{ data }] = codegen.useListPdfsQuery();
+ const [{ data }, reload] = codegen.useListPdfsQuery();
+
+ const [_addPdfResult, addPdf] = codegen.useAddPdfMutation();
 
  console.log(data);
 
@@ -78,10 +80,12 @@ function MyApp() {
   <div className="App">
    <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
-    <p>
+    <div>
+     <button onClick={() => addPdf({ content: `${Date.now()}` })}>Add PDF</button>
+     <button onClick={() => reload()}>Reload</button>
      {data && data.listPdfs.map(item => <div>{JSON.stringify(item)}</div>)}
      Edit <code>src/App.tsx</code> and save to reload.
-    </p>
+    </div>
     <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
      Learn React
     </a>
