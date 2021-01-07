@@ -1722,22 +1722,24 @@ dependencies = [
 [[package]]
 name = "turbosql"
 version = "0.0.2"
-source = "git+https://github.com/trevyn/turbosql?branch=main#e969a9ead34b46ff8e61b446ed399e8c8eee8020"
+source = "git+https://github.com/trevyn/turbosql?branch=main#b8a0b2a5e174b0c25559e84a60b019a469540406"
 dependencies = [
  "anyhow",
  "itertools",
+ "juniper",
  "log",
  "once_cell",
  "rusqlite",
  "serde",
  "toml",
  "turbosql_macros",
+ "ux",
 ]
 
 [[package]]
 name = "turbosql_macros"
 version = "0.0.2"
-source = "git+https://github.com/trevyn/turbosql?branch=main#e969a9ead34b46ff8e61b446ed399e8c8eee8020"
+source = "git+https://github.com/trevyn/turbosql?branch=main#b8a0b2a5e174b0c25559e84a60b019a469540406"
 dependencies = [
  "fs2",
  "nom-sql",
@@ -1837,6 +1839,14 @@ name = "uuid"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9fde2f6a4bea1d6e007c4ad38c6839fa71cbb63b6dbf5b595aa38dc9b1093c11"
+
+[[package]]
+name = "ux"
+version = "0.1.2"
+source = "git+https://github.com/1aim/uX?rev=e17f5565d27bb4c1ebfd408329c7c075c58f0a0a#e17f5565d27bb4c1ebfd408329c7c075c58f0a0a"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "vcpkg"
