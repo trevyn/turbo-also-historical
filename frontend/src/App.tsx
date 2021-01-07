@@ -1,4 +1,5 @@
 import React from "react";
+import Dropzone from "react-dropzone";
 import logo from "./logo.svg";
 import "./App.css";
 import { Document, Page } from "react-pdf";
@@ -80,6 +81,40 @@ function MyApp() {
   <div className="App">
    <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
+    <Dropzone
+     onDrop={acceptedFiles =>
+      acceptedFiles.forEach(file => {
+       const reader = new FileReader();
+
+       reader.onabort = () => console.log("file reading was aborted");
+       reader.onerror = () => console.log("file reading has failed");
+       reader.onload = () => {
+        const result = reader.result;
+        if (result) {
+         console.log(`len is ${result.toString().length}`);
+         addPdf({ content: `${result.toString()}` }).then(
+          () => {
+           console.log("added");
+          },
+          () => {
+           console.log("error?");
+          }
+         );
+        }
+       };
+       reader.readAsDataURL(file);
+      })
+     }
+    >
+     {({ getRootProps, getInputProps }) => (
+      <section>
+       <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        <p>Drag -n- drop some files here, or click to select files</p>
+       </div>
+      </section>
+     )}
+    </Dropzone>
     <div>
      <button onClick={() => addPdf({ content: `${Date.now()}` })}>Add PDF</button>
      <button onClick={() => reload({ requestPolicy: "network-only" })}>Reload</button>
