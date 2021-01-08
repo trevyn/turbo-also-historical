@@ -39,6 +39,7 @@ export type Query = {
 
 export type Pdf = {
   __typename?: 'Pdf';
+  rowid?: Maybe<Scalars['i53']>;
   id?: Maybe<Scalars['Int']>;
   filesize?: Maybe<Scalars['i53']>;
   name?: Maybe<Scalars['String']>;
@@ -54,7 +55,7 @@ export type AddPdfMutation = (
   { __typename?: 'Mutation' }
   & { addPdf: (
     { __typename?: 'Pdf' }
-    & Pick<Pdf, 'id' | 'filesize' | 'name' | 'content'>
+    & Pick<Pdf, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
   ) }
 );
 
@@ -65,7 +66,7 @@ export type UsersSubscriptionSubscription = (
   { __typename?: 'Subscription' }
   & { usersSubscription: (
     { __typename?: 'Pdf' }
-    & Pick<Pdf, 'id' | 'filesize' | 'name' | 'content'>
+    & Pick<Pdf, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
   ) }
 );
 
@@ -76,7 +77,7 @@ export type ListPdfsQuery = (
   { __typename?: 'Query' }
   & { listPdfs: Array<(
     { __typename?: 'Pdf' }
-    & Pick<Pdf, 'id' | 'filesize' | 'name' | 'content'>
+    & Pick<Pdf, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
   )> }
 );
 
@@ -84,6 +85,7 @@ export type ListPdfsQuery = (
 export const AddPdfDocument = gql`
     mutation addPdf($content: String!) {
   addPdf(content: $content) {
+    rowid
     id
     filesize
     name
@@ -98,6 +100,7 @@ export function useAddPdfMutation() {
 export const UsersSubscriptionDocument = gql`
     subscription usersSubscription {
   usersSubscription {
+    rowid
     id
     filesize
     name
@@ -112,6 +115,7 @@ export function useUsersSubscriptionSubscription<TData = UsersSubscriptionSubscr
 export const ListPdfsDocument = gql`
     query listPdfs {
   listPdfs {
+    rowid
     id
     filesize
     name

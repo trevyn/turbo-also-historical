@@ -1,6 +1,7 @@
 mutation addPdf($content: String!) {
  addPdf(content: $content)
  {
+  rowid
   id
   filesize
   name
@@ -11,6 +12,7 @@ mutation addPdf($content: String!) {
 subscription usersSubscription {
  usersSubscription
  {
+  rowid
   id
   filesize
   name
@@ -21,6 +23,7 @@ subscription usersSubscription {
 query listPdfs {
  listPdfs
  {
+  rowid
   id
   filesize
   name

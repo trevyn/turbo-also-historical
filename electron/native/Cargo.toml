@@ -17,7 +17,7 @@ neon-build = "=0.7.0"
 [dependencies]
 anyhow = "=1.0.37"
 env_logger = "=0.8.2"
-futures = "=0.3.8"
+futures = "=0.3.9"
 juniper = "=0.15.1"
 juniper_graphql_ws = "=0.2.1"
 juniper_warp = {version = "=0.6.0", features = ["subscriptions"]}

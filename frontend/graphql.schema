@@ -8,6 +8,7 @@ type Mutation {
 }
 
 type Pdf {
+  rowid: i53
   id: Int
   filesize: i53
   name: String
