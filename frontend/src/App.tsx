@@ -118,7 +118,10 @@ function MyApp() {
     <div>
      <button onClick={() => addPdf({ content: `${Date.now()}` })}>Add PDF</button>
      <button onClick={() => reload({ requestPolicy: "network-only" })}>Reload</button>
-     {data && data.listPdfs.map((item, i) => <div key={i}>{JSON.stringify(item)}</div>)}
+     {data &&
+      data.listPdfs.map((item, i) => (
+       <div key={i}>{JSON.stringify({ ...item, content: undefined })}</div>
+      ))}
      Edit <code>src/App.tsx</code> and save to reload.
     </div>
     <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
