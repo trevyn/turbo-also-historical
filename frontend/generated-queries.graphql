@@ -9,6 +9,13 @@ mutation addPdf($content: String!) {
  }
 }
 
+mutation deletePdf($rowid: i53!) {
+ deletePdf(rowid: $rowid)
+ {
+  success
+ }
+}
+
 subscription usersSubscription {
  usersSubscription
  {

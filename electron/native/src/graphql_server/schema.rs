@@ -1,7 +1,7 @@
 use futures::Stream;
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
 use std::{convert::TryInto, pin::Pin, time::Duration};
-use turbosql::{i53, select};
+use turbosql::{execute, i53, select};
 
 mod datastore;
 use datastore::Pdf;
@@ -18,6 +18,11 @@ pub struct Query;
 struct ListPdfsResultItem {
  rowid: i53,
  name: String,
+}
+
+#[derive(juniper::GraphQLObject)]
+struct MutationResult {
+ success: bool,
 }
 
 #[graphql_object]
@@ -38,6 +43,9 @@ impl Mutation {
    name: Some("from addPdf".into()),
    ..Default::default()
   })
+ }
+ async fn delete_pdf(rowid: i53) -> MutationResult {
+  MutationResult { success: execute!("DELETE FROM pdf WHERE rowid = ?", rowid).is_ok() }
  }
 }
 

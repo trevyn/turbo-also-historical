@@ -19,11 +19,22 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   addPdf: Pdf;
+  deletePdf: MutationResult;
 };
 
 
 export type MutationAddPdfArgs = {
   content: Scalars['String'];
+};
+
+
+export type MutationDeletePdfArgs = {
+  rowid: Scalars['i53'];
+};
+
+export type MutationResult = {
+  __typename?: 'MutationResult';
+  success: Scalars['Boolean'];
 };
 
 export type Subscription = {
@@ -65,6 +76,19 @@ export type AddPdfMutation = (
   ) }
 );
 
+export type DeletePdfMutationVariables = Exact<{
+  rowid: Scalars['i53'];
+}>;
+
+
+export type DeletePdfMutation = (
+  { __typename?: 'Mutation' }
+  & { deletePdf: (
+    { __typename?: 'MutationResult' }
+    & Pick<MutationResult, 'success'>
+  ) }
+);
+
 export type UsersSubscriptionSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -102,6 +126,17 @@ export const AddPdfDocument = gql`
 
 export function useAddPdfMutation() {
   return Urql.useMutation<AddPdfMutation, AddPdfMutationVariables>(AddPdfDocument);
+};
+export const DeletePdfDocument = gql`
+    mutation deletePdf($rowid: i53!) {
+  deletePdf(rowid: $rowid) {
+    success
+  }
+}
+    `;
+
+export function useDeletePdfMutation() {
+  return Urql.useMutation<DeletePdfMutation, DeletePdfMutationVariables>(DeletePdfDocument);
 };
 export const UsersSubscriptionDocument = gql`
     subscription usersSubscription {

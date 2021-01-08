@@ -10,6 +10,11 @@ type ListPdfsResultItem {
 
 type Mutation {
   addPdf(content: String!): Pdf!
+  deletePdf(rowid: i53!): MutationResult!
+}
+
+type MutationResult {
+  success: Boolean!
 }
 
 type Pdf {
