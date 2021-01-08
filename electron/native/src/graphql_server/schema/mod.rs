@@ -5,6 +5,12 @@ use std::{convert::TryInto, pin::Pin, time::Duration};
 mod datastore;
 use datastore::Pdf;
 
+type Schema = juniper::RootNode<'static, Query, Mutation, Subscription>;
+
+pub fn schema() -> Schema {
+ Schema::new(Query, Mutation, Subscription)
+}
+
 pub struct Query;
 
 #[graphql_object]

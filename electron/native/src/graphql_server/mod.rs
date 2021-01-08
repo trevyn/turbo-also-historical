@@ -1,24 +1,14 @@
 use futures::FutureExt as _;
-use juniper_graphql_ws::ConnectionConfig;
-use juniper_warp::{playground_filter, subscriptions::serve_graphql_ws};
-use std::{env, sync::Arc};
+use std::sync::Arc;
 use warp::{http, Filter};
 
-mod api;
-use api::{Mutation, Query, Subscription};
-
 mod asset_server;
-
-type Schema = juniper::RootNode<'static, Query, Mutation, Subscription>;
-
-fn schema() -> Schema {
- Schema::new(Query, Mutation, Subscription)
-}
+mod schema;
 
 // @mark server
 #[tokio::main]
 pub async fn run() {
- env::set_var("RUST_LOG", "warp_subscriptions");
+ std::env::set_var("RUST_LOG", "warp_subscriptions");
  env_logger::init();
 
  let log = warp::log("warp_subscriptions");
@@ -28,35 +18,39 @@ pub async fn run() {
   .allow_headers(vec![http::header::CONTENT_TYPE, http::header::AUTHORIZATION])
   .allow_any_origin();
 
- let qm_schema = schema();
- let qm_graphql_filter =
-  juniper_warp::make_graphql_filter(qm_schema, warp::any().map(move || ()).boxed());
-
- let root_node = Arc::new(schema());
+ let root_node = Arc::new(schema::schema());
 
  eprintln!("Listening on 127.0.0.1:8080");
 
  let routes = (warp::path("subscriptions").and(warp::ws()).map(move |ws: warp::ws::Ws| {
   let root_node = root_node.clone();
   ws.on_upgrade(move |websocket| async move {
-   serve_graphql_ws(websocket, root_node, ConnectionConfig::new(()))
-    .map(|r| {
-     if let Err(e) = r {
-      eprintln!("Websocket error: {}", e);
-     }
-    })
-    .await
+   juniper_warp::subscriptions::serve_graphql_ws(
+    websocket,
+    root_node,
+    juniper_graphql_ws::ConnectionConfig::new(()),
+   )
+   .map(|r| {
+    if let Err(e) = r {
+     eprintln!("Websocket error: {}", e);
+    }
+   })
+   .await
   })
  }))
  .map(|reply| {
   // TODO#584: remove this workaround
-  warp::reply::with_header(reply, "Sec-WebSocket-Protocol", "graphql-ws") // transport-
+  warp::reply::with_header(reply, "Sec-WebSocket-Protocol", "graphql-ws")
  })
- .or(warp::post().and(warp::path("graphql")).and(qm_graphql_filter))
+ .or(
+  warp::post()
+   .and(warp::path("graphql"))
+   .and(juniper_warp::make_graphql_filter(schema::schema(), warp::any().map(move || ()).boxed())),
+ )
  .or(
   warp::get()
    .and(warp::path("playground"))
-   .and(playground_filter("/graphql", Some("/subscriptions"))),
+   .and(juniper_warp::playground_filter("/graphql", Some("/subscriptions"))),
  )
  .or(asset_server::asset_server())
  .with(cors)
