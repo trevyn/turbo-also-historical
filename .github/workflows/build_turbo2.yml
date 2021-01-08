@@ -41,3 +41,41 @@ jobs:
 
       - run: npm run make
         working-directory: 'electron'
+
+  build-release:
+    name: build-release ${{ matrix.os }} rust ${{ matrix.rust }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-10.15]
+        rust: [stable]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: hecrj/setup-rust-action@v1
+        with:
+          rust-version: ${{ matrix.rust }}
+
+      - run: npm install
+        working-directory: 'frontend'
+
+      - run: npm run build
+        working-directory: 'frontend'
+
+      - run: npm install
+        working-directory: 'electron'
+
+      - run: npm run build-neon-release
+        working-directory: 'electron'
+
+      - run: npm run make
+        working-directory: 'electron'
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: turbo2-darwin-x64-0.1.0.zip
+          path: electron/out/make/zip/darwin/x64/turbo2-darwin-x64-0.1.0.zip
+
