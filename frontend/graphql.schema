@@ -3,6 +3,11 @@ i53: 53-bit signed integer; represented as `i53`/`i64` in Rust, `Float` in Graph
 """
 scalar i53
 
+type ListPdfsResultItem {
+  rowid: i53!
+  name: String!
+}
+
 type Mutation {
   addPdf(content: String!): Pdf!
 }
@@ -16,7 +21,7 @@ type Pdf {
 }
 
 type Query {
-  listPdfs: [Pdf!]!
+  listPdfs: [ListPdfsResultItem!]!
 }
 
 type Subscription {

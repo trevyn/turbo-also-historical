@@ -24,10 +24,7 @@ query listPdfs {
  listPdfs
  {
   rowid
-  id
-  filesize
   name
-  content
  }
 }
 

@@ -1,6 +1,7 @@
 use futures::Stream;
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
 use std::{convert::TryInto, pin::Pin, time::Duration};
+use turbosql::{i53, select};
 
 mod datastore;
 use datastore::Pdf;
@@ -13,10 +14,16 @@ pub fn schema() -> Schema {
 
 pub struct Query;
 
+#[derive(juniper::GraphQLObject)]
+struct ListPdfsResultItem {
+ rowid: i53,
+ name: String,
+}
+
 #[graphql_object]
 impl Query {
- async fn list_pdfs() -> FieldResult<Vec<Pdf>> {
-  Ok(datastore::list_pdfs()?)
+ async fn list_pdfs() -> FieldResult<Vec<ListPdfsResultItem>> {
+  Ok(select!(Vec<ListPdfsResultItem> "rowid, name FROM pdf")?)
  }
 }
 

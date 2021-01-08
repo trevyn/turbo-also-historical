@@ -33,9 +33,14 @@ export type Subscription = {
 
 export type Query = {
   __typename?: 'Query';
-  listPdfs: Array<Pdf>;
+  listPdfs: Array<ListPdfsResultItem>;
 };
 
+export type ListPdfsResultItem = {
+  __typename?: 'ListPdfsResultItem';
+  rowid: Scalars['i53'];
+  name: Scalars['String'];
+};
 
 export type Pdf = {
   __typename?: 'Pdf';
@@ -45,6 +50,7 @@ export type Pdf = {
   name?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
 };
+
 
 export type AddPdfMutationVariables = Exact<{
   content: Scalars['String'];
@@ -76,8 +82,8 @@ export type ListPdfsQueryVariables = Exact<{ [key: string]: never; }>;
 export type ListPdfsQuery = (
   { __typename?: 'Query' }
   & { listPdfs: Array<(
-    { __typename?: 'Pdf' }
-    & Pick<Pdf, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
+    { __typename?: 'ListPdfsResultItem' }
+    & Pick<ListPdfsResultItem, 'rowid' | 'name'>
   )> }
 );
 
@@ -116,10 +122,7 @@ export const ListPdfsDocument = gql`
     query listPdfs {
   listPdfs {
     rowid
-    id
-    filesize
     name
-    content
   }
 }
     `;
