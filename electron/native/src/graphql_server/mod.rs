@@ -11,14 +11,9 @@ use datastore::Pdf;
 
 mod asset_server;
 
-#[derive(Clone)]
-pub struct JuniperContext {}
-
-impl juniper::Context for JuniperContext {}
-
 struct Query;
 
-#[graphql_object(context = JuniperContext)]
+#[graphql_object]
 impl Query {
  async fn list_pdfs() -> FieldResult<Vec<Pdf>> {
   Ok(datastore::list_pdfs()?)
@@ -27,7 +22,7 @@ impl Query {
 
 struct Mutation;
 
-#[graphql_object(context = JuniperContext)]
+#[graphql_object]
 impl Mutation {
  async fn add_pdf(content: String) -> FieldResult<Pdf> {
   datastore::add_pdf(&content)?;
@@ -43,7 +38,7 @@ type UsersStream = Pin<Box<dyn Stream<Item = Result<Pdf, FieldError>> + Send>>;
 
 struct Subscription;
 
-#[graphql_subscription(context = JuniperContext)]
+#[graphql_subscription]
 impl Subscription {
  async fn users_subscription() -> UsersStream {
   let mut counter = 0;
@@ -76,8 +71,8 @@ pub async fn run() {
   .allow_any_origin();
 
  let qm_schema = schema();
- let qm_state = warp::any().map(move || JuniperContext {});
- let qm_graphql_filter = juniper_warp::make_graphql_filter(qm_schema, qm_state.boxed());
+ let qm_graphql_filter =
+  juniper_warp::make_graphql_filter(qm_schema, warp::any().map(move || ()).boxed());
 
  let root_node = Arc::new(schema());
 
@@ -86,7 +81,7 @@ pub async fn run() {
  let routes = (warp::path("subscriptions").and(warp::ws()).map(move |ws: warp::ws::Ws| {
   let root_node = root_node.clone();
   ws.on_upgrade(move |websocket| async move {
-   serve_graphql_ws(websocket, root_node, ConnectionConfig::new(JuniperContext {}))
+   serve_graphql_ws(websocket, root_node, ConnectionConfig::new(()))
     .map(|r| {
      if let Err(e) = r {
       eprintln!("Websocket error: {}", e);
