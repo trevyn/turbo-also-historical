@@ -5,6 +5,7 @@ import "./App.css";
 import { Document, Page } from "react-pdf";
 
 import { Client, defaultExchanges, subscriptionExchange, Provider } from "urql";
+import { devtoolsExchange } from "@urql/devtools";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 
 import * as codegen from "./graphql-codegen";
@@ -23,6 +24,7 @@ const subscriptionClient = new SubscriptionClient("ws://localhost:8080/subscript
 const client = new Client({
  url: "http://localhost:8080/graphql",
  exchanges: [
+  devtoolsExchange,
   ...defaultExchanges,
   subscriptionExchange({
    forwardSubscription(operation) {
@@ -73,7 +75,8 @@ function MyApp() {
 
  const [{ data }, reload] = codegen.useListPdfsQuery();
 
- const [_addPdfResult, addPdf] = codegen.useAddPdfMutation();
+ const [, addPdf] = codegen.useAddPdfMutation();
+ const [, deletePdf] = codegen.useDeletePdfMutation();
 
  console.log(data);
 
@@ -120,7 +123,10 @@ function MyApp() {
      <button onClick={() => reload({ requestPolicy: "network-only" })}>Reload</button>
      {data &&
       data.listPdfs.map((item, i) => (
-       <div key={i}>{JSON.stringify({ ...item, content: undefined })}</div>
+       <div key={i}>
+        <button onClick={() => deletePdf({ rowid: item.rowid })}>delete {item.rowid}</button>
+        {JSON.stringify({ ...item, content: undefined })}
+       </div>
       ))}
      Edit <code>src/App.tsx</code> and save to reload.
     </div>
