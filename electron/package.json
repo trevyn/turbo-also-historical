@@ -6,11 +6,10 @@
  "author": "Eden <github@eden2.com>",
  "license": "MIT",
  "scripts": {
-  "install": "electron-build-env neon build",
-  "start": "electron-forge start",
+  "start": "electron-build-env neon build && electron-forge start",
   "oldstart": "electron-build-env neon build && electron .",
-  "build": "electron-build-env neon build",
-  "build2": "electron-build-env neon build --release",
+  "build-neon": "electron-build-env neon build",
+  "build-neon-release": "electron-build-env neon build --release",
   "package": "electron-forge package",
   "make": "electron-forge make"
  },
