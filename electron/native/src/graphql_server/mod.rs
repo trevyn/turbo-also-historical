@@ -1,36 +1,20 @@
-use std::{env, pin::Pin, sync::Arc, time::Duration};
-
 use futures::{FutureExt as _, Stream};
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult, RootNode};
 use juniper_graphql_ws::ConnectionConfig;
 use juniper_warp::{playground_filter, subscriptions::serve_graphql_ws};
 use std::convert::TryInto;
+use std::{env, pin::Pin, sync::Arc, time::Duration};
 use warp::{http, Filter};
 
 mod datastore;
 use datastore::Pdf;
 
+mod asset_server;
+
 #[derive(Clone)]
 pub struct JuniperContext {}
 
 impl juniper::Context for JuniperContext {}
-
-// struct User {
-//  id: i32,
-//  name: String,
-// }
-
-// Field resolvers implementation
-// #[graphql_object(context = JuniperContext)]
-// impl Pdf {
-//  fn id(&self) -> i32 {
-//   self.id
-//  }
-
-//  fn name(&self) -> &str {
-//   &self.name
-//  }
-// }
 
 struct Query;
 
@@ -91,12 +75,6 @@ pub async fn run() {
   .allow_headers(vec![http::header::CONTENT_TYPE, http::header::AUTHORIZATION])
   .allow_any_origin();
 
- let homepage = warp::path::end().map(|| {
-        http::Response::builder()
-            .header("content-type", "text/html")
-            .body("<html><h1>juniper_subscriptions demo</h1><div>visit <a href=\"/playground\">graphql playground</a></html>".to_string())
-    });
-
  let qm_schema = schema();
  let qm_state = warp::any().map(move || JuniperContext {});
  let qm_graphql_filter = juniper_warp::make_graphql_filter(qm_schema, qm_state.boxed());
@@ -127,7 +105,7 @@ pub async fn run() {
    .and(warp::path("playground"))
    .and(playground_filter("/graphql", Some("/subscriptions"))),
  )
- .or(homepage)
+ .or(asset_server::asset_server())
  .with(cors)
  .with(log);
 

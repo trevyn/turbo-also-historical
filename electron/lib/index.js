@@ -21,7 +21,7 @@ function createWindow() {
  });
 
  // win.loadFile("index.html");
- win.loadURL("http://localhost:3000");
+ win.loadURL("http://localhost:8080");
  // win.loadURL("https://github.com");
  win.webContents.on("did-finish-load", () => {
   win.webContents.send("ping", "whoooooooh!");
