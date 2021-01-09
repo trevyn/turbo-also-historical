@@ -1,0 +1,10 @@
+[package]
+authors = ["Eden <github@eden2.com>"]
+edition = "2018"
+name = "struct_lift_macro"
+version = "0.0.0"
+
+[dependencies]
+proc-macro2 = "1"
+quote = "1"
+syn = {version = "1", features = ["full", "extra-traits"]}

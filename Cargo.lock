@@ -1560,6 +1560,24 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
+name = "struct_lift"
+version = "0.0.0"
+dependencies = [
+ "proc-macro2",
+ "struct_lift_macro",
+ "syn",
+]
+
+[[package]]
+name = "struct_lift_macro"
+version = "0.0.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "syn"
 version = "1.0.58"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1789,6 +1807,7 @@ dependencies = [
  "neon",
  "neon-build",
  "rust-embed",
+ "struct_lift",
  "tokio",
  "turbosql",
  "warp",

@@ -1,5 +1,9 @@
 [workspace]
-members = ["electron/native"]
+members = [
+  "electron/native",
+  "struct_lift/struct_lift",
+  "struct_lift/struct_lift_macro",
+]
 
 [profile.release]
 codegen-units = 1 # Reduce number of codegen units to increase optimizations.

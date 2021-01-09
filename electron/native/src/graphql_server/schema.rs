@@ -25,6 +25,7 @@ struct MutationResult {
  success: bool,
 }
 
+#[struct_lift::struct_lift]
 #[graphql_object]
 impl Query {
  async fn list_pdfs() -> FieldResult<Vec<ListPdfsResultItem>> {

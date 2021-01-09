@@ -1,0 +1,13 @@
+[package]
+authors = ["Eden <github@eden2.com>"]
+edition = "2018"
+name = "struct_lift"
+version = "0.0.0"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1"
+struct_lift_macro = {path = "../struct_lift_macro"}
+syn = "1"
