@@ -14,13 +14,13 @@ pub fn schema() -> Schema {
 
 pub struct Query;
 
-#[derive(juniper::GraphQLObject)]
+#[derive(juniper::GraphQLObject, Debug)]
 struct ListPdfsResultItem {
  rowid: i53,
  name: String,
 }
 
-#[derive(juniper::GraphQLObject)]
+#[derive(juniper::GraphQLObject, Debug)]
 struct MutationResult {
  success: bool,
 }
@@ -28,7 +28,7 @@ struct MutationResult {
 #[graphql_object]
 impl Query {
  async fn list_pdfs() -> FieldResult<Vec<ListPdfsResultItem>> {
-  Ok(select!(Vec<ListPdfsResultItem> "rowid, name FROM pdf")?)
+  Ok(dbg!(select!(Vec<ListPdfsResultItem> "rowid, name FROM pdf"))?)
  }
 }
 
