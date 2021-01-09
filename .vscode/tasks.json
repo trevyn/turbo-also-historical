@@ -1,6 +1,6 @@
 {
-	"version": "2.0.0",
-	"tasks": [
+ "version": "2.0.0",
+ "tasks": [
   {
    "type": "npm",
    "script": "start",
@@ -12,6 +12,15 @@
     "kind": "build",
     "isDefault": true
    }
+  },
+  {
+   "type": "npm",
+   "script": "start",
+   "path": "frontend/",
+   "problemMatcher": [],
+   "label": "frontend: start",
+   "detail": "i'm the detail text",
+   "group": "build"
   }
  ]
 }
