@@ -32,7 +32,7 @@ pub async fn run() {
    )
    .map(|r| {
     if let Err(e) = r {
-     eprintln!("Websocket error: {}", e);
+     log::error!("Websocket error: {}", e);
     }
    })
    .await

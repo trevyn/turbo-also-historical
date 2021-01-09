@@ -15,7 +15,7 @@ fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
 // @mark neon
 #[neon::main]
 fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
- eprintln!("neon module init");
+ log::debug!("neon module init");
  cx.export_function("hello", hello)?;
  // let version = cx.string("1.0.0");
  // cx.export_value("version", version)?;
