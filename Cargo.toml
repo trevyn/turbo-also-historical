@@ -2,7 +2,6 @@
 members = [
   "electron/native",
   "struct_lift/struct_lift",
-  "struct_lift/struct_lift_macro",
 ]
 
 [profile.release]
