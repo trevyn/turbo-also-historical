@@ -12,69 +12,44 @@ pub fn schema() -> Schema {
  Schema::new(Query, Mutation, Subscription)
 }
 
+// @mark schema
 pub struct Query;
+
+#[fold_impls::fold_impls]
+fn _query_impls() {
+ #[derive(juniper::GraphQLObject, Debug)]
+ struct ListPdfsResultItem {
+  rowid: i53,
+  name: String,
+ }
+
+ #[graphql_object]
+ impl Query {
+  async fn list_pdfs() -> FieldResult<Vec<ListPdfsResultItem>> {
+   Ok(dbg!(select!(Vec<ListPdfsResultItem> "rowid, name FROM pdf"))?)
+  }
+ }
+
+ #[derive(juniper::GraphQLObject, Debug)]
+ struct ListPdfsResultItem2 {
+  rowid: i53,
+  name: String,
+ }
+
+ #[graphql_object]
+ impl Query {
+  async fn list_pdfs2() -> FieldResult<Vec<ListPdfsResultItem2>> {
+   Ok(dbg!(select!(Vec<ListPdfsResultItem2> "rowid, name FROM pdf"))?)
+  }
+ }
+}
+
+pub struct Mutation;
 
 #[derive(juniper::GraphQLObject, Debug)]
 struct MutationResult {
  success: bool,
 }
-
-// @mark schema
-
-// #[impl_fold::impl_fold]
-// #[allow(unused_must_use, clippy::no_effect)]
-struct_lift::struct_lift! {
-
- fn _query_impls() {
-  {
-
-#[derive(juniper :: GraphQLObject, Debug)]
-struct ListPdfsResultItem {
- rowid: i53,
- name: String,
-}
-
-#[graphql_object]
-impl Query {
- async fn list_pdfs() -> FieldResult<Vec<ListPdfsResultItem>> {
-  Ok(dbg!(select ! (Vec < ListPdfsResultItem > "rowid, name FROM pdf"))?)
- }
-
-}
-
-
-#[derive(juniper :: GraphQLObject, Debug)]
-struct ListPdfsResultItem2 {
- rowid: i53,
- name: String,
-}
-
-#[graphql_object]
-impl Query {
-
- async fn list_pdfs2() -> FieldResult<Vec<ListPdfsResultItem2>> {
-  Ok(dbg!(select ! (Vec < ListPdfsResultItem2 > "rowid, name FROM pdf"))?)
- }
-}
-
-
-
-}
-}}
-
-// struct_lift::struct_lift! {
-//  #[graphql_object]
-//  impl Query {
-
-//   async fn list_pdfs() -> FieldResult<Vec<ListPdfsResultItem>> {
-//    #[derive(juniper::GraphQLObject, Debug)]
-//    struct ListPdfsResultItem { rowid: i53, name: String };
-//    Ok(dbg!(select!(Vec<ListPdfsResultItem> "rowid, name FROM pdf"))?)
-//   }
-//  }
-// }
-
-pub struct Mutation;
 
 #[graphql_object]
 impl Mutation {

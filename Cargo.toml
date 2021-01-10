@@ -1,7 +1,7 @@
 [workspace]
 members = [
   "electron/native",
-  "struct_lift/struct_lift",
+  "fold_impls",
 ]
 
 [profile.release]

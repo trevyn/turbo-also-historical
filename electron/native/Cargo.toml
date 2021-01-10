@@ -17,6 +17,7 @@ neon-build = "=0.7.0"
 [dependencies]
 anyhow = "=1.0.37"
 env_logger = "=0.8.2"
+fold_impls = {path = "../../fold_impls"}
 futures = "=0.3.9"
 juniper = "=0.15.1"
 juniper_graphql_ws = "=0.2.1"
@@ -24,7 +25,6 @@ juniper_warp = {version = "=0.6.0", features = ["subscriptions"]}
 log = "=0.4.11"
 neon = {version = "=0.7.0", features = ["proc-macros"]}
 rust-embed = "=5.8.0"
-struct_lift = {path = "../../struct_lift/struct_lift"}
 tokio = {version = "=0.2.24", features = ["rt-core", "macros"]}
 # turbosql = {path = "../../../turbosql/turbosql"}
 turbosql = {git = "https://github.com/trevyn/turbosql", branch = "main"}

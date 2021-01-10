@@ -1,15 +1,14 @@
 [package]
 authors = ["Eden <github@eden2.com>"]
 edition = "2018"
-name = "struct_lift"
-version = "0.0.0"
+name = "fold_impls"
+version = "0.0.1"
 
 [lib]
 proc-macro = true
 
 [dependencies]
-once_cell = "1.5.2"
 proc-macro-error = "1"
 proc-macro2 = "1"
 quote = "1"
-syn = {version = "1", features = ["full", "extra-traits", "parsing", "printing"]}
+syn = {version = "1", features = ["full"]}
