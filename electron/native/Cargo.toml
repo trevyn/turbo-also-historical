@@ -1,5 +1,5 @@
 [package]
-authors = ["Eden <github@eden2.com>"]
+authors = ["Eden <rust@eden2.com>"]
 build = "build.rs"
 edition = "2018"
 exclude = ["artifacts.json", "index.node"]
