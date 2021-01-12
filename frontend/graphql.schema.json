@@ -58,7 +58,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "i53",
+                    "name": "i54",
                     "ofType": null
                   }
                 },
@@ -185,6 +185,73 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "listPdfs2",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ListPdfsResultItem2",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ListPdfsResultItem2",
+        "description": null,
+        "fields": [
+          {
+            "name": "rowid",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "i54",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -206,7 +273,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "i53",
+                "name": "i54",
                 "ofType": null
               }
             },
@@ -246,7 +313,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "i53",
+              "name": "i54",
               "ofType": null
             },
             "isDeprecated": false,
@@ -270,7 +337,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "i53",
+              "name": "i54",
               "ofType": null
             },
             "isDeprecated": false,
@@ -318,8 +385,8 @@
       },
       {
         "kind": "SCALAR",
-        "name": "i53",
-        "description": "i53: 53-bit signed integer; represented as `i53`/`i64` in Rust, `Float` in GraphQL, `number` in TypeScript.",
+        "name": "i54",
+        "description": "i54: 54-bit signed integer abstraction; represented as `i54`/`i64` in Rust, `Float` in GraphQL, `number` in TypeScript.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,

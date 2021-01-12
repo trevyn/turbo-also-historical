@@ -1,11 +1,11 @@
+use i54_::i54;
 use std::convert::TryInto;
-use turbosql::i53;
 
 #[derive(juniper::GraphQLObject, turbosql::Turbosql, Default)]
 pub struct Pdf {
- pub rowid: Option<i53>,
+ pub rowid: Option<i54>,
  pub id: Option<i32>,
- pub filesize: Option<i53>,
+ pub filesize: Option<i54>,
  pub name: Option<String>,
  pub content: Option<String>,
 }

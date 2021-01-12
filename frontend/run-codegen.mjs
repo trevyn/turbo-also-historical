@@ -53,7 +53,7 @@ async function run() {
       withHooks: true,
       withHOC: false,
       withComponent: false,
-      scalars: { i53: "number" },
+      scalars: { i54: "number" },
      },
     },
    },

@@ -12,8 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** i53: 53-bit signed integer; represented as `i53`/`i64` in Rust, `Float` in GraphQL, `number` in TypeScript. */
-  i53: number;
+  /** i54: 54-bit signed integer abstraction; represented as `i54`/`i64` in Rust, `Float` in GraphQL, `number` in TypeScript. */
+  i54: number;
 };
 
 export type Mutation = {
@@ -29,7 +29,7 @@ export type MutationAddPdfArgs = {
 
 
 export type MutationDeletePdfArgs = {
-  rowid: Scalars['i53'];
+  rowid: Scalars['i54'];
 };
 
 export type MutationResult = {
@@ -45,19 +45,26 @@ export type Subscription = {
 export type Query = {
   __typename?: 'Query';
   listPdfs: Array<ListPdfsResultItem>;
+  listPdfs2: Array<ListPdfsResultItem2>;
+};
+
+export type ListPdfsResultItem2 = {
+  __typename?: 'ListPdfsResultItem2';
+  rowid: Scalars['i54'];
+  name: Scalars['String'];
 };
 
 export type ListPdfsResultItem = {
   __typename?: 'ListPdfsResultItem';
-  rowid: Scalars['i53'];
+  rowid: Scalars['i54'];
   name: Scalars['String'];
 };
 
 export type Pdf = {
   __typename?: 'Pdf';
-  rowid?: Maybe<Scalars['i53']>;
+  rowid?: Maybe<Scalars['i54']>;
   id?: Maybe<Scalars['Int']>;
-  filesize?: Maybe<Scalars['i53']>;
+  filesize?: Maybe<Scalars['i54']>;
   name?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
 };
@@ -77,7 +84,7 @@ export type AddPdfMutation = (
 );
 
 export type DeletePdfMutationVariables = Exact<{
-  rowid: Scalars['i53'];
+  rowid: Scalars['i54'];
 }>;
 
 
@@ -111,6 +118,17 @@ export type ListPdfsQuery = (
   )> }
 );
 
+export type ListPdfs2QueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListPdfs2Query = (
+  { __typename?: 'Query' }
+  & { listPdfs2: Array<(
+    { __typename?: 'ListPdfsResultItem2' }
+    & Pick<ListPdfsResultItem2, 'rowid' | 'name'>
+  )> }
+);
+
 
 export const AddPdfDocument = gql`
     mutation addPdf($content: String!) {
@@ -128,7 +146,7 @@ export function useAddPdfMutation() {
   return Urql.useMutation<AddPdfMutation, AddPdfMutationVariables>(AddPdfDocument);
 };
 export const DeletePdfDocument = gql`
-    mutation deletePdf($rowid: i53!) {
+    mutation deletePdf($rowid: i54!) {
   deletePdf(rowid: $rowid) {
     success
   }
@@ -164,4 +182,16 @@ export const ListPdfsDocument = gql`
 
 export function useListPdfsQuery(options: Omit<Urql.UseQueryArgs<ListPdfsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<ListPdfsQuery>({ query: ListPdfsDocument, ...options });
+};
+export const ListPdfs2Document = gql`
+    query listPdfs2 {
+  listPdfs2 {
+    rowid
+    name
+  }
+}
+    `;
+
+export function useListPdfs2Query(options: Omit<Urql.UseQueryArgs<ListPdfs2QueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ListPdfs2Query>({ query: ListPdfs2Document, ...options });
 };
