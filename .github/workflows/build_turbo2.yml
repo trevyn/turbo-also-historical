@@ -1,6 +1,7 @@
 name: build_turbo2
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
