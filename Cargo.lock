@@ -1720,7 +1720,6 @@ dependencies = [
 [[package]]
 name = "turbosql"
 version = "0.0.2"
-source = "git+https://github.com/trevyn/turbosql?branch=main#1d70d182929e4d03b41ae2661197dc2552607439"
 dependencies = [
  "anyhow",
  "directories-next",
@@ -1736,7 +1735,6 @@ dependencies = [
 [[package]]
 name = "turbosql-impl"
 version = "0.0.2"
-source = "git+https://github.com/trevyn/turbosql?branch=main#1d70d182929e4d03b41ae2661197dc2552607439"
 dependencies = [
  "fs2",
  "indoc",

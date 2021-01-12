@@ -27,6 +27,5 @@ log = "0.4"
 neon = {version = "=0.7.0", features = ["proc-macros"]}
 rust-embed = "5"
 tokio = {version = "=0.2.24", features = ["rt-core", "macros"]}
-# turbosql = {path = "../../../turbosql/turbosql"}
-turbosql = {git = "https://github.com/trevyn/turbosql", branch = "main"}
+turbosql = {path = "../../../turbosql/turbosql", version = "0.0.2"}
 warp = {version = "=0.2.5"}
