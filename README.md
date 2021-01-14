@@ -34,4 +34,4 @@ Contributions of all forms are very much welcome! (code, ideas, evangelism strik
 
 Use practices from the Rust community as a template for a large, open, community-driven project based on shared goals.
 
-### License: MIT OR Apache-2.0 OR CC0 (public domain)
+### License: MIT OR Apache-2.0 OR CC0̸ (public domain)
