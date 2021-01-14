@@ -1,5 +1,5 @@
 <!-- App.svelte -->
-<script>
+<script lang="ts">
  import { onMount } from "svelte";
  let count = 0; // @hmr:keep
  onMount(() => {
