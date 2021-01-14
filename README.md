@@ -14,7 +14,7 @@ A platform for applying [optimization methods](https://en.wikipedia.org/wiki/Mat
 
 ## Core Tech Stack (subject to change)
 
-- Svelte + Tailwind CSS
+- Svelte + Tailwind CSS 2.0
 - urql
 - Chrome/Chromium/iOS Safari
 - GraphQL
