@@ -19,7 +19,7 @@ A platform for applying [optimization methods](https://en.wikipedia.org/wiki/Mat
 - Chrome/Chromium/iOS Safari
 - GraphQL
 - Juniper
-- [Rust, in the form of a Node.js native plugin](https://github.com/trevyn/turbo/discussions/1) (possibly via Electron, possibly not)
+- [Rust, in the form of a Node.js native plugin](https://github.com/trevyn/turbo/discussions/1) ([possibly via Electron](https://github.com/trevyn/turbo/discussions/2), possibly not)
 - SQLite
 
 ## Status
