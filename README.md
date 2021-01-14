@@ -6,7 +6,7 @@
 
 A {modern + free + open} personal knowledge management app, with a focus on {[spaced repetition](https://en.wikipedia.org/wiki/Spaced_repetition) + [incremental reading](https://en.wikipedia.org/wiki/Incremental_reading) + [zettelkasten](https://en.wikipedia.org/wiki/Zettelkasten)} techniques.
 
-A place for learning, reading, and gardening your personal knowledge graph!
+A place for {learning + reading + gardening your personal knowledge graph}!
 
 ## Why
 
