@@ -4,7 +4,7 @@
 
 ## Vision
 
-A free, open, modern personal knowledge management app, focused on [spaced repetition](https://en.wikipedia.org/wiki/Spaced_repetition) (with [incremental reading](https://en.wikipedia.org/wiki/Incremental_reading)) + [zettelkasten](https://en.wikipedia.org/wiki/Zettelkasten) techniques.
+A free, open, modern personal knowledge management app, with a focus on [spaced repetition](https://en.wikipedia.org/wiki/Spaced_repetition) + [incremental reading](https://en.wikipedia.org/wiki/Incremental_reading) + [zettelkasten](https://en.wikipedia.org/wiki/Zettelkasten) techniques.
 
 A place for learning, reading, _and_ gardening your personal knowledge graph.
 
@@ -30,7 +30,7 @@ Not yet ready for out-of-the-box use.
 
 Contributions of all forms are very much welcome! (code, ideas, evangelism strike force, etc.)
 
-## Community
+## Community Principles
 
 Use practices from the Rust community as a template for a large, open, community-driven project based on shared goals.
 
