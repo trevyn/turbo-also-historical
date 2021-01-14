@@ -4,7 +4,7 @@
 
 ## Vision
 
-A free, open, modern [SuperMemo](https://en.wikipedia.org/wiki/SuperMemo)-[like](https://en.wikipedia.org/wiki/Roguelike) (with [incremental reading](https://en.wikipedia.org/wiki/Incremental_reading)) + [Zettelkasten](https://en.wikipedia.org/wiki/Zettelkasten).
+A free, open, modern personal knowledge management app, focused on [spaced repetition](https://en.wikipedia.org/wiki/Spaced_repetition) (with [incremental reading](https://en.wikipedia.org/wiki/Incremental_reading)) + [zettelkasten](https://en.wikipedia.org/wiki/Zettelkasten) techniques.
 
 A place for learning, reading, _and_ gardening your personal knowledge graph.
 
