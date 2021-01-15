@@ -1,9 +1,36 @@
 <!-- App.svelte -->
 <script lang="ts">
- import { initClient, mutation } from "@urql/svelte";
- initClient({ url: "http://localhost:8080/graphql" });
+ import {
+  initClient,
+  defaultExchanges,
+  subscriptionExchange,
+  query,
+  mutation,
+  subscription,
+  operationStore,
+ } from "@urql/svelte";
+ import { SubscriptionClient } from "subscriptions-transport-ws";
 
- import { operationStore, query } from "@urql/svelte";
+ const subscriptionClient = new SubscriptionClient(
+  "ws://localhost:8080/subscriptions",
+  {
+   reconnect: true,
+  }
+ );
+
+ initClient({
+  url: "http://localhost:8080/graphql",
+  exchanges: [
+   // devtoolsExchange,
+   ...defaultExchanges,
+   subscriptionExchange({
+    forwardSubscription(operation) {
+     return subscriptionClient.request(operation);
+    },
+   }),
+  ],
+ });
+
  const listPdfs = operationStore(`
     query {
       listPdfs {
@@ -27,6 +54,21 @@ mutation addPdf($content: String!) {
 }
   `);
 
+ const usersSubscription = operationStore(`
+subscription {
+ usersSubscription
+ {
+  id
+ }
+}
+  `);
+
+ const handleSubscription = (messages = [], data) => {
+  console.log(data);
+  return [data.usersSubscription, ...messages];
+ };
+ subscription(usersSubscription, handleSubscription);
+
  const mutateTodo = mutation(addPdf);
  function updateTodo(newTitle) {
   mutateTodo({ content: newTitle });
@@ -43,36 +85,36 @@ mutation addPdf($content: String!) {
 </script>
 
 <div class="App">
- <header class="App-header">
-  <p class="text-yellow-500 font-extrabold">
-   Page has been here for
-   <code>{count}</code>
-   seconds.
-  </p>
+ <p class="text-yellow-500 font-extrabold">
+  Page has been here for
+  <code>{count}</code>
+  seconds.
+ </p>
 
-  <button
-   on:click={() => {
-    mutateTodo({ content: 'NEW PDF' });
-   }}>BUTTON</button>
+ {#if !$usersSubscription.data}
+  <p>No new messages</p>
+ {:else}
+  <ul>
+   {#each $usersSubscription.data as message}
+    <li>{JSON.stringify(message)}</li>
+   {/each}
+  </ul>
+ {/if}
 
-  {#if $listPdfs.fetching}
-   <p>Loading...</p>
-  {:else if $listPdfs.error}
-   <p>Oh no... {$listPdfs.error.message}</p>
-  {:else}
-   <ul>
-    {#each $listPdfs.data.listPdfs as todo}
-     <li>{JSON.stringify(todo)}</li>
-    {/each}
-   </ul>
-  {/if}
+ <button
+  on:click={() => {
+   mutateTodo({ content: 'NEW PDF' });
+  }}>BUTTON</button>
 
-  <a
-   class="App-link"
-   href="https://svelte.dev"
-   target="_blank"
-   rel="noopener noreferrer">
-   Learn Svelte
-  </a>
- </header>
+ {#if $listPdfs.fetching}
+  <p>Loading...</p>
+ {:else if $listPdfs.error}
+  <p>Oh no... {$listPdfs.error.message}</p>
+ {:else}
+  <ul>
+   {#each $listPdfs.data.listPdfs as todo}
+    <li>{JSON.stringify(todo)}</li>
+   {/each}
+  </ul>
+ {/if}
 </div>

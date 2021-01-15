@@ -1,10 +1,5 @@
-// index.js
-
-/* Add JavaScript code here! */
 import App from "./App.svelte";
 
-let app = new App({
+export default new App({
  target: document.body,
 });
-
-export default app;
