@@ -4,6 +4,7 @@ electron/native/artifacts.json
 electron/out
 **/*~
 **/node_modules
+**/build
 **/.DS_Store
 
 **/*.sqlite
