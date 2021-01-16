@@ -1,0 +1,41 @@
+"""
+i54: 54-bit signed integer abstraction; represented as `i54`/`i64` in Rust, `Float` in GraphQL, `number` in TypeScript.
+"""
+scalar i54
+
+type ListPdfsResultItem {
+  rowid: i54!
+  name: String!
+}
+
+type ListPdfsResultItem2 {
+  rowid: i54!
+  name: String!
+}
+
+type Mutation {
+  addPdf(content: String!): Pdf!
+  deletePdf(rowid: i54!): MutationResult!
+}
+
+type MutationResult {
+  success: Boolean!
+}
+
+type Pdf {
+  rowid: i54
+  id: Int
+  filesize: i54
+  name: String
+  content: String
+}
+
+type Query {
+  listPdfs: [ListPdfsResultItem!]!
+  listPdfs2: [ListPdfsResultItem2!]!
+}
+
+type Subscription {
+  usersSubscription: Pdf!
+}
+

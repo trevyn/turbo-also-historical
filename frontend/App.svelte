@@ -11,7 +11,7 @@
   listPdfsQuery,
   addPdfMutation,
   usersSubscriptionSubscription,
- } from "./graphql_ops.svelte";
+ } from "./graphql-codegen.svelte";
 
  const subscriptionClient = new SubscriptionClient(
   "ws://localhost:8080/subscriptions",

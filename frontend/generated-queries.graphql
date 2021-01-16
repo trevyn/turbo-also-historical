@@ -1,0 +1,45 @@
+mutation addPdf($content: String!) {
+ addPdf(content: $content)
+ {
+  rowid
+  id
+  filesize
+  name
+  content
+ }
+}
+
+mutation deletePdf($rowid: i54!) {
+ deletePdf(rowid: $rowid)
+ {
+  success
+ }
+}
+
+subscription usersSubscription {
+ usersSubscription
+ {
+  rowid
+  id
+  filesize
+  name
+  content
+ }
+}
+
+query listPdfs {
+ listPdfs
+ {
+  rowid
+  name
+ }
+}
+
+query listPdfs2 {
+ listPdfs2
+ {
+  rowid
+  name
+ }
+}
+
