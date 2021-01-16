@@ -7,6 +7,5 @@ export interface UrqlSveltePluginConfig extends ClientSideBasePluginConfig {
 export declare class UrqlSvelteVisitor extends ClientSideBaseVisitor<UrqlSvelteRawPluginConfig, UrqlSveltePluginConfig> {
     constructor(schema: GraphQLSchema, fragments: LoadedFragment[], rawConfig: UrqlSvelteRawPluginConfig);
     getImports(): string[];
-    private _buildHooks;
     protected buildOperation(node: OperationDefinitionNode, documentVariableName: string, operationType: string, operationResultType: string, operationVariablesTypes: string): string;
 }
