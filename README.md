@@ -32,6 +32,6 @@ Contributions of all forms are very much welcome! (code, ideas, [wiki edits](htt
 
 ## Community Principles
 
-Use practices from the Rust community as a template for a large, open, community-driven project based on shared goals. See also: https://github.com/trevyn/turbo/wiki/COMMUNITY.md
+Use practices from the Rust community as a template for a large, open, community-driven project based on shared goals. See also: https://github.com/trevyn/turbo/wiki
 
 ### License: MIT OR Apache-2.0 OR CC0̸ (public domain)
