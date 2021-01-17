@@ -28,7 +28,7 @@ In active development, updated January 2021!
 
 Not yet ready for out-of-the-box use.
 
-Contributions of all forms are very much welcome! (code, ideas, wiki edits, evangelism strike force, etc.)
+Contributions of all forms are very much welcome! (code, ideas, [wiki edits](https://github.com/trevyn/turbo/wiki), evangelism strike force, etc.)
 
 ## Community Principles
 
