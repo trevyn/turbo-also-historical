@@ -1,5 +1,5 @@
-mutation addPdf($content: String!) {
- addPdf(content: $content)
+mutation addCard($content: String!) {
+ addCard(content: $content)
  {
   rowid
   id
@@ -9,15 +9,8 @@ mutation addPdf($content: String!) {
  }
 }
 
-mutation deletePdf($rowid: i54!) {
- deletePdf(rowid: $rowid)
- {
-  success
- }
-}
-
-subscription usersStream {
- usersStream
+mutation updateCard($rowid: i54!, $content: String!) {
+ updateCard(rowid: $rowid, content: $content)
  {
   rowid
   id
@@ -27,19 +20,37 @@ subscription usersStream {
  }
 }
 
-query listPdfs {
- listPdfs
+mutation deleteCard($rowid: i54!) {
+ deleteCard(rowid: $rowid)
+}
+
+subscription cardStream {
+ cardStream
+ {
+  rowid
+  id
+  filesize
+  name
+  content
+ }
+}
+
+query listCardsShort {
+ listCardsShort
  {
   rowid
   name
  }
 }
 
-query listPdfs2 {
- listPdfs2
+query listCardsFull {
+ listCardsFull
  {
   rowid
+  id
+  filesize
   name
+  content
  }
 }
 

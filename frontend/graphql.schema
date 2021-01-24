@@ -1,28 +1,4 @@
-"""
-i54: 54-bit signed integer abstraction; represented as `i54`/`i64` in Rust, `Float` in GraphQL, `number` in TypeScript.
-"""
-scalar i54
-
-type ListPdfsResultItem {
-  rowid: i54!
-  name: String!
-}
-
-type ListPdfsResultItem2 {
-  rowid: i54!
-  name: String!
-}
-
-type Mutation {
-  addPdf(content: String!): Pdf!
-  deletePdf(rowid: i54!): MutationResult!
-}
-
-type MutationResult {
-  success: Boolean!
-}
-
-type Pdf {
+type Card {
   rowid: i54
   id: Int
   filesize: i54
@@ -30,12 +6,28 @@ type Pdf {
   content: String
 }
 
+"""
+i54: 54-bit signed integer abstraction; represented as `i54`/`i64` in Rust, `Float` in GraphQL, `number` in TypeScript.
+"""
+scalar i54
+
+type Mutation {
+  addCard(content: String!): Card!
+  updateCard(rowid: i54!, content: String!): Card!
+  deleteCard(rowid: i54!): Boolean!
+}
+
 type Query {
-  listPdfs: [ListPdfsResultItem!]!
-  listPdfs2: [ListPdfsResultItem2!]!
+  listCardsShort: [ShortCard!]!
+  listCardsFull: [Card!]!
+}
+
+type ShortCard {
+  rowid: i54!
+  name: String!
 }
 
 type Subscription {
-  usersStream: Pdf!
+  cardStream: Card!
 }
 

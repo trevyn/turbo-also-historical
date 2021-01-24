@@ -17,52 +17,8 @@ export type Scalars = {
   i54: number;
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  addPdf: Pdf;
-  deletePdf: MutationResult;
-};
-
-
-export type MutationAddPdfArgs = {
-  content: Scalars['String'];
-};
-
-
-export type MutationDeletePdfArgs = {
-  rowid: Scalars['i54'];
-};
-
-export type MutationResult = {
-  __typename?: 'MutationResult';
-  success: Scalars['Boolean'];
-};
-
-export type Subscription = {
-  __typename?: 'Subscription';
-  usersStream: Pdf;
-};
-
-export type Query = {
-  __typename?: 'Query';
-  listPdfs: Array<ListPdfsResultItem>;
-  listPdfs2: Array<ListPdfsResultItem2>;
-};
-
-export type ListPdfsResultItem2 = {
-  __typename?: 'ListPdfsResultItem2';
-  rowid: Scalars['i54'];
-  name: Scalars['String'];
-};
-
-export type ListPdfsResultItem = {
-  __typename?: 'ListPdfsResultItem';
-  rowid: Scalars['i54'];
-  name: Scalars['String'];
-};
-
-export type Pdf = {
-  __typename?: 'Pdf';
+export type Card = {
+  __typename?: 'Card';
   rowid?: Maybe<Scalars['i54']>;
   id?: Maybe<Scalars['Int']>;
   filesize?: Maybe<Scalars['i54']>;
@@ -70,70 +26,121 @@ export type Pdf = {
   content?: Maybe<Scalars['String']>;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  addCard: Card;
+  updateCard: Card;
+  deleteCard: Scalars['Boolean'];
+};
 
-export type AddPdfMutationVariables = Exact<{
+
+export type MutationAddCardArgs = {
+  content: Scalars['String'];
+};
+
+
+export type MutationUpdateCardArgs = {
+  rowid: Scalars['i54'];
+  content: Scalars['String'];
+};
+
+
+export type MutationDeleteCardArgs = {
+  rowid: Scalars['i54'];
+};
+
+export type ShortCard = {
+  __typename?: 'ShortCard';
+  rowid: Scalars['i54'];
+  name: Scalars['String'];
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  cardStream: Card;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  listCardsShort: Array<ShortCard>;
+  listCardsFull: Array<Card>;
+};
+
+
+export type AddCardMutationVariables = Exact<{
   content: Scalars['String'];
 }>;
 
 
-export type AddPdfMutation = (
+export type AddCardMutation = (
   { __typename?: 'Mutation' }
-  & { addPdf: (
-    { __typename?: 'Pdf' }
-    & Pick<Pdf, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
+  & { addCard: (
+    { __typename?: 'Card' }
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
   ) }
 );
 
-export type DeletePdfMutationVariables = Exact<{
+export type UpdateCardMutationVariables = Exact<{
+  rowid: Scalars['i54'];
+  content: Scalars['String'];
+}>;
+
+
+export type UpdateCardMutation = (
+  { __typename?: 'Mutation' }
+  & { updateCard: (
+    { __typename?: 'Card' }
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
+  ) }
+);
+
+export type DeleteCardMutationVariables = Exact<{
   rowid: Scalars['i54'];
 }>;
 
 
-export type DeletePdfMutation = (
+export type DeleteCardMutation = (
   { __typename?: 'Mutation' }
-  & { deletePdf: (
-    { __typename?: 'MutationResult' }
-    & Pick<MutationResult, 'success'>
-  ) }
+  & Pick<Mutation, 'deleteCard'>
 );
 
-export type UsersStreamSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type CardStreamSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersStreamSubscription = (
+export type CardStreamSubscription = (
   { __typename?: 'Subscription' }
-  & { usersStream: (
-    { __typename?: 'Pdf' }
-    & Pick<Pdf, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
+  & { cardStream: (
+    { __typename?: 'Card' }
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
   ) }
 );
 
-export type ListPdfsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ListCardsShortQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListPdfsQuery = (
+export type ListCardsShortQuery = (
   { __typename?: 'Query' }
-  & { listPdfs: Array<(
-    { __typename?: 'ListPdfsResultItem' }
-    & Pick<ListPdfsResultItem, 'rowid' | 'name'>
+  & { listCardsShort: Array<(
+    { __typename?: 'ShortCard' }
+    & Pick<ShortCard, 'rowid' | 'name'>
   )> }
 );
 
-export type ListPdfs2QueryVariables = Exact<{ [key: string]: never; }>;
+export type ListCardsFullQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListPdfs2Query = (
+export type ListCardsFullQuery = (
   { __typename?: 'Query' }
-  & { listPdfs2: Array<(
-    { __typename?: 'ListPdfsResultItem2' }
-    & Pick<ListPdfsResultItem2, 'rowid' | 'name'>
+  & { listCardsFull: Array<(
+    { __typename?: 'Card' }
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
   )> }
 );
 
 
-export const AddPdfDocument = gql`
-    mutation addPdf($content: String!) {
-  addPdf(content: $content) {
+export const AddCardDocument = gql`
+    mutation addCard($content: String!) {
+  addCard(content: $content) {
     rowid
     id
     filesize
@@ -143,23 +150,12 @@ export const AddPdfDocument = gql`
 }
     `;
 
-export function addPdfMutation() {
-  return UrqlSvelte.mutation(UrqlSvelte.operationStore(AddPdfDocument));
+export function addCardMutation() {
+  return UrqlSvelte.mutation(UrqlSvelte.operationStore(AddCardDocument));
 };
-export const DeletePdfDocument = gql`
-    mutation deletePdf($rowid: i54!) {
-  deletePdf(rowid: $rowid) {
-    success
-  }
-}
-    `;
-
-export function deletePdfMutation() {
-  return UrqlSvelte.mutation(UrqlSvelte.operationStore(DeletePdfDocument));
-};
-export const UsersStreamDocument = gql`
-    subscription usersStream {
-  usersStream {
+export const UpdateCardDocument = gql`
+    mutation updateCard($rowid: i54!, $content: String!) {
+  updateCard(rowid: $rowid, content: $content) {
     rowid
     id
     filesize
@@ -169,31 +165,58 @@ export const UsersStreamDocument = gql`
 }
     `;
 
-export function usersStreamSubscription(handler) {
-  return UrqlSvelte.subscription(UrqlSvelte.operationStore(UsersStreamDocument), handler);
+export function updateCardMutation() {
+  return UrqlSvelte.mutation(UrqlSvelte.operationStore(UpdateCardDocument));
 };
-export const ListPdfsDocument = gql`
-    query listPdfs {
-  listPdfs {
+export const DeleteCardDocument = gql`
+    mutation deleteCard($rowid: i54!) {
+  deleteCard(rowid: $rowid)
+}
+    `;
+
+export function deleteCardMutation() {
+  return UrqlSvelte.mutation(UrqlSvelte.operationStore(DeleteCardDocument));
+};
+export const CardStreamDocument = gql`
+    subscription cardStream {
+  cardStream {
+    rowid
+    id
+    filesize
+    name
+    content
+  }
+}
+    `;
+
+export function cardStreamSubscription(handler) {
+  return UrqlSvelte.subscription(UrqlSvelte.operationStore(CardStreamDocument), handler);
+};
+export const ListCardsShortDocument = gql`
+    query listCardsShort {
+  listCardsShort {
     rowid
     name
   }
 }
     `;
 
-export function listPdfsQuery() {
-  return UrqlSvelte.query(UrqlSvelte.operationStore(ListPdfsDocument));
+export function listCardsShortQuery() {
+  return UrqlSvelte.query(UrqlSvelte.operationStore(ListCardsShortDocument));
 };
-export const ListPdfs2Document = gql`
-    query listPdfs2 {
-  listPdfs2 {
+export const ListCardsFullDocument = gql`
+    query listCardsFull {
+  listCardsFull {
     rowid
+    id
+    filesize
     name
+    content
   }
 }
     `;
 
-export function listPdfs2Query() {
-  return UrqlSvelte.query(UrqlSvelte.operationStore(ListPdfs2Document));
+export function listCardsFullQuery() {
+  return UrqlSvelte.query(UrqlSvelte.operationStore(ListCardsFullDocument));
 };
 </script>

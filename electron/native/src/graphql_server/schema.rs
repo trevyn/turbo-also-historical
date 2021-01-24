@@ -1,6 +1,6 @@
 use futures::Stream;
 use i54_::i54;
-use juniper::{graphql_object, graphql_subscription, ExecutionResult, FieldError, FieldResult};
+use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
 use std::{convert::TryInto, pin::Pin, time::Duration};
 use turbosql::{execute, select};
 
