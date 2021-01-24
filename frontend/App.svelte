@@ -1,11 +1,5 @@
 <script>
- import {
-  initClient,
-  defaultExchanges,
-  subscriptionExchange,
- } from "@urql/svelte";
- import { devtoolsExchange } from "@urql/devtools";
- import { SubscriptionClient } from "subscriptions-transport-ws";
+ import { initTurboClient } from "./src/TurboClient.svelte";
 
  import {
   listPdfsQuery,
@@ -13,25 +7,7 @@
   usersSubscriptionSubscription,
  } from "./graphql-codegen.svelte";
 
- const subscriptionClient = new SubscriptionClient(
-  "ws://localhost:8080/subscriptions",
-  {
-   reconnect: true,
-  }
- );
-
- initClient({
-  url: "http://localhost:8080/graphql",
-  exchanges: [
-   devtoolsExchange,
-   ...defaultExchanges,
-   subscriptionExchange({
-    forwardSubscription(operation) {
-     return subscriptionClient.request(operation);
-    },
-   }),
-  ],
- });
+ initTurboClient();
 
  const listPdfs = listPdfsQuery();
  const addPdf = addPdfMutation();
