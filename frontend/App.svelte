@@ -1,27 +1,27 @@
-<script>
+<script lang="ts">
  import { initTurboClient } from "./src/TurboClient.svelte";
 
  import {
-  listPdfsQuery,
-  addPdfMutation,
-  usersStreamSubscription,
+  listCardsFullQuery,
+  addCardMutation,
+  cardStreamSubscription,
  } from "./graphql-codegen.svelte";
 
  initTurboClient();
 
- const listPdfs = listPdfsQuery();
- const addPdf = addPdfMutation();
- const usersStream = usersStreamSubscription((messages = [], data) => [
-  data.usersStream,
+ const listCardsFull = listCardsFullQuery();
+ const addCard = addCardMutation();
+ const cardStream = cardStreamSubscription((messages = [], data) => [
+  data.cardStream,
   ...messages,
  ]);
 </script>
 
-{#if !$usersStream.data}
+{#if !$cardStream.data}
  <p>No new messages</p>
 {:else}
  <ul>
-  {#each $usersStream.data as message}
+  {#each $cardStream.data as message}
    <li>{JSON.stringify(message)}</li>
   {/each}
  </ul>
@@ -29,17 +29,17 @@
 
 <button
  on:click={() => {
-  addPdf({ content: 'NEW PDF' });
-  $listPdfs.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
+  addCard({ content: 'NEW PDF' });
+  $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
  }}>BUTTON</button>
 
-{#if $listPdfs.fetching}
+{#if $listCardsFull.fetching}
  <p>Loading...</p>
-{:else if $listPdfs.error}
- <p>Oh no... {$listPdfs.error.message}</p>
+{:else if $listCardsFull.error}
+ <p>Oh no... {$listCardsFull.error.message}</p>
 {:else}
  <ul>
-  {#each $listPdfs.data.listPdfs as todo}
+  {#each $listCardsFull.data.listCardsFull as todo}
    <li>{JSON.stringify(todo)}</li>
   {/each}
  </ul>
