@@ -36,6 +36,6 @@ type Query {
 }
 
 type Subscription {
-  usersSubscription: Pdf!
+  usersStream: Pdf!
 }
 

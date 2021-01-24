@@ -136,7 +136,7 @@
         "description": null,
         "fields": [
           {
-            "name": "usersSubscription",
+            "name": "usersStream",
             "description": null,
             "args": [],
             "type": {

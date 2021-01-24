@@ -73,7 +73,7 @@ pub struct Subscription;
 
 #[graphql_subscription]
 impl Subscription {
- async fn users_subscription() -> UsersStream {
+ async fn users_stream() -> UsersStream {
   let mut counter = 0;
   let stream = tokio::time::interval(Duration::from_secs(5)).map(move |_| {
    counter += 1;

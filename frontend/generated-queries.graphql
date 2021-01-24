@@ -16,8 +16,8 @@ mutation deletePdf($rowid: i54!) {
  }
 }
 
-subscription usersSubscription {
- usersSubscription
+subscription usersStream {
+ usersStream
  {
   rowid
   id

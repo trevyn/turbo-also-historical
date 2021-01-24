@@ -4,23 +4,24 @@
  import {
   listPdfsQuery,
   addPdfMutation,
-  usersSubscriptionSubscription,
+  usersStreamSubscription,
  } from "./graphql-codegen.svelte";
 
  initTurboClient();
 
  const listPdfs = listPdfsQuery();
  const addPdf = addPdfMutation();
- const usersSubscription = usersSubscriptionSubscription(
-  (messages = [], data) => [data.usersSubscription, ...messages]
- );
+ const usersStream = usersStreamSubscription((messages = [], data) => [
+  data.usersStream,
+  ...messages,
+ ]);
 </script>
 
-{#if !$usersSubscription.data}
+{#if !$usersStream.data}
  <p>No new messages</p>
 {:else}
  <ul>
-  {#each $usersSubscription.data as message}
+  {#each $usersStream.data as message}
    <li>{JSON.stringify(message)}</li>
   {/each}
  </ul>

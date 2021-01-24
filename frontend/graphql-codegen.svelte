@@ -40,7 +40,7 @@ export type MutationResult = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  usersSubscription: Pdf;
+  usersStream: Pdf;
 };
 
 export type Query = {
@@ -97,12 +97,12 @@ export type DeletePdfMutation = (
   ) }
 );
 
-export type UsersSubscriptionSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type UsersStreamSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersSubscriptionSubscription = (
+export type UsersStreamSubscription = (
   { __typename?: 'Subscription' }
-  & { usersSubscription: (
+  & { usersStream: (
     { __typename?: 'Pdf' }
     & Pick<Pdf, 'rowid' | 'id' | 'filesize' | 'name' | 'content'>
   ) }
@@ -157,9 +157,9 @@ export const DeletePdfDocument = gql`
 export function deletePdfMutation() {
   return UrqlSvelte.mutation(UrqlSvelte.operationStore(DeletePdfDocument));
 };
-export const UsersSubscriptionDocument = gql`
-    subscription usersSubscription {
-  usersSubscription {
+export const UsersStreamDocument = gql`
+    subscription usersStream {
+  usersStream {
     rowid
     id
     filesize
@@ -169,8 +169,8 @@ export const UsersSubscriptionDocument = gql`
 }
     `;
 
-export function usersSubscriptionSubscription(handler) {
-  return UrqlSvelte.subscription(UrqlSvelte.operationStore(UsersSubscriptionDocument), handler);
+export function usersStreamSubscription(handler) {
+  return UrqlSvelte.subscription(UrqlSvelte.operationStore(UsersStreamDocument), handler);
 };
 export const ListPdfsDocument = gql`
     query listPdfs {
