@@ -758,9 +758,9 @@ dependencies = [
 
 [[package]]
 name = "juniper_codegen"
-version = "0.15.2"
+version = "0.15.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad4272ac0ace346ffe07be22838607d60cea037334d9f16f5dfaac82da778f3a"
+checksum = "a57106f1e3bb3f7156d240f062c3eee0c83dece5e7e2ff49c4da980a10def2bf"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",
@@ -1746,6 +1746,7 @@ dependencies = [
  "futures",
  "i54_",
  "juniper",
+ "juniper_codegen",
  "juniper_graphql_ws",
  "juniper_warp",
  "log",
