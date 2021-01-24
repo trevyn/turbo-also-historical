@@ -11,5 +11,7 @@ electron/out
 **/*.sqlite-wal
 **/*.sqlite-shm
 
+frontend-react
+
 # /.cargo/config.toml uses zld linker for speed while developing, but it shouldn't be used for release builds
 /.cargo/config.toml
