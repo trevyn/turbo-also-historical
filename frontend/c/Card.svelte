@@ -3,13 +3,26 @@
  const dispatch = createEventDispatcher();
 
  export let card;
+
+ import ProsemirrorEditor from "prosemirror-svelte";
+ import { createMultiLineEditor, toPlainText } from "prosemirror-svelte/state";
+
+ let editorState = createMultiLineEditor(card.content);
+
+ // $: console.log(toPlainText(editorState));
 </script>
 
 <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
  <div class="w-full flex items-center justify-between p-6 space-x-6">
   <div class="flex-1">
    <p class="text-gray-500 text-sm">
-    <slot />
+    <ProsemirrorEditor
+     placeholder="Go ahead and type something"
+     {editorState}
+     on:change={(event) => {
+      editorState = event.detail.editorState;
+      dispatch('change', toPlainText(editorState));
+     }} />
    </p>
   </div>
  </div>
