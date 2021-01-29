@@ -3,21 +3,15 @@
  import Button from "./c/Button.svelte";
  import Card from "./c/Card.svelte";
 
- import {
-  listCardsFullQuery,
-  addCardMutation,
-  cardStreamSubscription,
-  deleteCardMutation,
-  updateCardMutation,
- } from "./graphql-codegen.svelte";
+ import * as db from "./graphql-codegen.svelte";
 
  initTurboClient();
 
- const listCardsFull = listCardsFullQuery();
- const addCard = addCardMutation();
- const deleteCard = deleteCardMutation();
- const updateCard = updateCardMutation();
- const cardStream = cardStreamSubscription((messages = [], data) => [
+ const listCardsFull = db.listCardsFullQuery();
+ const addCard = db.addCardMutation();
+ const deleteCard = db.deleteCardMutation();
+ const updateCard = db.updateCardMutation();
+ const cardStream = db.cardStreamSubscription((messages = [], data) => [
   data.cardStream,
   ...messages,
  ]);
