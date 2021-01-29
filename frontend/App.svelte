@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
  import { initTurboClient } from "./src/TurboClient.svelte";
  import Button from "./c/Button.svelte";
  import Card from "./c/Card.svelte";
@@ -19,6 +19,23 @@
   data.cardStream,
   ...messages,
  ]);
+
+ // import the core component
+ import ProsemirrorEditor from "prosemirror-svelte";
+
+ // import helpers to work with prosemirror state
+ import { createMultiLineEditor, toPlainText } from "prosemirror-svelte/state";
+
+ // create the initial editor state
+ let editorState = createMultiLineEditor("Hello world!");
+
+ function handleChange(event) {
+  // get the new editor state from event.detail
+  editorState = event.detail.editorState;
+ }
+
+ // log the text content of the editor state, just for fun
+ $: console.log(toPlainText(editorState));
 </script>
 
 <!-- {#if !$cardStream.data}
@@ -56,7 +73,10 @@
 
      // alert(`AAAHHHHHHHH ${event.detail.rowid}`);
     }}>
-    {JSON.stringify(card)}
+    <ProsemirrorEditor
+     placeholder="Go ahead and type something"
+     {editorState}
+     on:change={handleChange} />
    </Card>
   {/each}
  </ul>

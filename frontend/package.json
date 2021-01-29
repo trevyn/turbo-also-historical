@@ -28,5 +28,7 @@
   "svelte": "^3.31.2",
   "graphql-tag": "^2.11.0"
  },
- "dependencies": {}
+ "dependencies": {
+  "prosemirror-svelte": "^0.2.3"
+ }
 }
