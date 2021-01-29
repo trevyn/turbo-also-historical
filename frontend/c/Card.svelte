@@ -5,25 +5,23 @@
  export let card;
 
  import ProsemirrorEditor from "prosemirror-svelte";
- import { createMultiLineEditor, toPlainText } from "prosemirror-svelte/state";
+ import { createRichTextEditor, toHTML } from "prosemirror-svelte/state";
 
- let editorState = createMultiLineEditor(card.content);
+ let editorState = createRichTextEditor(card.content);
 
  // $: console.log(toPlainText(editorState));
 </script>
 
 <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
- <div class="w-full flex items-center justify-between p-6 space-x-6">
-  <div class="flex-1">
-   <p class="text-gray-500 text-sm">
-    <ProsemirrorEditor
-     placeholder="Go ahead and type something"
-     {editorState}
-     on:change={(event) => {
-      editorState = event.detail.editorState;
-      dispatch('change', toPlainText(editorState));
-     }} />
-   </p>
+ <div class="w-full flex justify-center p-6 space-x-6">
+  <div class="flex-1 text-gray-500 text-sm prose">
+   <ProsemirrorEditor
+    placeholder="Go ahead and type something"
+    {editorState}
+    on:change={(event) => {
+     editorState = event.detail.editorState;
+     dispatch('change', toHTML(editorState));
+    }} />
   </div>
  </div>
  <div>

@@ -42,7 +42,7 @@
 {:else if $listCardsFull.error}
  <p>Oh no... {$listCardsFull.error.message}</p>
 {:else}
- <ul class="p-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+ <ul class="p-4 grid grid-cols-1 gap-6 lg:grid-cols-2">
   {#each $listCardsFull.data.listCardsFull as card (card.rowid)}
    <Card
     {card}
