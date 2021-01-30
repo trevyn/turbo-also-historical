@@ -25,6 +25,7 @@ juniper_codegen = "=0.15.3"
 juniper_graphql_ws = "=0.2.3"
 juniper_warp = {version = "=0.6.2", features = ["subscriptions"]}
 log = "0.4"
+mime_guess = "2"
 neon = {version = "=0.7.0", features = ["proc-macros"]}
 rust-embed = "5"
 tokio = {version = "=0.2.25", features = ["rt-core", "macros"]}

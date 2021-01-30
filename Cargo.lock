@@ -1750,6 +1750,7 @@ dependencies = [
  "juniper_graphql_ws",
  "juniper_warp",
  "log",
+ "mime_guess",
  "neon",
  "neon-build",
  "rust-embed",

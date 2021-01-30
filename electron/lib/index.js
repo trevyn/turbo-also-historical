@@ -1,5 +1,6 @@
 var addon = require("../native");
 // const { ipcMain } = require("electron");
+const { shell } = require("electron");
 
 console.log(addon.hello());
 
@@ -28,7 +29,7 @@ function createWindow() {
  });
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => shell.openExternal("http://localhost:8080"));
 
 app.on("window-all-closed", () => {
  if (process.platform !== "darwin") {
@@ -38,7 +39,8 @@ app.on("window-all-closed", () => {
 
 app.on("activate", () => {
  if (BrowserWindow.getAllWindows().length === 0) {
-  createWindow();
+  shell.openExternal("http://localhost:8080");
+  // createWindow();
  }
 });
 
@@ -80,4 +82,4 @@ async function main() {
  console.log("pup end");
 }
 
-main();
+//main();
