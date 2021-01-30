@@ -40,7 +40,7 @@ fn _query_impls() {
  #[graphql_object]
  impl Query {
   async fn list_cards_full() -> FieldResult<Vec<Card>> {
-   Ok(dbg!(select!(Vec<Card>))?)
+   Ok(dbg!(select!(Vec<Card> "ORDER BY rowid DESC"))?)
   }
  }
 }
