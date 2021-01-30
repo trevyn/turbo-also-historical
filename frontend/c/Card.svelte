@@ -1,4 +1,5 @@
 <script>
+ import { DateTime } from "luxon";
  import { createEventDispatcher } from "svelte";
  const dispatch = createEventDispatcher();
 
@@ -32,11 +33,11 @@
   </div>
  </div>
  <div class="w-full flex justify-center p-6 space-x-6">
-  <div class="flex-1 text-gray-500 text-sm prose">
+  <div class="flex-1 text-gray-300 text-xs">
    Created
-   {card.createdTime}<br />
+   {card.createdTime && `${DateTime.fromSeconds(card.createdTime).toRelative()} (${DateTime.fromSeconds(card.createdTime).toFormat('MMM d, yyyy')})`}<br />
    Modified
-   {card.modifiedTime}
+   {card.modifiedTime && `${DateTime.fromSeconds(card.modifiedTime).toRelative()} (${DateTime.fromSeconds(card.modifiedTime).toFormat('MMM d, yyyy')})`}
   </div>
  </div>
 
