@@ -1,5 +1,5 @@
-mutation addCard($content: String!) {
- addCard(content: $content)
+mutation addCard($content: String!, $answer: String!) {
+ addCard(content: $content, answer: $answer)
  {
   rowid
   id
@@ -14,8 +14,8 @@ mutation addCard($content: String!) {
  }
 }
 
-mutation updateCard($rowid: i54!, $content: String!) {
- updateCard(rowid: $rowid, content: $content)
+mutation updateCard($rowid: i54!, $content: String!, $answer: String!) {
+ updateCard(rowid: $rowid, content: $content, answer: $answer)
  {
   rowid
   id

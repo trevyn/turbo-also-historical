@@ -17,8 +17,8 @@ i54: 54-bit signed integer abstraction; represented as `i54`/`i64` in Rust, `Flo
 scalar i54
 
 type Mutation {
-  addCard(content: String!): Card!
-  updateCard(rowid: i54!, content: String!): Card!
+  addCard(content: String!, answer: String!): Card!
+  updateCard(rowid: i54!, content: String!, answer: String!): Card!
   deleteCard(rowid: i54!): Boolean!
 }
 

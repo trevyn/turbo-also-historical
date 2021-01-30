@@ -41,12 +41,14 @@ export type Mutation = {
 
 export type MutationAddCardArgs = {
   content: Scalars['String'];
+  answer: Scalars['String'];
 };
 
 
 export type MutationUpdateCardArgs = {
   rowid: Scalars['i54'];
   content: Scalars['String'];
+  answer: Scalars['String'];
 };
 
 
@@ -74,6 +76,7 @@ export type Query = {
 
 export type AddCardMutationVariables = Exact<{
   content: Scalars['String'];
+  answer: Scalars['String'];
 }>;
 
 
@@ -88,6 +91,7 @@ export type AddCardMutation = (
 export type UpdateCardMutationVariables = Exact<{
   rowid: Scalars['i54'];
   content: Scalars['String'];
+  answer: Scalars['String'];
 }>;
 
 
@@ -144,8 +148,8 @@ export type ListCardsFullQuery = (
 
 
 export const AddCardDocument = gql`
-    mutation addCard($content: String!) {
-  addCard(content: $content) {
+    mutation addCard($content: String!, $answer: String!) {
+  addCard(content: $content, answer: $answer) {
     rowid
     id
     filesize
@@ -164,8 +168,8 @@ export function addCardMutation() {
   return UrqlSvelte.mutation(UrqlSvelte.operationStore(AddCardDocument));
 };
 export const UpdateCardDocument = gql`
-    mutation updateCard($rowid: i54!, $content: String!) {
-  updateCard(rowid: $rowid, content: $content) {
+    mutation updateCard($rowid: i54!, $content: String!, $answer: String!) {
+  updateCard(rowid: $rowid, content: $content, answer: $answer) {
     rowid
     id
     filesize

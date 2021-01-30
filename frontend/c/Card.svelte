@@ -9,6 +9,7 @@
  import { createRichTextEditor, toHTML } from "prosemirror-svelte/state";
 
  let editorState = createRichTextEditor(card.content);
+ let answerEditorState = createRichTextEditor(card.answer);
 
  import { EditorState } from "prosemirror-state";
 
@@ -28,10 +29,25 @@
     on:change={(event) => {
      console.log('onchange');
      editorState = event.detail.editorState;
-     dispatch('change', toHTML(editorState));
+     dispatch('changecontent', toHTML(editorState));
     }} />
   </div>
  </div>
+ <div class="w-full flex justify-center p-6 space-x-6">
+  <div class="flex-1 text-gray-500 text-sm prose">
+   <ProsemirrorEditor
+    placeholder="Answer goes here"
+    editorState={answerEditorState}
+    on:transaction={(event) => {
+     answerEditorState = event.detail.editorState;
+    }}
+    on:change={(event) => {
+     answerEditorState = event.detail.editorState;
+     dispatch('changeanswer', toHTML(answerEditorState));
+    }} />
+  </div>
+ </div>
+
  <div class="w-full flex justify-center p-6 space-x-6">
   <div class="flex-1 text-gray-300 text-xs">
    Created

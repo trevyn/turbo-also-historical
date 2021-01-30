@@ -55,10 +55,11 @@ pub struct Mutation;
 
 #[graphql_object]
 impl Mutation {
- async fn add_card(content: String) -> FieldResult<Card> {
+ async fn add_card(content: String, answer: String) -> FieldResult<Card> {
   let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs_f64();
   let card = Card {
    content: Some(content.to_string()),
+   answer: Some(answer),
    name: Some(format!("a card of {} bytes", content.len())),
    filesize: Some(content.len().try_into()?),
    created_time: Some(now),
@@ -71,9 +72,15 @@ impl Mutation {
   Ok(card)
  }
 
- async fn update_card(rowid: i54, content: String) -> FieldResult<Card> {
+ async fn update_card(rowid: i54, content: String, answer: String) -> FieldResult<Card> {
   let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs_f64();
-  execute!("UPDATE card SET content = ?, modified_time = ? WHERE rowid = ?", content, now, rowid)?;
+  execute!(
+   "UPDATE card SET content = ?, answer = ?, modified_time = ? WHERE rowid = ?",
+   content,
+   answer,
+   now,
+   rowid
+  )?;
   Ok(select!(Card "WHERE rowid = ?", rowid)?)
  }
 

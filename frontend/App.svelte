@@ -31,7 +31,7 @@
 
 <Button
  on:click={() => {
-  addCard({ content: 'NEW CARD' });
+  addCard({ content: 'NEW CARD', answer: '' });
   $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
  }}>
  Add Card
@@ -46,10 +46,16 @@
   {#each $listCardsFull.data.listCardsFull as card (card.rowid)}
    <Card
     {card}
-    on:change={(newContent) => {
-     console.log('newcontent: ', newContent.detail);
-     updateCard({ rowid: card.rowid, content: newContent.detail });
-    }}
+    on:changecontent={(newContent) => updateCard({
+      rowid: card.rowid,
+      content: newContent.detail,
+      answer: card.answer,
+     })}
+    on:changeanswer={(newAnswer) => updateCard({
+      rowid: card.rowid,
+      content: card.content,
+      answer: newAnswer.detail,
+     })}
     on:delete={(event) => {
      deleteCard({ rowid: event.detail.rowid });
      $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
