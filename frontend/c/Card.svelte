@@ -9,6 +9,8 @@
 
  let editorState = createRichTextEditor(card.content);
 
+ import { EditorState } from "prosemirror-state";
+
  // $: console.log(toPlainText(editorState));
 </script>
 
@@ -18,28 +20,36 @@
    <ProsemirrorEditor
     placeholder="Go ahead and type something"
     {editorState}
+    on:transaction={(event) => {
+     console.log('transaction');
+     editorState = event.detail.editorState;
+    }}
     on:change={(event) => {
+     console.log('onchange');
      editorState = event.detail.editorState;
      dispatch('change', toHTML(editorState));
     }} />
   </div>
  </div>
  <div>
-  <div class="-mt-px flex divide-x divide-gray-200">
+  <div class="-mt-px flex">
    <div class="w-0 flex-1 flex">
-    <a
+    <span
      href="#"
      on:click={() => dispatch('delete', { rowid: card.rowid })}
-     class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent round;ed-bl-lg hover:bg-gray-50">
+     class="cursor-pointer relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border-t border-gray-200 rounded-bl-lg hover:bg-gray-50">
      <span class="ml-3">Delete</span>
-    </a>
+    </span>
    </div>
    <div class="-ml-px w-0 flex-1 flex">
-    <a
+    <span
      href="#"
-     class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:bg-gray-50">
-     <span class="ml-3" />
-    </a>
+     on:mousedown|capture|stopPropagation|preventDefault={() => console.log(editorState.selection
+        .content()
+        .content.toJSON())}
+     class="cursor-pointer relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border-t border-l border-gray-200 rounded-br-lg hover:bg-gray-50">
+     <span class="ml-3">Extract Selection</span>
+    </span>
    </div>
   </div>
  </div>
