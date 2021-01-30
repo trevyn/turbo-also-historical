@@ -1,7 +1,8 @@
 use futures::Stream;
 use i54_::i54;
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
-use std::{convert::TryInto, pin::Pin, time::Duration};
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::{convert::TryInto, pin::Pin};
 use turbosql::{execute, select};
 
 #[derive(juniper::GraphQLObject, turbosql::Turbosql, Default, Debug)]
@@ -15,6 +16,7 @@ pub struct Card {
  pub modified_time: Option<f64>,
  pub last_display_time: Option<f64>,
  pub next_display_time: Option<f64>,
+ pub answer: Option<String>,
 }
 
 type Schema = juniper::RootNode<'static, Query, Mutation, Subscription>;
@@ -54,10 +56,13 @@ pub struct Mutation;
 #[graphql_object]
 impl Mutation {
  async fn add_card(content: String) -> FieldResult<Card> {
+  let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs_f64();
   let card = Card {
    content: Some(content.to_string()),
    name: Some(format!("a card of {} bytes", content.len())),
    filesize: Some(content.len().try_into()?),
+   created_time: Some(now),
+   modified_time: Some(now),
    ..Default::default()
   };
 
@@ -67,7 +72,8 @@ impl Mutation {
  }
 
  async fn update_card(rowid: i54, content: String) -> FieldResult<Card> {
-  execute!("UPDATE card SET content = ? WHERE rowid = ?", content, rowid)?;
+  let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs_f64();
+  execute!("UPDATE card SET content = ?, modified_time = ? WHERE rowid = ?", content, now, rowid)?;
   Ok(select!(Card "WHERE rowid = ?", rowid)?)
  }
 
