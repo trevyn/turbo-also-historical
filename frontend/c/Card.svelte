@@ -31,6 +31,15 @@
     }} />
   </div>
  </div>
+ <div class="w-full flex justify-center p-6 space-x-6">
+  <div class="flex-1 text-gray-500 text-sm prose">
+   Created
+   {card.createdTime}<br />
+   Modified
+   {card.modifiedTime}
+  </div>
+ </div>
+
  <div>
   <div class="-mt-px flex">
    <div class="w-0 flex-1 flex">

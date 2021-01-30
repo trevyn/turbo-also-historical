@@ -38,7 +38,7 @@
 </Button>
 
 {#if $listCardsFull.fetching}
- <p>Loading...</p>
+ <p />
 {:else if $listCardsFull.error}
  <p>Oh no... {$listCardsFull.error.message}</p>
 {:else}
