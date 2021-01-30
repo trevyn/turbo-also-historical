@@ -1,4 +1,4 @@
-name: build_turbo2
+name: build_turbo
 
 on:
   workflow_dispatch:
@@ -77,6 +77,6 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: turbo2-darwin-x64-0.1.0.zip
-          path: electron/out/make/zip/darwin/x64/turbo2-darwin-x64-0.1.0.zip
+          name: turbo-darwin-x64-0.1.0.zip
+          path: electron/out/make/zip/darwin/x64/turbo-darwin-x64-0.1.0.zip
 
