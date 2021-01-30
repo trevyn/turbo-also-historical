@@ -4,6 +4,7 @@ type Card {
   filesize: i54
   name: String
   content: String
+  answer: String
   createdTime: Float
   modifiedTime: Float
   lastDisplayTime: Float

@@ -24,6 +24,7 @@ export type Card = {
   filesize?: Maybe<Scalars['i54']>;
   name?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
+  answer?: Maybe<Scalars['String']>;
   createdTime?: Maybe<Scalars['Float']>;
   modifiedTime?: Maybe<Scalars['Float']>;
   lastDisplayTime?: Maybe<Scalars['Float']>;
@@ -80,7 +81,7 @@ export type AddCardMutation = (
   { __typename?: 'Mutation' }
   & { addCard: (
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
   ) }
 );
 
@@ -94,7 +95,7 @@ export type UpdateCardMutation = (
   { __typename?: 'Mutation' }
   & { updateCard: (
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
   ) }
 );
 
@@ -115,7 +116,7 @@ export type CardStreamSubscription = (
   { __typename?: 'Subscription' }
   & { cardStream: (
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
   ) }
 );
 
@@ -137,7 +138,7 @@ export type ListCardsFullQuery = (
   { __typename?: 'Query' }
   & { listCardsFull: Array<(
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
   )> }
 );
 
@@ -150,6 +151,7 @@ export const AddCardDocument = gql`
     filesize
     name
     content
+    answer
     createdTime
     modifiedTime
     lastDisplayTime
@@ -169,6 +171,7 @@ export const UpdateCardDocument = gql`
     filesize
     name
     content
+    answer
     createdTime
     modifiedTime
     lastDisplayTime
@@ -197,6 +200,7 @@ export const CardStreamDocument = gql`
     filesize
     name
     content
+    answer
     createdTime
     modifiedTime
     lastDisplayTime
@@ -228,6 +232,7 @@ export const ListCardsFullDocument = gql`
     filesize
     name
     content
+    answer
     createdTime
     modifiedTime
     lastDisplayTime
