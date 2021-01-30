@@ -4,6 +4,10 @@ type Card {
   filesize: i54
   name: String
   content: String
+  createdTime: Float
+  modifiedTime: Float
+  lastDisplayTime: Float
+  nextDisplayTime: Float
 }
 
 """

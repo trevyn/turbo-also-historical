@@ -11,6 +11,10 @@ pub struct Card {
  pub filesize: Option<i54>,
  pub name: Option<String>,
  pub content: Option<String>,
+ pub created_time: Option<f64>,
+ pub modified_time: Option<f64>,
+ pub last_display_time: Option<f64>,
+ pub next_display_time: Option<f64>,
 }
 
 type Schema = juniper::RootNode<'static, Query, Mutation, Subscription>;

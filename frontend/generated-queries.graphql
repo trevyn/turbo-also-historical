@@ -6,6 +6,10 @@ mutation addCard($content: String!) {
   filesize
   name
   content
+  createdTime
+  modifiedTime
+  lastDisplayTime
+  nextDisplayTime
  }
 }
 
@@ -17,6 +21,10 @@ mutation updateCard($rowid: i54!, $content: String!) {
   filesize
   name
   content
+  createdTime
+  modifiedTime
+  lastDisplayTime
+  nextDisplayTime
  }
 }
 
@@ -32,6 +40,10 @@ subscription cardStream {
   filesize
   name
   content
+  createdTime
+  modifiedTime
+  lastDisplayTime
+  nextDisplayTime
  }
 }
 
@@ -51,6 +63,10 @@ query listCardsFull {
   filesize
   name
   content
+  createdTime
+  modifiedTime
+  lastDisplayTime
+  nextDisplayTime
  }
 }
 
