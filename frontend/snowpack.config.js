@@ -12,6 +12,8 @@ module.exports = {
   "**/node_modules/**/*",
   "queries-plugin.js",
   "run-codegen.mjs",
+  "package.json",
+  "package-lock.json",
   "**/typescript-urql-svelte/**/*",
  ],
  routes: [
