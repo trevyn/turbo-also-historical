@@ -7,6 +7,7 @@ use turbosql::{execute, select};
 
 #[derive(juniper::GraphQLObject, turbosql::Turbosql, Default, Debug)]
 pub struct Card {
+ // Remember: you can mark these as deprecated at any time! (or maybe delete them entirely? Is the schema a semi-hidden implementation detail?)
  pub rowid: Option<i54>,
  pub id: Option<i32>,
  pub filesize: Option<i54>,

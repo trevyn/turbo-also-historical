@@ -31,7 +31,7 @@
 
 <Button
  on:click={() => {
-  addCard({ content: 'NEW CARD', answer: '' });
+  addCard({ content: '', answer: '' });
   $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
  }}>
  Add Card
