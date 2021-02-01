@@ -29,6 +29,7 @@ export type Card = {
   modifiedTime?: Maybe<Scalars['Float']>;
   lastDisplayTime?: Maybe<Scalars['Float']>;
   nextDisplayTime?: Maybe<Scalars['Float']>;
+  presentationOrder?: Maybe<Scalars['i54']>;
 };
 
 export type Mutation = {
@@ -36,6 +37,7 @@ export type Mutation = {
   addCard: Card;
   updateCard: Card;
   deleteCard: Scalars['Boolean'];
+  shuffleCards: Scalars['Boolean'];
 };
 
 
@@ -84,7 +86,7 @@ export type AddCardMutation = (
   { __typename?: 'Mutation' }
   & { addCard: (
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime' | 'presentationOrder'>
   ) }
 );
 
@@ -99,7 +101,7 @@ export type UpdateCardMutation = (
   { __typename?: 'Mutation' }
   & { updateCard: (
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime' | 'presentationOrder'>
   ) }
 );
 
@@ -113,6 +115,14 @@ export type DeleteCardMutation = (
   & Pick<Mutation, 'deleteCard'>
 );
 
+export type ShuffleCardsMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShuffleCardsMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'shuffleCards'>
+);
+
 export type CardStreamSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -120,7 +130,7 @@ export type CardStreamSubscription = (
   { __typename?: 'Subscription' }
   & { cardStream: (
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime' | 'presentationOrder'>
   ) }
 );
 
@@ -142,7 +152,7 @@ export type ListCardsFullQuery = (
   { __typename?: 'Query' }
   & { listCardsFull: Array<(
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'id' | 'filesize' | 'name' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime' | 'presentationOrder'>
   )> }
 );
 
@@ -160,6 +170,7 @@ export const AddCardDocument = gql`
     modifiedTime
     lastDisplayTime
     nextDisplayTime
+    presentationOrder
   }
 }
     `;
@@ -180,6 +191,7 @@ export const UpdateCardDocument = gql`
     modifiedTime
     lastDisplayTime
     nextDisplayTime
+    presentationOrder
   }
 }
     `;
@@ -196,6 +208,15 @@ export const DeleteCardDocument = gql`
 export function deleteCardMutation() {
   return UrqlSvelte.mutation(UrqlSvelte.operationStore(DeleteCardDocument));
 };
+export const ShuffleCardsDocument = gql`
+    mutation shuffleCards {
+  shuffleCards
+}
+    `;
+
+export function shuffleCardsMutation() {
+  return UrqlSvelte.mutation(UrqlSvelte.operationStore(ShuffleCardsDocument));
+};
 export const CardStreamDocument = gql`
     subscription cardStream {
   cardStream {
@@ -209,6 +230,7 @@ export const CardStreamDocument = gql`
     modifiedTime
     lastDisplayTime
     nextDisplayTime
+    presentationOrder
   }
 }
     `;
@@ -241,6 +263,7 @@ export const ListCardsFullDocument = gql`
     modifiedTime
     lastDisplayTime
     nextDisplayTime
+    presentationOrder
   }
 }
     `;

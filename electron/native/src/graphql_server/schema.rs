@@ -18,6 +18,7 @@ pub struct Card {
  pub modified_time: Option<f64>,
  pub last_display_time: Option<f64>,
  pub next_display_time: Option<f64>,
+ pub presentation_order: Option<i54>,
 }
 
 type Schema = juniper::RootNode<'static, Query, Mutation, Subscription>;
@@ -40,14 +41,14 @@ fn _query_impls() {
  #[graphql_object]
  impl Query {
   async fn list_cards_short() -> FieldResult<Vec<ShortCard>> {
-   Ok(dbg!(select!(Vec<ShortCard> "rowid, name FROM card"))?)
+   Ok(select!(Vec<ShortCard> "rowid, name FROM card")?)
   }
  }
 
  #[graphql_object]
  impl Query {
   async fn list_cards_full() -> FieldResult<Vec<Card>> {
-   Ok(dbg!(select!(Vec<Card> "ORDER BY rowid DESC"))?)
+   Ok(select!(Vec<Card> "ORDER BY LENGTH(content) = 0 DESC, presentation_order DESC")?)
   }
  }
 }
@@ -87,6 +88,11 @@ impl Mutation {
 
  async fn delete_card(rowid: i54) -> FieldResult<bool> {
   execute!("DELETE FROM card WHERE rowid = ?", rowid)?;
+  Ok(true)
+ }
+
+ async fn shuffle_cards() -> FieldResult<bool> {
+  execute!("UPDATE card SET presentation_order = (RANDOM() % 9007199254740991)")?;
   Ok(true)
  }
 }

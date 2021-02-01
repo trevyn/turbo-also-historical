@@ -9,6 +9,7 @@ type Card {
   modifiedTime: Float
   lastDisplayTime: Float
   nextDisplayTime: Float
+  presentationOrder: i54
 }
 
 """
@@ -20,6 +21,7 @@ type Mutation {
   addCard(content: String!, answer: String!): Card!
   updateCard(rowid: i54!, content: String!, answer: String!): Card!
   deleteCard(rowid: i54!): Boolean!
+  shuffleCards: Boolean!
 }
 
 type Query {

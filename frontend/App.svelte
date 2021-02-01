@@ -11,6 +11,7 @@
  const addCard = db.addCardMutation();
  const deleteCard = db.deleteCardMutation();
  const updateCard = db.updateCardMutation();
+ const shuffleCards = db.shuffleCardsMutation();
  const cardStream = db.cardStreamSubscription((messages = [], data) => [
   data.cardStream,
   ...messages,
@@ -35,6 +36,14 @@
   $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
  }}>
  Add Card
+</Button>
+
+<Button
+ on:click={() => {
+  shuffleCards();
+  $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
+ }}>
+ Shuffle Cards
 </Button>
 
 {#if $listCardsFull.fetching}

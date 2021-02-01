@@ -11,6 +11,7 @@ mutation addCard($content: String!, $answer: String!) {
   modifiedTime
   lastDisplayTime
   nextDisplayTime
+  presentationOrder
  }
 }
 
@@ -27,11 +28,16 @@ mutation updateCard($rowid: i54!, $content: String!, $answer: String!) {
   modifiedTime
   lastDisplayTime
   nextDisplayTime
+  presentationOrder
  }
 }
 
 mutation deleteCard($rowid: i54!) {
  deleteCard(rowid: $rowid)
+}
+
+mutation shuffleCards {
+ shuffleCards
 }
 
 subscription cardStream {
@@ -47,6 +53,7 @@ subscription cardStream {
   modifiedTime
   lastDisplayTime
   nextDisplayTime
+  presentationOrder
  }
 }
 
@@ -71,6 +78,7 @@ query listCardsFull {
   modifiedTime
   lastDisplayTime
   nextDisplayTime
+  presentationOrder
  }
 }
 
