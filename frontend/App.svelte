@@ -31,26 +31,24 @@
 <Button>Do Nothing</Button>
 
 <Button
- on:click={() => {
-  addCard({ content: '', answer: '' });
+ on:click={async () => {
+  await addCard({ content: '', answer: '' });
   $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
  }}>
  Add Card
 </Button>
 
 <Button
- on:click={() => {
-  shuffleCards();
+ on:click={async () => {
+  await shuffleCards();
   $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
  }}>
  Shuffle Cards
 </Button>
 
-{#if $listCardsFull.fetching}
- <p />
-{:else if $listCardsFull.error}
+{#if $listCardsFull.error}
  <p>Oh no... {$listCardsFull.error.message}</p>
-{:else}
+{:else if $listCardsFull.data}
  <ul class="p-4 grid grid-cols-1 gap-6">
   {#each $listCardsFull.data.listCardsFull as card (card.rowid)}
    <Card
