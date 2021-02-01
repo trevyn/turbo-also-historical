@@ -25,10 +25,10 @@ module.exports = {
   // "bundle": true,
  },
  packageOptions: {
-  /* ... */
+  // source: "remote",
  },
  devOptions: {
-  /* ... */
+  port: 8085,
  },
  buildOptions: {
   /* ... */

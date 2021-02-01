@@ -12,6 +12,7 @@ electron/out
 **/*.sqlite-shm
 
 frontend-react
+.snowpack
 
 # /.cargo/config.toml uses zld linker for speed while developing, but it shouldn't be used for release builds
 /.cargo/config.toml
