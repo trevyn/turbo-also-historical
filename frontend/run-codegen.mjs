@@ -1,5 +1,4 @@
-import pkg from "@graphql-codegen/cli";
-const { generate } = pkg;
+import { generate } from "@graphql-codegen/cli";
 
 let schema = {
  "http://localhost:8080/graphql": {
@@ -39,7 +38,7 @@ async function run() {
   true
  );
 
- console.log("generating src/graphql-codegen.ts...");
+ console.log("generating graphql-codegen.ts...");
  await generate(
   {
    schema: schema,
