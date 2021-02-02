@@ -5,8 +5,8 @@ module.exports = {
   // icon: "electron-app/resources/icon",
   // name: "Your app name",
   osxSign: {
-   entitlements: "electron/entitlements.plist",
-   "entitlements-inherit": "electron/entitlements.plist",
+   entitlements: "entitlements.plist",
+   "entitlements-inherit": "entitlements.plist",
    "gatekeeper-assess": false,
    hardenedRuntime: true,
    // identity: "Developer ID Application: YOUR NAME HERE (YOUR ID HERE)",
