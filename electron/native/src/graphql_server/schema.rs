@@ -3,9 +3,9 @@ use i54_::i54;
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 use std::{convert::TryInto, pin::Pin};
-use turbosql::{execute, select};
+use turbosql::{execute, select, Turbosql};
 
-#[derive(juniper::GraphQLObject, turbosql::Turbosql, Default, Debug)]
+#[derive(juniper::GraphQLObject, Turbosql, Default, Debug)]
 pub struct Card {
  // Remember: you can mark these as deprecated at any time! (or maybe delete them entirely? Is the schema a semi-hidden implementation detail?)
  pub rowid: Option<i54>,
@@ -21,7 +21,7 @@ pub struct Card {
  pub presentation_order: Option<i54>,
 }
 
-#[derive(turbosql::Turbosql, Default, Debug)]
+#[derive(Turbosql, Default, Debug)]
 pub struct CardList {
  pub rowid: Option<i54>,
  pub list: Option<String>,
