@@ -14,7 +14,6 @@ module.exports = {
   "run-codegen.mjs",
   "package.json",
   "package-lock.json",
-  "**/typescript-urql-svelte/**/*",
  ],
  routes: [
   /* Enable an SPA Fallback in development: */

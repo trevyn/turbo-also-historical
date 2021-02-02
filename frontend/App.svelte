@@ -1,21 +1,22 @@
-<script>
+<script lang="ts">
  import { initTurboClient } from "./src/TurboClient.svelte";
  import Button from "./c/Button.svelte";
  import Card from "./c/Card.svelte";
 
- import * as db from "./graphql-codegen.svelte";
+ import * as gql from "./graphql-codegen";
+ import { operationStore, query, mutation, subscription } from "@urql/svelte";
 
  initTurboClient();
 
- const listCardsFull = db.listCardsFullQuery();
- const addCard = db.addCardMutation();
- const deleteCard = db.deleteCardMutation();
- const updateCard = db.updateCardMutation();
- const shuffleCards = db.shuffleCardsMutation();
- const cardStream = db.cardStreamSubscription((messages = [], data) => [
-  data.cardStream,
-  ...messages,
- ]);
+ const listCardsFull = query(operationStore(gql.ListCardsFullDocument));
+ const addCard = mutation(operationStore(gql.AddCardDocument));
+ const deleteCard = mutation(operationStore(gql.DeleteCardDocument));
+ const updateCard = mutation(operationStore(gql.UpdateCardDocument));
+ const shuffleCards = mutation(operationStore(gql.ShuffleCardsDocument));
+ // const cardStream = subscription(
+ //  operationStore(gql.CardStreamDocument),
+ //  (messages = [], data) => [data.cardStream, ...messages]
+ // );
 </script>
 
 <!-- {#if !$cardStream.data}

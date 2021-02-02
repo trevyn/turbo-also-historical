@@ -45,12 +45,10 @@ async function run() {
    schema: schema,
    overwrite: true,
    generates: {
-    "./graphql-codegen.svelte": {
+    "./graphql-codegen.ts": {
      documents: "./generated-queries.graphql",
-     plugins: ["typescript", "typescript-operations", "typescript-urql-svelte"],
+     plugins: ["typescript", "typescript-operations", "typed-document-node"],
      config: {
-      skipTypename: false,
-      withHOC: false,
       scalars: { i54: "number" },
      },
     },
