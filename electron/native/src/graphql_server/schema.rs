@@ -21,6 +21,13 @@ pub struct Card {
  pub presentation_order: Option<i54>,
 }
 
+#[derive(turbosql::Turbosql, Default, Debug)]
+pub struct CardList {
+ pub rowid: Option<i54>,
+ pub list: Option<String>,
+ pub created_time: Option<f64>,
+}
+
 type Schema = juniper::RootNode<'static, Query, Mutation, Subscription>;
 
 pub fn schema() -> Schema {
@@ -48,7 +55,21 @@ fn _query_impls() {
  #[graphql_object]
  impl Query {
   async fn list_cards_full() -> FieldResult<Vec<Card>> {
-   Ok(select!(Vec<Card> "ORDER BY LENGTH(content) = 0 DESC, presentation_order DESC")?)
+   Ok(select!(Vec<Card>
+    "
+     WITH split(word, str) AS (
+      SELECT '', list FROM cardlist
+      UNION ALL SELECT
+       substr(str, 0, instr(str, ',')),
+       substr(str, instr(str, ',') + 1)
+       FROM split WHERE str != ''
+     )
+     SELECT DISTINCT card.*
+      FROM split
+      LEFT JOIN card ON card.rowid = word
+      WHERE word != '' AND card.rowid IS NOT NULL
+    "
+   )?)
   }
  }
 }
@@ -69,7 +90,15 @@ impl Mutation {
    ..Default::default()
   };
 
-  card.insert()?;
+  let rowid = card.insert()?;
+
+  execute!(
+   "
+    REPLACE INTO cardlist(rowid, list)
+     VALUES(1, ? || ',' || (SELECT list FROM cardlist))
+   ",
+   rowid
+  )?;
 
   Ok(card)
  }
@@ -77,7 +106,13 @@ impl Mutation {
  async fn update_card(rowid: i54, content: String, answer: String) -> FieldResult<Card> {
   let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs_f64();
   execute!(
-   "UPDATE card SET content = ?, answer = ?, modified_time = ? WHERE rowid = ?",
+   "
+    UPDATE card SET
+     content = ?,
+     answer = ?,
+     modified_time = ?
+     WHERE rowid = ?
+   ",
    content,
    answer,
    now,
@@ -92,7 +127,15 @@ impl Mutation {
  }
 
  async fn shuffle_cards() -> FieldResult<bool> {
-  execute!("UPDATE card SET presentation_order = (RANDOM() % 9007199254740991)")?;
+  execute!(
+   "
+    REPLACE INTO cardlist(rowid, list)
+     VALUES(1, (
+      SELECT group_concat(rowid) || ','
+       FROM (SELECT rowid FROM card ORDER BY random())
+     ))
+   "
+  )?;
   Ok(true)
  }
 }

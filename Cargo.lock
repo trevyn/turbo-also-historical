@@ -1761,9 +1761,9 @@ dependencies = [
 
 [[package]]
 name = "turbosql"
-version = "0.0.3"
+version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "60e5334318dcc7edc57e36c88ffeee4087a1963f0495af26eae7e8a685eb8193"
+checksum = "b0d7de6a0305e40cbd2f1b654ef4fc6c352ce4baf1163bb23a3e3a077d98ffbf"
 dependencies = [
  "anyhow",
  "directories-next",
@@ -1778,9 +1778,9 @@ dependencies = [
 
 [[package]]
 name = "turbosql-impl"
-version = "0.0.3"
+version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5cb75505a8caad6c2d1608a639a2e89aa348e2a02d275ed70ad04595f06e8635"
+checksum = "9afac30570007476f01c1fead7fb6dbfb798129ab060a6ed584554241ccb8753"
 dependencies = [
  "fs2",
  "indoc",
