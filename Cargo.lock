@@ -1740,6 +1740,16 @@ dependencies = [
 name = "turbo"
 version = "0.1.0"
 dependencies = [
+ "log",
+ "neon",
+ "neon-build",
+ "turbo_server",
+]
+
+[[package]]
+name = "turbo_server"
+version = "0.0.1"
+dependencies = [
  "anyhow",
  "env_logger",
  "fold_impls",
@@ -1751,8 +1761,6 @@ dependencies = [
  "juniper_warp",
  "log",
  "mime_guess",
- "neon",
- "neon-build",
  "rust-embed",
  "tokio",
  "turbosql",

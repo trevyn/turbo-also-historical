@@ -2,7 +2,7 @@ use anyhow::Context;
 use warp::{filters::BoxedFilter, Filter, Reply};
 
 #[derive(rust_embed::RustEmbed)]
-#[folder = "../../frontend/build"]
+#[folder = "../frontend/build"]
 struct Asset;
 
 pub fn asset_server() -> BoxedFilter<(Box<dyn Reply>,)> {

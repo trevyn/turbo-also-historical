@@ -1,7 +1,5 @@
 use neon::prelude::*;
 
-mod graphql_server;
-
 fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
  Ok(cx.string("hello node 2"))
 }
@@ -22,7 +20,7 @@ fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
 
  // launch the server
  std::thread::spawn(|| {
-  graphql_server::run();
+  turbo_server::run();
  });
 
  Ok(())

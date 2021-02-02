@@ -2,6 +2,7 @@
 members = [
   "electron/native",
   "fold_impls",
+  "turbo_server",
 ]
 
 [profile.release]
