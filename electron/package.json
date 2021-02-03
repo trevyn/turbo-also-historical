@@ -11,7 +11,8 @@
   "build-neon": "electron-build-env neon build",
   "build-neon-release": "electron-build-env neon build --release",
   "package": "electron-forge package",
-  "make": "electron-forge make"
+  "make": "electron-forge make",
+  "publish": "electron-forge publish"
  },
  "devDependencies": {
   "@electron-forge/cli": "^6.0.0-beta.54",
