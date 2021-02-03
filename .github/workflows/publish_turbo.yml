@@ -1,6 +1,9 @@
 name: publish_turbo
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       newversion:
@@ -13,8 +16,9 @@ env:
 jobs:
 
   publish:
-    name: publish ${{ matrix.os }} ${{ github.event.inputs.newversion }}
+    name: publish ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    if: "contains(github.event.head_commit.message, 'turbo@0')"
 
     strategy:
       fail-fast: false
