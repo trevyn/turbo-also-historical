@@ -5,12 +5,12 @@
 
  export let card;
 
- import ProsemirrorEditor from "prosemirror-svelte";
+ import ProsemirrorEditor from "../prosemirror-svelte/ProsemirrorEditor.svelte";
  import {
   createRichTextEditor,
   toHTML,
   toPlainText,
- } from "prosemirror-svelte/state";
+ } from "../prosemirror-svelte/state";
 
  let editorState = createRichTextEditor(card.content);
  let answerEditorState = createRichTextEditor(card.answer);

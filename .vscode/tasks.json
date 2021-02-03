@@ -6,8 +6,8 @@
    "script": "start",
    "path": "electron/",
    "problemMatcher": [],
-   "label": "npm: start - electron",
-   "detail": "electron-build-env neon build && electron .",
+   "label": "start",
+   "detail": "electron: start",
    "group": {
     "kind": "build",
     "isDefault": true
@@ -15,11 +15,11 @@
   },
   {
    "type": "npm",
-   "script": "start",
+   "script": "dev",
    "path": "frontend/",
    "problemMatcher": [],
-   "label": "frontend: start",
-   "detail": "i'm the detail text",
+   "label": "dev",
+   "detail": "frontend: dev",
    "group": "build"
   }
  ]
