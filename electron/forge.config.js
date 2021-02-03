@@ -11,10 +11,10 @@ module.exports = {
    hardenedRuntime: true,
    // identity: "Developer ID Application: YOUR NAME HERE (YOUR ID HERE)",
   },
-  // osxNotarize: {
-  //  appleId: process.env["APPLE_ID"],
-  //  appleIdPassword: process.env["APPLE_ID_PASSWORD"],
-  // },
+  osxNotarize: {
+   appleId: process.env["APPLE_ID"],
+   appleIdPassword: process.env["APPLE_ID_PASSWORD"],
+  },
  },
  makers: [
   {
