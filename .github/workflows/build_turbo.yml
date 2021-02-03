@@ -80,6 +80,9 @@ jobs:
 
       - run: npm run make
         working-directory: 'electron'
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
 
       - uses: actions/upload-artifact@v2
         with:
