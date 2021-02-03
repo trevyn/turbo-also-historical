@@ -28,6 +28,16 @@ module.exports = {
    platforms: ["darwin"],
   },
   {
+   name: "@electron-forge/publisher-github",
+   config: {
+    repository: {
+     owner: "trevyn",
+     name: "turbo",
+    },
+    prerelease: true,
+   },
+  },
+  {
    name: "@electron-forge/maker-deb",
    config: {},
   },
