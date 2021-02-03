@@ -1,9 +1,11 @@
-<script>
+<script lang="ts">
  import { DateTime } from "luxon";
  import { createEventDispatcher } from "svelte";
  const dispatch = createEventDispatcher();
 
- export let card;
+ import * as gql from "../graphql-codegen";
+
+ export let card: gql.Card;
 
  import ProsemirrorEditor from "../prosemirror-svelte/ProsemirrorEditor.svelte";
  import {
