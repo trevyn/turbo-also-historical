@@ -28,6 +28,16 @@ module.exports = {
    platforms: ["darwin"],
   },
   {
+   name: "@electron-forge/maker-deb",
+   config: {},
+  },
+  {
+   name: "@electron-forge/maker-rpm",
+   config: {},
+  },
+ ],
+ publishers: [
+  {
    name: "@electron-forge/publisher-github",
    config: {
     repository: {
@@ -36,14 +46,6 @@ module.exports = {
     },
     prerelease: true,
    },
-  },
-  {
-   name: "@electron-forge/maker-deb",
-   config: {},
-  },
-  {
-   name: "@electron-forge/maker-rpm",
-   config: {},
   },
  ],
 };
