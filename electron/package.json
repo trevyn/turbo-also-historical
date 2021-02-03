@@ -1,7 +1,7 @@
 {
  "name": "turbo",
  "productName": "Turbo",
- "version": "0.2.0-alpha.7",
+ "version": "0.2.0-alpha.8",
  "description": "turbo",
  "main": "lib/index.js",
  "author": "Eden <github@eden2.com>",
