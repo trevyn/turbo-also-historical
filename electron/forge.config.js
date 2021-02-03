@@ -10,7 +10,6 @@ module.exports = {
    "entitlements-inherit": "entitlements.plist",
    "gatekeeper-assess": false,
    hardenedRuntime: true,
-   // identity: "Developer ID Application: YOUR NAME HERE (YOUR ID HERE)",
   },
   osxNotarize: {
    appleId: process.env["APPLE_ID"],
@@ -45,7 +44,6 @@ module.exports = {
      owner: "trevyn",
      name: "turbo",
     },
-    prerelease: false,
    },
   },
  ],
