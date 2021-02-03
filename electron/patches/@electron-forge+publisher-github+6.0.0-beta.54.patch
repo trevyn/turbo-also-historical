@@ -1,0 +1,50 @@
+diff --git a/node_modules/@electron-forge/publisher-github/dist/PublisherGithub.js b/node_modules/@electron-forge/publisher-github/dist/PublisherGithub.js
+index 16a3f6e..d35dcc6 100644
+--- a/node_modules/@electron-forge/publisher-github/dist/PublisherGithub.js
++++ b/node_modules/@electron-forge/publisher-github/dist/PublisherGithub.js
+@@ -58,7 +58,6 @@ class PublisherGithub extends _publisherBase.default {
+       let release;
+       const artifacts = perReleaseArtifacts[releaseName];
+       await (0, _asyncOra.asyncOra)(`Searching for target release: ${releaseName}`, async () => {
+-        try {
+           release = (await github.getGitHub().repos.listReleases({
+             owner: config.repository.owner,
+             repo: config.repository.name,
+@@ -71,22 +70,6 @@ class PublisherGithub extends _publisherBase.default {
+               code: 404
+             };
+           }
+-        } catch (err) {
+-          if (err.code === 404) {
+-            // Release does not exist, let's make it
+-            release = (await github.getGitHub().repos.createRelease({
+-              owner: config.repository.owner,
+-              repo: config.repository.name,
+-              tag_name: `v${releaseName}`,
+-              name: `v${releaseName}`,
+-              draft: config.draft !== false,
+-              prerelease: config.prerelease === true
+-            })).data;
+-          } else {
+-            // Unknown error
+-            throw err;
+-          }
+-        }
+       });
+       let uploaded = 0;
+       await (0, _asyncOra.asyncOra)(`Uploading Artifacts ${uploaded}/${artifacts.length} to v${releaseName}`, async uploadSpinner => {
+@@ -126,6 +109,14 @@ class PublisherGithub extends _publisherBase.default {
+             },
+             name: _path.default.basename(artifactPath)
+           });
++
++          await github.getGitHub().repos.updateRelease({
++            owner: config.repository.owner,
++            repo: config.repository.name,
++            release_id: release.id,
++            draft: false
++          });
++
+           return done();
+         }));
+       });
