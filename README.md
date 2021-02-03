@@ -15,10 +15,8 @@ A platform for applying [optimization methods](https://en.wikipedia.org/wiki/Mat
 ## Core Tech Stack (subject to change)
 
 - Svelte + Tailwind CSS 2.0
-- urql
-- Chrome/Chromium/iOS Safari
-- GraphQL
-- Juniper
+- Chrome / Chromium / iOS Safari
+- GraphQL, via urql + Juniper
 - [Rust, in the form of a Node.js native plugin](https://github.com/trevyn/turbo/discussions/1) ([possibly via Electron](https://github.com/trevyn/turbo/discussions/2), possibly not)
 - SQLite
 
@@ -34,4 +32,4 @@ Contributions of all forms are very much welcome! (code, ideas, [wiki edits](htt
 
 Use practices from the Rust community as a template for a large, open, community-driven project based on shared goals. See also: https://github.com/trevyn/turbo/wiki
 
-### License: MIT OR Apache-2.0 OR CC0-1.0
+### License: MIT OR Apache-2.0 OR CC0-1.0 (public domain)
