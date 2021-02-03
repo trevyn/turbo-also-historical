@@ -3,7 +3,7 @@ authors = ["Eden <rust@eden2.com>"]
 edition = "2018"
 name = "turbo_server"
 publish = false
-version = "0.0.1"
+version = "0.0.0"
 
 [dependencies]
 anyhow = "1"

@@ -3,10 +3,10 @@ authors = ["Eden <rust@eden2.com>"]
 build = "build.rs"
 edition = "2018"
 exclude = ["artifacts.json", "index.node"]
-license = "MIT"
+license = "MIT OR Apache-2.0 OR CC0-1.0"
 name = "turbo"
 publish = false
-version = "0.2.0-alpha.1"
+version = "0.0.0"
 
 [lib]
 crate-type = ["cdylib"]

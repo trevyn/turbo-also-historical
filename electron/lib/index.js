@@ -2,6 +2,8 @@ var addon = require("../native");
 // const { ipcMain } = require("electron");
 const { shell } = require("electron");
 
+require("update-electron-app")();
+
 console.log(addon.hello());
 
 const { app, BrowserWindow } = require("electron");
