@@ -1,5 +1,6 @@
 {
  "name": "turbo",
+ "productName": "Turbo",
  "version": "0.2.0-alpha.5",
  "description": "turbo",
  "main": "lib/index.js",
@@ -11,10 +12,8 @@
  },
  "scripts": {
   "start": "electron-build-env neon build && electron-forge start",
-  "oldstart": "electron-build-env neon build && electron .",
   "build-neon": "electron-build-env neon build",
   "build-neon-release": "electron-build-env neon build --release",
-  "package": "electron-forge package",
   "make": "electron-forge make",
   "publish": "electron-forge publish"
  },

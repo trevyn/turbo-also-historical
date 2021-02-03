@@ -50,6 +50,9 @@
 {#if $listCardsFull.error}
  <p>Oh no... {$listCardsFull.error.message}</p>
 {:else if $listCardsFull.data}
+ {$listCardsFull.data.listCardsFull.length}
+ Cards
+
  <ul class="p-4 grid grid-cols-1 gap-6">
   {#each $listCardsFull.data.listCardsFull as card (card.rowid)}
    <Card
