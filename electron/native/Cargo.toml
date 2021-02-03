@@ -6,7 +6,7 @@ exclude = ["artifacts.json", "index.node"]
 license = "MIT"
 name = "turbo"
 publish = false
-version = "0.1.0"
+version = "0.2.0-alpha.1"
 
 [lib]
 crate-type = ["cdylib"]
