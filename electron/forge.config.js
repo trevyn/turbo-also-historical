@@ -4,6 +4,7 @@ module.exports = {
   // darwinDarkModeSupport: "true",
   // icon: "electron-app/resources/icon",
   name: "Turbo",
+  executableName: "turbo",
   osxSign: {
    entitlements: "entitlements.plist",
    "entitlements-inherit": "entitlements.plist",
