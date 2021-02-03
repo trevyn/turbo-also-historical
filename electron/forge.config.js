@@ -3,7 +3,7 @@ module.exports = {
   // asar: true,
   // darwinDarkModeSupport: "true",
   // icon: "electron-app/resources/icon",
-  // name: "Your app name",
+  name: "Turbo",
   osxSign: {
    entitlements: "entitlements.plist",
    "entitlements-inherit": "entitlements.plist",
