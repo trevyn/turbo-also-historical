@@ -6,10 +6,18 @@
  export let card;
 
  import ProsemirrorEditor from "prosemirror-svelte";
- import { createRichTextEditor, toHTML } from "prosemirror-svelte/state";
+ import {
+  createRichTextEditor,
+  toHTML,
+  toPlainText,
+ } from "prosemirror-svelte/state";
 
  let editorState = createRichTextEditor(card.content);
  let answerEditorState = createRichTextEditor(card.answer);
+
+ let revealed = false;
+
+ if (toPlainText(answerEditorState).length === 0) revealed = true;
 
  import { EditorState } from "prosemirror-state";
 
@@ -34,18 +42,26 @@
   </div>
  </div>
  <div class="w-full flex justify-center p-6 space-x-6">
-  <div class="flex-1 text-gray-500 text-sm prose">
-   <ProsemirrorEditor
-    placeholder="Answer goes here"
-    editorState={answerEditorState}
-    on:transaction={(event) => {
-     answerEditorState = event.detail.editorState;
-    }}
-    on:change={(event) => {
-     answerEditorState = event.detail.editorState;
-     dispatch('changeanswer', toHTML(answerEditorState));
-    }} />
-  </div>
+  {#if !revealed}
+   <div
+    on:click={() => (revealed = true)}
+    class="cursor-pointer flex-1 text-gray-200 text-center text-lg underline prose">
+    click to reveal answer
+   </div>
+  {:else}
+   <div class="flex-1 text-gray-500 text-sm prose">
+    <ProsemirrorEditor
+     placeholder="Answer goes here"
+     editorState={answerEditorState}
+     on:transaction={(event) => {
+      answerEditorState = event.detail.editorState;
+     }}
+     on:change={(event) => {
+      answerEditorState = event.detail.editorState;
+      dispatch('changeanswer', toHTML(answerEditorState));
+     }} />
+   </div>
+  {/if}
  </div>
 
  <div class="w-full flex justify-center p-6 space-x-6">
