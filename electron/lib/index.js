@@ -1,13 +1,13 @@
 var addon = require("../native");
 // const { ipcMain } = require("electron");
-const { shell } = require("electron");
+const { app, shell, BrowserWindow } = require("electron");
+var puppeteer = require("puppeteer-core");
+
+console.log(`app version is ${app.getVersion()}`);
 
 require("update-electron-app")();
 
 console.log(addon.hello());
-
-const { app, BrowserWindow } = require("electron");
-var puppeteer = require("puppeteer-core");
 
 app.commandLine.appendSwitch("force_low_power_gpu");
 

@@ -1,6 +1,6 @@
 {
  "name": "turbo",
- "version": "0.2.0-alpha.2",
+ "version": "0.2.0-alpha.3",
  "description": "turbo",
  "main": "lib/index.js",
  "author": "Eden <github@eden2.com>",
@@ -25,12 +25,12 @@
   "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
   "@electron-forge/maker-zip": "^6.0.0-beta.54",
   "@electron-forge/publisher-github": "^6.0.0-beta.54",
+  "electron": "12.0.0-beta.21",
   "electron-build-env": "0.2.0",
   "neon-cli": "0.7.0"
  },
  "//": "NOTE: puppeteer-core 5.4.1 is for chrome 87, 5.5 series for chrome 88",
  "dependencies": {
-  "electron": "12.0.0-beta.21",
   "electron-squirrel-startup": "^1.0.0",
   "puppeteer-core": "~5.5.0",
   "update-electron-app": "^2.0.1"
