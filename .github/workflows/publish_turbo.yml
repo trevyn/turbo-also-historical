@@ -2,6 +2,10 @@ name: publish_turbo
 
 on:
   workflow_dispatch:
+    inputs:
+      newversion:
+        description: 'new version number? e.g. 0.2.0-alpha.2'
+        required: true
       
 env:
   CARGO_TERM_COLOR: always
@@ -9,7 +13,7 @@ env:
 jobs:
 
   publish:
-    name: publish ${{ matrix.os }}
+    name: publish ${{ matrix.os }} ${{ github.event.inputs.newversion }}
     runs-on: ${{ matrix.os }}
 
     strategy:
