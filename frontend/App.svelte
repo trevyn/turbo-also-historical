@@ -17,6 +17,19 @@
  //  operationStore(gql.CardStreamDocument),
  //  (messages = [], data) => [data.cardStream, ...messages]
  // );
+
+ let theme =
+  localStorage.theme === "dark" ||
+  (!("theme" in localStorage) &&
+   window.matchMedia("(prefers-color-scheme: dark)").matches)
+   ? "dark"
+   : "light";
+
+ $: if (theme === "dark") {
+  document.documentElement.classList.add("dark");
+ } else {
+  document.documentElement.classList.remove("dark");
+ }
 </script>
 
 <!-- {#if !$cardStream.data}
@@ -29,7 +42,20 @@
  </ul>
 {/if} -->
 
-<Button>Do Nothing</Button>
+<Button
+ on:click={() => {
+  localStorage.theme = 'light';
+  theme = 'light';
+ }}>
+ Light
+</Button>
+<Button
+ on:click={() => {
+  localStorage.theme = 'dark';
+  theme = 'dark';
+ }}>
+ Dark
+</Button>
 
 <Button
  on:click={async () => {
@@ -50,9 +76,10 @@
 {#if $listCardsFull.error}
  <p>Oh no... {$listCardsFull.error.message}</p>
 {:else if $listCardsFull.data}
- {$listCardsFull.data.listCardsFull.length}
- Cards
-
+ <span class="text-gray-700 dark:text-gray-500">
+  {$listCardsFull.data.listCardsFull.length}
+  Cards
+ </span>
  <ul class="p-4 grid grid-cols-1 gap-6">
   {#each $listCardsFull.data.listCardsFull as card (card.rowid)}
    <Card
