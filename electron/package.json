@@ -1,6 +1,6 @@
 {
  "name": "turbo",
- "version": "0.2.0-alpha.3",
+ "version": "0.2.0-alpha.4",
  "description": "turbo",
  "main": "lib/index.js",
  "author": "Eden <github@eden2.com>",

@@ -44,7 +44,7 @@ module.exports = {
      owner: "trevyn",
      name: "turbo",
     },
-    prerelease: true,
+    prerelease: false,
    },
   },
  ],

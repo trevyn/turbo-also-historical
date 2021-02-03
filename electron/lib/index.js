@@ -4,6 +4,7 @@ const { app, shell, BrowserWindow } = require("electron");
 var puppeteer = require("puppeteer-core");
 
 console.log(`app version is ${app.getVersion()}`);
+// https://update.electronjs.org/trevyn/turbo/darwin-x64/0.0.0
 
 require("update-electron-app")();
 
@@ -40,10 +41,10 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
- if (BrowserWindow.getAllWindows().length === 0) {
-  shell.openExternal("http://localhost:8080");
-  // createWindow();
- }
+ // if (BrowserWindow.getAllWindows().length === 0) {
+ shell.openExternal("http://localhost:8080");
+ // createWindow();
+ // }
 });
 
 async function main() {
