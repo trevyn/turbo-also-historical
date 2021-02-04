@@ -41,7 +41,7 @@ jobs:
         working-directory: 'electron'
 
       - name: Add macOS certs
-        run: chmod +x add-macos-cert.sh && ./add-macos-cert.sh
+        run: chmod +x add-macos-cert.sh && ./add-macos-cert.sh > /dev/null
         working-directory: 'electron'
         env:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.CERTIFICATE_OSX_APPLICATION }}
