@@ -43,6 +43,8 @@ function initAutoUpdater() {
   console.log("update-downloaded", [event, releaseNotes, releaseName, releaseDate, updateURL]);
   addon.rustLog("update-downloaded");
  });
+
+ autoUpdater.checkForUpdates();
 }
 
 function createWindow() {
