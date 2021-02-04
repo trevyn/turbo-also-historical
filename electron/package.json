@@ -16,7 +16,8 @@
   "build-neon-release": "electron-build-env neon build --release",
   "make": "electron-forge make",
   "publish": "electron-forge publish",
-  "postinstall": "patch-package"
+  "postinstall": "patch-package",
+  "cargo-update": "cargo update --dry-run"
  },
  "devDependencies": {
   "@electron-forge/cli": "6.0.0-beta.54",
