@@ -30,7 +30,7 @@
   "neon-cli": "0.7.0",
   "patch-package": "^6.2.2"
  },
- "//": "NOTE: puppeteer-core 5.4.1 is for chrome 87, 5.5 series for chrome 88",
+ "//": "NOTE: puppeteer-core versions are specific to Chrome releases; 5.5 series is for chrome 88",
  "dependencies": {
   "electron-squirrel-startup": "^1.0.0",
   "puppeteer-core": "~5.5.0",
