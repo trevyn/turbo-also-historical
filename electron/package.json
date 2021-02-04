@@ -32,9 +32,8 @@
  },
  "//": "NOTE: puppeteer-core versions are specific to Chrome releases; 5.5 series is for chrome 88",
  "dependencies": {
-  "electron-squirrel-startup": "^1.0.0",
-  "puppeteer-core": "~5.5.0",
-  "update-electron-app": "^2.0.1"
+  "electron-is-dev": "^1.2.0",
+  "puppeteer-core": "~5.5.0"
  },
  "config": {
   "forge": "forge.config.js"

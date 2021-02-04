@@ -28,6 +28,17 @@ pub struct CardList {
  pub created_time: Option<f64>,
 }
 
+#[derive(Turbosql, Default, Debug)]
+pub struct Log {
+ pub rowid: Option<i54>,
+ pub entry: Option<String>,
+ pub created_time: Option<f64>,
+}
+
+pub fn rust_log(entry: String) {
+ Log { entry: Some(entry), ..Default::default() }.insert().unwrap();
+}
+
 type Schema = juniper::RootNode<'static, Query, Mutation, Subscription>;
 
 pub fn schema() -> Schema {

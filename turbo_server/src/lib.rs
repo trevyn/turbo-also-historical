@@ -5,6 +5,8 @@ use warp::{http, Filter};
 mod asset_server;
 mod schema;
 
+pub use schema::rust_log;
+
 // @mark server
 #[tokio::main]
 pub async fn run() {

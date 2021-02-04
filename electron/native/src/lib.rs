@@ -4,19 +4,18 @@ fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
  Ok(cx.string("hello node 2"))
 }
 
-// register_module!(mut cx, {
-//     eprintln!("neon module init 2");
-//     cx.export_function("hello", hello)?;
-//     Ok(())
-// });
+fn rust_log(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+ let s = cx.argument::<JsString>(0)?.value();
+ eprintln!("rust_log: {:#?}", s);
+ turbo_server::rust_log(s);
+ Ok(cx.undefined())
+}
 
-// @mark neon
 #[neon::main]
 fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
  log::debug!("neon module init");
  cx.export_function("hello", hello)?;
- // let version = cx.string("1.0.0");
- // cx.export_value("version", version)?;
+ cx.export_function("rustLog", rust_log)?;
 
  // launch the server
  std::thread::spawn(|| {

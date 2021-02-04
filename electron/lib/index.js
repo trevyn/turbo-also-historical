@@ -1,16 +1,49 @@
 var addon = require("../native");
-// const { ipcMain } = require("electron");
-const { app, shell, BrowserWindow } = require("electron");
+const { autoUpdater, app, shell, BrowserWindow } = require("electron");
 var puppeteer = require("puppeteer-core");
+const isDev = require("electron-is-dev");
 
-console.log(`app version is ${app.getVersion()}`);
-// https://update.electronjs.org/trevyn/turbo/darwin-x64/0.0.0
+app.commandLine.appendSwitch("force_low_power_gpu");
 
-require("update-electron-app")();
+let v = `app version is ${app.getVersion()}, dev is ${isDev}`;
+console.log(v);
+addon.rustLog(v);
 
 console.log(addon.hello());
 
-app.commandLine.appendSwitch("force_low_power_gpu");
+function initAutoUpdater() {
+ // https://update.electronjs.org/trevyn/turbo/darwin-x64/0.0.0
+
+ autoUpdater.setFeedURL(
+  `https://update.electronjs.org/trevyn/turbo/darwin-x64/${app.getVersion()}`
+ );
+
+ autoUpdater.on("error", err => {
+  console.log("updater error");
+  addon.rustLog("updater error");
+  console.log(err);
+ });
+
+ autoUpdater.on("checking-for-update", () => {
+  console.log("checking-for-update");
+  addon.rustLog("checking-for-update");
+ });
+
+ autoUpdater.on("update-available", () => {
+  console.log("update-available; downloading...");
+  addon.rustLog("update-available; downloading...");
+ });
+
+ autoUpdater.on("update-not-available", () => {
+  console.log("update-not-available");
+  addon.rustLog("update-not-available");
+ });
+
+ autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
+  console.log("update-downloaded", [event, releaseNotes, releaseName, releaseDate, updateURL]);
+  addon.rustLog("update-downloaded");
+ });
+}
 
 function createWindow() {
  const win = new BrowserWindow({
@@ -32,17 +65,21 @@ function createWindow() {
  });
 }
 
-app.whenReady().then(() => shell.openExternal("http://localhost:8080"));
+app.whenReady().then(() => {
+ shell.openExternal(isDev ? "http://localhost:8085" : "http://localhost:8080");
 
-app.on("window-all-closed", () => {
- if (process.platform !== "darwin") {
-  app.quit();
- }
+ if (!isDev) initAutoUpdater();
 });
+
+// app.on("window-all-closed", () => {
+//  if (process.platform !== "darwin") {
+//   app.quit();
+//  }
+// });
 
 app.on("activate", () => {
  // if (BrowserWindow.getAllWindows().length === 0) {
- shell.openExternal("http://localhost:8080");
+ shell.openExternal(isDev ? "http://localhost:8085" : "http://localhost:8080");
  // createWindow();
  // }
 });
