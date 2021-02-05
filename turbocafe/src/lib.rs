@@ -1,4 +1,4 @@
-// Turbocafe, the content-addressable store
+// Turbocafe, the content-addressable file store
 
 use multihash::Code::Blake3_256;
 use multihash::MultihashDigest;
