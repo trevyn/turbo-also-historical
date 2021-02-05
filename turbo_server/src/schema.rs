@@ -115,6 +115,23 @@ impl Mutation {
  }
 
  async fn update_card(rowid: i54, content: String, answer: String) -> FieldResult<Card> {
+  let old_content = select!(Card "WHERE rowid = ?", rowid).unwrap().content.unwrap();
+
+  let mut patch = Vec::new();
+  qbsdiff::Bsdiff::new(old_content.as_bytes(), content.as_bytes())
+   .compare(std::io::Cursor::new(&mut patch))
+   .unwrap();
+
+  dbg!(old_content.len());
+  dbg!(content.len());
+  dbg!(patch.len());
+
+  let patcher = qbsdiff::Bspatch::new(&patch).unwrap();
+  let mut target = Vec::new();
+  patcher.apply(old_content.as_bytes(), std::io::Cursor::new(&mut target))?;
+
+  assert!(dbg!(target == content.as_bytes()));
+
   let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs_f64();
   execute!(
    "
