@@ -1,8 +1,10 @@
 [package]
 authors = ["Eden <rust@eden2.com>"]
+description = "A proc-macro that folds multiple `impl` blocks into one."
 edition = "2018"
+license = "MIT OR Apache-2.0 OR CC0-1.0"
 name = "fold_impls"
-publish = false
+repository = "https://github.com/trevyn/turbo"
 version = "0.0.0"
 
 [lib]
@@ -12,4 +14,4 @@ proc-macro = true
 proc-macro-error = "1"
 proc-macro2 = "1"
 quote = "1"
-syn = {version = "1", features = ["full"]}
+syn = {version = "1", features = ["full", "visit-mut", "extra-traits"]}
