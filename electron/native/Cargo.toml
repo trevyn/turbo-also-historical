@@ -13,9 +13,9 @@ crate-type = ["cdylib"]
 name = "turbo"
 
 [build-dependencies]
-neon-build = "=0.7.0"
+neon-build = "=0.7.1"
 
 [dependencies]
 log = "0.4"
-neon = {version = "=0.7.0", features = ["proc-macros"]}
+neon = {version = "=0.7.1", features = ["proc-macros"]}
 turbo_server = {path = "../../turbo_server"}
