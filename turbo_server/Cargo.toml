@@ -21,5 +21,7 @@ qbsdiff = "1.3.1"
 rust-embed = "5.9"
 tokio = {version = "=0.2.25", features = ["rt-core", "macros"]}
 # turbosql = {path = "../../../turbosql/turbosql"}
+bs58 = "0.4.0"
+multihash = {version = "0.13.2", default-features = false, features = ["std", "multihash-impl", "blake3"]}
 turbosql = "0.1.0"
 warp = {version = "=0.2.5"}

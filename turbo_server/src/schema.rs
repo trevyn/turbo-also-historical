@@ -1,6 +1,8 @@
 use futures::Stream;
 use i54_::i54;
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
+use multihash::Code::Blake3_256;
+use multihash::MultihashDigest;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 use std::{convert::TryInto, pin::Pin};
 use turbosql::{execute, select, Turbosql};
@@ -122,7 +124,9 @@ impl Mutation {
    .compare(std::io::Cursor::new(&mut patch))
    .unwrap();
 
-  dbg!(old_content.len());
+  let old_content_hash = Blake3_256.digest(old_content.as_bytes()).to_bytes();
+  let hash_b58 = bs58::encode(old_content_hash).into_string();
+  dbg!(old_content.len(), hash_b58);
   dbg!(content.len());
   dbg!(patch.len());
 
