@@ -1,8 +1,9 @@
 use futures::Stream;
 use i54_::i54;
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
+use std::convert::TryInto;
+use std::pin::Pin;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
-use std::{convert::TryInto, pin::Pin};
 use turbosql::{execute, select, Turbosql};
 
 #[derive(juniper::GraphQLObject, Turbosql, Default, Debug)]
@@ -131,17 +132,17 @@ impl Mutation {
   let new_hash = dbg!(turbocafe::hash(&new_content));
   let patch_hash = dbg!(turbocafe::hash(&patch));
 
-  dbg!(turbocafe::get(&old_hash));
-  dbg!(turbocafe::get(&new_hash));
-  dbg!(turbocafe::get(&patch_hash));
+  dbg!(turbocafe::get_string(&old_hash)).ok();
+  dbg!(turbocafe::get_string(&new_hash)).ok();
+  // dbg!(turbocafe::get(&patch_hash)).ok();
 
-  dbg!(turbocafe::put(&old_content));
-  dbg!(turbocafe::put(&new_content));
-  dbg!(turbocafe::put(&patch));
+  dbg!(turbocafe::put(&old_content)).ok();
+  dbg!(turbocafe::put(&new_content)).ok();
+  dbg!(turbocafe::put(&patch)).ok();
 
-  dbg!(turbocafe::get(old_hash));
-  dbg!(turbocafe::get(new_hash));
-  dbg!(turbocafe::get(patch_hash));
+  dbg!(turbocafe::get_string(old_hash)).ok();
+  dbg!(turbocafe::get_string(new_hash)).ok();
+  // dbg!(turbocafe::get(patch_hash)).ok();
 
   let patcher = qbsdiff::Bspatch::new(&patch).unwrap();
   let mut target = Vec::new();
