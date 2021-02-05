@@ -2010,7 +2010,6 @@ name = "turbo_server"
 version = "0.0.0"
 dependencies = [
  "anyhow",
- "bs58",
  "env_logger",
  "fold_impls",
  "futures",
@@ -2021,12 +2020,20 @@ dependencies = [
  "juniper_warp",
  "log",
  "mime_guess",
- "multihash",
  "qbsdiff",
  "rust-embed",
  "tokio",
+ "turbocafe",
  "turbosql",
  "warp",
+]
+
+[[package]]
+name = "turbocafe"
+version = "0.0.0"
+dependencies = [
+ "bs58",
+ "multihash",
 ]
 
 [[package]]

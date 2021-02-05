@@ -1,0 +1,10 @@
+[package]
+authors = ["Eden <rust@eden2.com>"]
+edition = "2018"
+name = "turbocafe"
+publish = false
+version = "0.0.0"
+
+[dependencies]
+bs58 = "0.4.0"
+multihash = {version = "0.13.2", default-features = false, features = ["std", "multihash-impl", "blake3"]}

@@ -1,8 +1,6 @@
 use futures::Stream;
 use i54_::i54;
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
-use multihash::Code::Blake3_256;
-use multihash::MultihashDigest;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 use std::{convert::TryInto, pin::Pin};
 use turbosql::{execute, select, Turbosql};
@@ -117,24 +115,39 @@ impl Mutation {
  }
 
  async fn update_card(rowid: i54, content: String, answer: String) -> FieldResult<Card> {
+  let new_content = content;
   let old_content = select!(Card "WHERE rowid = ?", rowid).unwrap().content.unwrap();
 
   let mut patch = Vec::new();
-  qbsdiff::Bsdiff::new(old_content.as_bytes(), content.as_bytes())
+  qbsdiff::Bsdiff::new(old_content.as_bytes(), new_content.as_bytes())
    .compare(std::io::Cursor::new(&mut patch))
    .unwrap();
 
-  let old_content_hash = Blake3_256.digest(old_content.as_bytes()).to_bytes();
-  let hash_b58 = bs58::encode(old_content_hash).into_string();
-  dbg!(old_content.len(), hash_b58);
-  dbg!(content.len());
+  dbg!(old_content.len());
+  dbg!(new_content.len());
   dbg!(patch.len());
+
+  let old_hash = dbg!(turbocafe::hash(&old_content));
+  let new_hash = dbg!(turbocafe::hash(&new_content));
+  let patch_hash = dbg!(turbocafe::hash(&patch));
+
+  dbg!(turbocafe::get(&old_hash));
+  dbg!(turbocafe::get(&new_hash));
+  dbg!(turbocafe::get(&patch_hash));
+
+  dbg!(turbocafe::put(&old_content));
+  dbg!(turbocafe::put(&new_content));
+  dbg!(turbocafe::put(&patch));
+
+  dbg!(turbocafe::get(old_hash));
+  dbg!(turbocafe::get(new_hash));
+  dbg!(turbocafe::get(patch_hash));
 
   let patcher = qbsdiff::Bspatch::new(&patch).unwrap();
   let mut target = Vec::new();
   patcher.apply(old_content.as_bytes(), std::io::Cursor::new(&mut target))?;
 
-  assert!(dbg!(target == content.as_bytes()));
+  assert!(dbg!(target == new_content.as_bytes()));
 
   let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs_f64();
   execute!(
@@ -145,7 +158,7 @@ impl Mutation {
      modified_time = ?
      WHERE rowid = ?
    ",
-   content,
+   new_content,
    answer,
    now,
    rowid
