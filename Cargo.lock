@@ -953,11 +953,12 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 [[package]]
 name = "lexical-core"
 version = "0.7.4"
-source = "git+https://github.com/Gelbpunkt/rust-lexical?branch=fix-warnings-and-update-deps#eca91dc23e79736c9eb23c0e2f978909dc547e44"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "db65c6da02e61f55dae90a0ae427b2a5f6b3e8db09f58d10efab23af92592616"
 dependencies = [
  "arrayvec",
  "bitflags",
- "cfg-if 1.0.0",
+ "cfg-if 0.1.10",
  "ryu",
  "static_assertions",
 ]
