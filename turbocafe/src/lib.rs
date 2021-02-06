@@ -13,11 +13,12 @@ pub enum TurbocafeError {
  DataNotAvailable,
 }
 
+#[allow(non_camel_case_types)]
 #[derive(Turbosql, Default)]
-struct TurbocafeEntry {
+struct _Turbocafe_Entry {
  rowid: Option<i64>,
  hash: Option<String>,
- data: Option<Blob>,
+ content: Option<Blob>,
 }
 
 fn hash_impl<T: AsRef<[u8]>>(content: T) -> Vec<u8> {
@@ -31,9 +32,9 @@ pub fn hash<T: AsRef<[u8]>>(content: T) -> String {
 pub fn put<T: AsRef<[u8]>>(content: T) -> Result<String, TurbocafeError> {
  let hash = hash(&content);
 
- TurbocafeEntry {
+ _Turbocafe_Entry {
   hash: Some(hash.clone()),
-  data: Some(content.as_ref().to_owned()),
+  content: Some(content.as_ref().to_owned()),
   ..Default::default()
  }
  .insert()?;
@@ -43,8 +44,8 @@ pub fn put<T: AsRef<[u8]>>(content: T) -> Result<String, TurbocafeError> {
 
 pub fn get<T: AsRef<str>>(hash: T) -> Result<Vec<u8>, TurbocafeError> {
  Ok(
-  select!(TurbocafeEntry "WHERE hash = ?", hash.as_ref())?
-   .data
+  select!(_Turbocafe_Entry "WHERE hash = ?", hash.as_ref())?
+   .content
    .ok_or(TurbocafeError::DataNotAvailable)?,
  )
 }
