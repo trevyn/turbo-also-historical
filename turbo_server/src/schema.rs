@@ -26,7 +26,7 @@ pub struct Card {
 pub struct CardList {
  pub rowid: Option<i54>,
  pub list: Option<String>,
- pub created_time: Option<f64>,
+ pub created_time: Option<i64>,
 }
 
 #[derive(Turbosql, Default, Debug)]
