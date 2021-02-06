@@ -13,6 +13,8 @@ pub async fn run() {
  std::env::set_var("RUST_LOG", "warp_subscriptions");
  env_logger::init();
 
+ dbg!(env!("RUST_VERSION"));
+
  let log = warp::log("warp_subscriptions");
 
  let cors = warp::cors()
