@@ -88,7 +88,7 @@ impl Mutation {
  async fn add_card(content: String, answer: String) -> FieldResult<Card> {
   let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
   let card = Card {
-   content: Some(content.to_string()),
+   content: Some(content),
    answer: Some(answer),
    created_time: Some(now),
    modified_time: Some(now),
