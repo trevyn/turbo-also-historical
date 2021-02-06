@@ -762,9 +762,9 @@ checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
 
 [[package]]
 name = "hyper"
-version = "0.13.9"
+version = "0.13.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f6ad767baac13b44d4529fcf58ba2cd0995e36e7b435bc5b039de6f47e880dbf"
+checksum = "8a6f157065790a3ed2f88679250419b5cdd96e714a0d65f7797fd337186e96bb"
 dependencies = [
  "bytes 0.5.6",
  "futures-channel",
@@ -786,9 +786,9 @@ dependencies = [
 
 [[package]]
 name = "i54_"
-version = "0.0.1"
+version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e10d9980301c309ac78bcd821b3e577a746b5a3413a7a07934c2a12e56be8d04"
+checksum = "32031b7901f4c47d4c13439165d4ffbb6ae64705525dc71566e4355134c2be51"
 dependencies = [
  "juniper",
  "rusqlite",
@@ -799,9 +799,9 @@ dependencies = [
 
 [[package]]
 name = "idna"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "02e2673c30ee86b5b96a9cb52ad15718aa1f966f5ab9ad54a8b95d5ca33120a9"
+checksum = "de910d521f7cc3135c4de8db1cb910e0b5ed1dc6f57c381cd07e8e661ce10094"
 dependencies = [
  "matches",
  "unicode-bidi",
@@ -1678,9 +1678,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.61"
+version = "1.0.62"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4fceb2595057b6891a4ee808f70054bd2d12f0e97f1cbb78689b59f676df325a"
+checksum = "ea1c6153794552ea7cf7cf63b1231a25de00ec90db326ba6264440fa08e31486"
 dependencies = [
  "indexmap",
  "itoa",
@@ -2041,9 +2041,9 @@ dependencies = [
 
 [[package]]
 name = "turbosql"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8d498036465a50b23e6c1f6c894776a781340efe2794a9e30d9df6aeb7fa9d54"
+checksum = "9401e69b07e74bd5aa8f7123df851917d42e649e117d58b56e6dac1a9956d67d"
 dependencies = [
  "anyhow",
  "directories-next",
@@ -2058,9 +2058,9 @@ dependencies = [
 
 [[package]]
 name = "turbosql-impl"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ade28dca5f3f02fd44aa0b2ce42801500d4df6723a61ed8eb3ff5723d2438d51"
+checksum = "486eaf61ea37931658553fdb3d75bcbf53adfbb4b52a4a7199a3d048098341de"
 dependencies = [
  "fs2",
  "indoc",

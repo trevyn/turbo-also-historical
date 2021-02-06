@@ -10,16 +10,12 @@ use turbosql::{execute, select, Turbosql};
 pub struct Card {
  // Remember: you can mark these as deprecated at any time! (or maybe delete them entirely? Is the schema a semi-hidden implementation detail?)
  pub rowid: Option<i54>,
- pub id: Option<i32>,
- pub filesize: Option<i54>,
- pub name: Option<String>,
  pub content: Option<String>,
  pub answer: Option<String>,
- pub created_time: Option<f64>,
- pub modified_time: Option<f64>,
- pub last_display_time: Option<f64>,
- pub next_display_time: Option<f64>,
- pub presentation_order: Option<i54>,
+ pub created_time: Option<i54>,
+ pub modified_time: Option<i54>,
+ pub last_display_time: Option<i54>,
+ pub next_display_time: Option<i54>,
 }
 
 #[derive(Turbosql, Default, Debug)]
@@ -54,13 +50,12 @@ fn _query_impls() {
  #[derive(juniper::GraphQLObject, Debug)]
  struct ShortCard {
   rowid: i54,
-  name: String,
  }
 
  #[graphql_object]
  impl Query {
   async fn list_cards_short() -> FieldResult<Vec<ShortCard>> {
-   Ok(select!(Vec<ShortCard> "rowid, name FROM card")?)
+   Ok(select!(Vec<ShortCard> "rowid FROM card")?)
   }
  }
 
@@ -91,12 +86,10 @@ pub struct Mutation;
 #[graphql_object]
 impl Mutation {
  async fn add_card(content: String, answer: String) -> FieldResult<Card> {
-  let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs_f64();
+  let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
   let card = Card {
    content: Some(content.to_string()),
    answer: Some(answer),
-   name: Some(format!("a card of {} bytes", content.len())),
-   filesize: Some(content.len().try_into()?),
    created_time: Some(now),
    modified_time: Some(now),
    ..Default::default()
@@ -196,7 +189,7 @@ impl Subscription {
   let mut counter = 0;
   let stream = tokio::time::interval(Duration::from_secs(5)).map(move |_| {
    counter += 1;
-   Ok(Card { id: Some(counter), name: Some("stream user".to_string()), ..Default::default() })
+   Ok(Card { rowid: Some(counter.into()), ..Default::default() })
   });
 
   Box::pin(stream)

@@ -2,16 +2,12 @@ mutation addCard($content: String!, $answer: String!) {
  addCard(content: $content, answer: $answer)
  {
   rowid
-  id
-  filesize
-  name
   content
   answer
   createdTime
   modifiedTime
   lastDisplayTime
   nextDisplayTime
-  presentationOrder
  }
 }
 
@@ -19,16 +15,12 @@ mutation updateCard($rowid: i54!, $content: String!, $answer: String!) {
  updateCard(rowid: $rowid, content: $content, answer: $answer)
  {
   rowid
-  id
-  filesize
-  name
   content
   answer
   createdTime
   modifiedTime
   lastDisplayTime
   nextDisplayTime
-  presentationOrder
  }
 }
 
@@ -44,16 +36,12 @@ subscription cardStream {
  cardStream
  {
   rowid
-  id
-  filesize
-  name
   content
   answer
   createdTime
   modifiedTime
   lastDisplayTime
   nextDisplayTime
-  presentationOrder
  }
 }
 
@@ -61,7 +49,6 @@ query listCardsShort {
  listCardsShort
  {
   rowid
-  name
  }
 }
 
@@ -69,16 +56,12 @@ query listCardsFull {
  listCardsFull
  {
   rowid
-  id
-  filesize
-  name
   content
   answer
   createdTime
   modifiedTime
   lastDisplayTime
   nextDisplayTime
-  presentationOrder
  }
 }
 

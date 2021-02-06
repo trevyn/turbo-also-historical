@@ -7,6 +7,7 @@ members = [
 ]
 
 [patch.crates-io]
+# i54_ = {path = "/Users/eden/i54"}
 # turbosql = {path = "../turbosql/turbosql"}
 
 [profile.release]

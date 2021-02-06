@@ -1,15 +1,11 @@
 type Card {
   rowid: i54
-  id: Int
-  filesize: i54
-  name: String
   content: String
   answer: String
-  createdTime: Float
-  modifiedTime: Float
-  lastDisplayTime: Float
-  nextDisplayTime: Float
-  presentationOrder: i54
+  createdTime: i54
+  modifiedTime: i54
+  lastDisplayTime: i54
+  nextDisplayTime: i54
 }
 
 """
@@ -31,7 +27,6 @@ type Query {
 
 type ShortCard {
   rowid: i54!
-  name: String!
 }
 
 type Subscription {
