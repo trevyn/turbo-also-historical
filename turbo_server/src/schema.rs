@@ -109,16 +109,13 @@ impl Mutation {
  }
 
  async fn update_card(rowid: i54, content: String, answer: String) -> FieldResult<Card> {
-  let new_content = content;
+  let new_content = dbg!(content);
   let old_content = select!(Card "WHERE rowid = ?", rowid).unwrap().content.unwrap();
 
-  let mut patch = Vec::new();
-  qbsdiff::Bsdiff::new(old_content.as_bytes(), new_content.as_bytes())
-   .compare(std::io::Cursor::new(&mut patch))
-   .unwrap();
+  let patch = multipatch::create(&old_content, &new_content).unwrap();
+  let rehydrated_new = multipatch::apply(&old_content, &patch).unwrap();
+  assert!(dbg!(rehydrated_new == <String as AsRef<[u8]>>::as_ref(&new_content)));
 
-  dbg!(old_content.len());
-  dbg!(new_content.len());
   dbg!(patch.len());
 
   let old_hash = dbg!(turbocafe::hash(&old_content));
@@ -136,12 +133,6 @@ impl Mutation {
   dbg!(turbocafe::get_string(old_hash)).ok();
   dbg!(turbocafe::get_string(new_hash)).ok();
   // dbg!(turbocafe::get(patch_hash)).ok();
-
-  let patcher = qbsdiff::Bspatch::new(&patch).unwrap();
-  let mut target = Vec::new();
-  patcher.apply(old_content.as_bytes(), std::io::Cursor::new(&mut target))?;
-
-  assert!(dbg!(target == new_content.as_bytes()));
 
   let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs_f64();
   execute!(

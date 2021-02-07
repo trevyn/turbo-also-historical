@@ -1110,6 +1110,10 @@ dependencies = [
 [[package]]
 name = "multipatch"
 version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "qbsdiff",
+]
 
 [[package]]
 name = "neon"
@@ -2061,7 +2065,7 @@ dependencies = [
  "juniper_warp",
  "log",
  "mime_guess",
- "qbsdiff",
+ "multipatch",
  "rust-embed",
  "rustc_version",
  "tokio",
