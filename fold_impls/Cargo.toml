@@ -4,7 +4,7 @@ description = "A proc-macro that folds multiple `impl` blocks into one."
 edition = "2018"
 license = "MIT OR Apache-2.0 OR CC0-1.0"
 name = "fold_impls"
-repository = "https://github.com/trevyn/turbo"
+repository = "https://github.com/trevyn/turbo/tree/main/fold_impls"
 version = "0.0.0"
 
 [lib]

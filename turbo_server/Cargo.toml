@@ -4,7 +4,7 @@ description = "The core (web & GraphQL) server for the Turbo end-user app. (WIP)
 edition = "2018"
 license = "MIT OR Apache-2.0 OR CC0-1.0"
 name = "turbo_server"
-repository = "https://github.com/trevyn/turbo"
+repository = "https://github.com/trevyn/turbo/tree/main/turbo_server"
 version = "0.0.0"
 
 [build-dependencies]

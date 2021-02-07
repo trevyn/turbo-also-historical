@@ -4,7 +4,7 @@ description = "A p2p network (WIP)"
 edition = "2018"
 license = "MIT OR Apache-2.0 OR CC0-1.0"
 name = "turbonet"
-repository = "https://github.com/trevyn/turbo"
+repository = "https://github.com/trevyn/turbo/tree/main/turbonet"
 version = "0.0.0"
 
 [dependencies]
