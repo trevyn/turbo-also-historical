@@ -1,6 +1,6 @@
 [package]
 authors = ["Eden <rust@eden2.com>"]
-description = "Turbo identity framework. (WIP)"
+description = "Turbo's identity framework. (WIP)"
 edition = "2018"
 license = "MIT OR Apache-2.0 OR CC0-1.0"
 name = "turboid"
