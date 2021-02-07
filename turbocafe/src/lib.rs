@@ -1,4 +1,4 @@
-// Turbocafe, the content-addressable file store
+// Turbocafe, the content-addressable file eyrie. :)
 
 use multihash::{Code::Blake3_256, MultihashDigest};
 use turbosql::{select, Blob, Turbosql};
