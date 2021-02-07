@@ -33,3 +33,13 @@ pub fn apply<O: AsRef<[u8]>, P: AsRef<[u8]>>(old: O, patch: P) -> anyhow::Result
 
  Ok(new)
 }
+
+#[cfg(test)]
+mod tests {
+ use super::*;
+ #[test]
+ fn has_magic() {
+  let patch = create("", "").unwrap();
+  assert_eq!(patch[0], MAGIC_BSDIFF);
+ }
+}
