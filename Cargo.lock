@@ -1108,6 +1108,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "multipatch"
+version = "0.0.0"
+
+[[package]]
 name = "neon"
 version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

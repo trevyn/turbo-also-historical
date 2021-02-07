@@ -2,6 +2,7 @@
 members = [
   "electron/native",
   "fold_impls",
+  "multipatch",
   "turbocafe",
   "turboid",
   "turbonet",
