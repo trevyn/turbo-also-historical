@@ -1,0 +1,10 @@
+[package]
+authors = ["Eden <rust@eden2.com>"]
+description = "_We're travelling in time._ - Ace of Base"
+edition = "2018"
+license = "MIT OR Apache-2.0 OR CC0-1.0"
+name = "turbotime"
+repository = "https://github.com/trevyn/turbo"
+version = "0.0.0"
+
+[dependencies]

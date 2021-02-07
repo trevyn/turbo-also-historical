@@ -2077,6 +2077,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "turboid"
+version = "0.0.0"
+
+[[package]]
 name = "turbonet"
 version = "0.0.0"
 
@@ -2115,6 +2119,10 @@ dependencies = [
  "syn",
  "toml",
 ]
+
+[[package]]
+name = "turbotime"
+version = "0.0.0"
 
 [[package]]
 name = "twoway"

@@ -3,7 +3,9 @@ members = [
   "electron/native",
   "fold_impls",
   "turbocafe",
+  "turboid",
   "turbonet",
+  "turbotime",
   "turbo_server",
 ]
 
