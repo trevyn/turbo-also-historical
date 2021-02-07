@@ -14,7 +14,45 @@
   toPlainText,
  } from "../prosemirror-svelte/state";
 
- let editorState = createRichTextEditor(card.content);
+ import schema from "./prosemirror-schema";
+ import {
+  collab,
+  receiveTransaction,
+  sendableSteps,
+  getVersion,
+ } from "prosemirror-collab";
+ import { DOMParser, DOMSerializer } from "prosemirror-model";
+ import { EditorState, TextSelection } from "prosemirror-state";
+
+ import { corePlugins } from "../prosemirror-svelte/helpers/plugins";
+ import { richTextPlugins } from "../prosemirror-svelte/helpers";
+
+ // let editorState = createRichTextEditor(card.content);
+
+ const parser = DOMParser.fromSchema(schema);
+ const node = document.createElement("div");
+ node.innerHTML = card.content;
+ const doc = parser.parse(node);
+
+ let editorState = EditorState.create({
+  schema,
+  doc,
+  plugins: [...corePlugins, ...richTextPlugins, collab()],
+ });
+ // let view = new EditorView(place, {
+ //  state: EditorState.create({
+ //   doc: authority.doc,
+ //   plugins: [collab.collab({ version: authority.steps.length })],
+ //  }),
+ //  dispatchTransaction(transaction) {
+ //   let newState = view.state.apply(transaction);
+ //   view.updateState(newState);
+ //   let sendable = collab.sendableSteps(newState);
+ //   if (sendable)
+ //    authority.receiveSteps(sendable.version, sendable.steps, sendable.clientID);
+ //  },
+ // });
+
  let answerEditorState = createRichTextEditor(card.answer);
 
  let revealed = false;
@@ -30,13 +68,19 @@
     placeholder="Go ahead and type something"
     {editorState}
     on:transaction={(event) => {
-     console.log('transaction');
+     console.log('transaction', event);
      editorState = event.detail.editorState;
+     console.log(JSON.stringify(sendableSteps(editorState)?.steps.map((s) =>
+        s.toJSON()
+       )));
     }}
     on:change={(event) => {
-     console.log('onchange');
+     console.log('onchange', event);
      editorState = event.detail.editorState;
      dispatch('changecontent', toHTML(editorState));
+     console.log(JSON.stringify(sendableSteps(editorState)?.steps.map((s) =>
+        s.toJSON()
+       )));
     }} />
   </div>
  </div>
