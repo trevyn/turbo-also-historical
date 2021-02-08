@@ -17,7 +17,7 @@ A platform for applying [optimization methods](https://en.wikipedia.org/wiki/Mat
 - Svelte + Tailwind CSS 2.0
 - Chrome / Chromium / iOS Safari
 - GraphQL, via urql + Juniper
-- [Rust, in the form of a Node.js native plugin](https://github.com/trevyn/turbo/discussions/1) ([possibly via Electron](https://github.com/trevyn/turbo/discussions/2), possibly not)
+- [Rust, in the form of a Node.js native plugin](https://github.com/trevyn/turbo/discussions/1) ([optionally via Electron](https://github.com/trevyn/turbo/discussions/2))
 - SQLite
 
 ## Status
