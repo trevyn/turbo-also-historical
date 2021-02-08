@@ -1,4 +1,5 @@
 <script lang="ts">
+ import "./index.css";
  import { initTurboClient } from "./src/TurboClient.svelte";
  import Button from "./c/Button.svelte";
  import Card from "./c/Card.svelte";
