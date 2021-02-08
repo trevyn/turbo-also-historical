@@ -1,7 +1,7 @@
 // import { collab } from "prosemirror-collab";
 import { EditorState } from "prosemirror-state";
 import { Step } from "prosemirror-transform";
-import schema from "./prosemirror-schema";
+import schema from "frontend/c/prosemirror-schema.js";
 
 Deno.core.ops();
 const _newline = new Uint8Array([10]);

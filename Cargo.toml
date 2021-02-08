@@ -3,6 +3,7 @@ members = [
   "electron/native",
   "fold_impls",
   "multipatch",
+  "prosemirror_collab_server",
   "turbocafe",
   "turboid",
   "turbonet",
