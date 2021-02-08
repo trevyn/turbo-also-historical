@@ -120,7 +120,7 @@ impl Mutation {
 
   let old_hash = dbg!(turbocafe::hash(&old_content));
   let new_hash = dbg!(turbocafe::hash(&new_content));
-  let patch_hash = dbg!(turbocafe::hash(&patch));
+  let _patch_hash = dbg!(turbocafe::hash(&patch));
 
   dbg!(turbocafe::get_string(&old_hash)).ok();
   dbg!(turbocafe::get_string(&new_hash)).ok();
@@ -134,7 +134,7 @@ impl Mutation {
   dbg!(turbocafe::get_string(new_hash)).ok();
   // dbg!(turbocafe::get(patch_hash)).ok();
 
-  let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs_f64();
+  let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
   execute!(
    "
     UPDATE card SET
