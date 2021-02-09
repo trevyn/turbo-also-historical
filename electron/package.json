@@ -26,9 +26,9 @@
   "@electron-forge/maker-squirrel": "6.0.0-beta.54",
   "@electron-forge/maker-zip": "6.0.0-beta.54",
   "@electron-forge/publisher-github": "6.0.0-beta.54",
-  "electron": "12.0.0-beta.21",
+  "electron": "=12.0.0-beta.23",
   "electron-build-env": "0.2.0",
-  "neon-cli": "0.7.0",
+  "neon-cli": "=0.7.1",
   "patch-package": "^6.2.2"
  },
  "//": "NOTE: puppeteer-core versions are specific to Chrome releases; 5.5 series is for chrome 88",
