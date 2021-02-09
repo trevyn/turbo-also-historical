@@ -31,7 +31,7 @@ jobs:
       - run: npm install
         working-directory: 'frontend'
 
-      - run: npx svelte-check
+      - run: npm run svelte-check
         working-directory: 'frontend'
 
       - run: npm run build
