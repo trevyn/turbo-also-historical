@@ -85,6 +85,12 @@
   {#each $listCardsFull.data.listCardsFull as card (card.rowid)}
    <Card
     {card}
+    on:changecontent={(steps) => {
+     recvSteps({
+      instantiationId: 'gW1agQGSbsxM4B7F5CSFGo5y2XD9JpMxoEGwrJZCvApRso',
+      steps: steps.detail,
+     });
+    }}
     on:delete={(event) => {
      deleteCard({ rowid: event.detail.rowid });
      $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };

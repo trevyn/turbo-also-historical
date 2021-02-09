@@ -132,6 +132,11 @@ impl Mutation {
   // let old_content =
   //  turbocafe::get_string(select!(Card "WHERE rowid = ?", rowid).unwrap().instantiation_id.unwrap())
   //   .unwrap();
+
+  dbg!(turbocafe::put(
+   r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
+  ))?;
+
   let old_content = turbocafe::get_string(instantiation_id).unwrap();
 
   let new_content =
