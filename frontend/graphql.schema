@@ -17,7 +17,7 @@ scalar i54
 
 type Mutation {
   addBlankCard: Card!
-  updateCard(rowid: i54!, content: String!, answer: String!): Card!
+  recvSteps(instantiationId: String!, steps: String!): String!
   deleteCard(rowid: i54!): Boolean!
   shuffleCards: Boolean!
 }

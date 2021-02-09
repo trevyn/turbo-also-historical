@@ -102,7 +102,9 @@ pub struct Mutation;
 impl Mutation {
  async fn add_blank_card() -> FieldResult<Card> {
   let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
-  let new_hash = dbg!(turbocafe::put("i'm a new card from turbocafe!"))?;
+  let new_hash = dbg!(turbocafe::put(
+   r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
+  ))?;
 
   let mut card = Card {
    instantiation_id: Some(new_hash),
@@ -126,17 +128,20 @@ impl Mutation {
   Ok(card)
  }
 
- async fn update_card(rowid: i54, content: String, answer: String) -> FieldResult<Card> {
-  let new_content = dbg!(content);
-  let old_content = select!(Card "WHERE rowid = ?", rowid).unwrap().content.unwrap();
+ async fn recv_steps(instantiation_id: String, steps: String) -> FieldResult<String> {
+  // let old_content =
+  //  turbocafe::get_string(select!(Card "WHERE rowid = ?", rowid).unwrap().instantiation_id.unwrap())
+  //   .unwrap();
+  let old_content = turbocafe::get_string(instantiation_id).unwrap();
 
-  dbg!(prosemirror_collab_server::apply_steps(old_content.clone(), new_content.clone()))?; // no-op for now
+  let new_content =
+   dbg!(prosemirror_collab_server::apply_steps(old_content.clone(), steps.clone()))?; // no-op for now
 
-  let patch = multipatch::create(&old_content, &new_content).unwrap();
-  let rehydrated_new = multipatch::apply(&old_content, &patch).unwrap();
-  assert!(dbg!(rehydrated_new == <String as AsRef<[u8]>>::as_ref(&new_content)));
+  // let patch = multipatch::create(&old_content, &new_content).unwrap();
+  // let rehydrated_new = multipatch::apply(&old_content, &patch).unwrap();
+  // assert!(dbg!(rehydrated_new == <String as AsRef<[u8]>>::as_ref(&new_content)));
 
-  dbg!(patch.len());
+  // dbg!(patch.len());
 
   // let old_hash = dbg!(turbocafe::hash(&old_content));
   // let new_hash = dbg!(turbocafe::hash(&new_content));
@@ -147,34 +152,32 @@ impl Mutation {
   // dbg!(turbocafe::get(&patch_hash)).ok();
 
   // dbg!(turbocafe::put(&old_content)).ok();
-  let new_hash = dbg!(turbocafe::put(&new_content))?;
+  // let new_hash = dbg!(turbocafe::put(&new_content))?;
   // dbg!(turbocafe::put(&patch)).ok();
 
   // dbg!(turbocafe::get_string(&old_hash)).ok();
   // dbg!(turbocafe::get_string(&new_hash)).ok();
   // dbg!(turbocafe::get(patch_hash)).ok();
 
-  let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
+  // let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
 
-  execute!(
-   "
-    UPDATE card SET
-     content = ?,
-     answer = ?,
-     instantiation_id = ?,
-     modified_time = ?
-     WHERE rowid = ?
-   ",
-   new_content,
-   answer,
-   new_hash,
-   now,
-   rowid
-  )?;
+  // execute!(
+  //  "
+  //   UPDATE card SET
+  //    instantiation_id = ?,
+  //    modified_time = ?
+  //    WHERE rowid = ?
+  //  ",
+  //  new_hash,
+  //  now,
+  //  rowid
+  // )?;
+
+  Ok("".to_string())
 
   // return prosemirror instead
 
-  Ok(select!(Card "WHERE rowid = ?", rowid)?)
+  // Ok(select!(Card "WHERE rowid = ?", rowid)?)
  }
 
  async fn delete_card(rowid: i54) -> FieldResult<bool> {

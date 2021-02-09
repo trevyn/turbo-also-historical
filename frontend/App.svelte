@@ -10,9 +10,9 @@
  initTurboClient();
 
  const listCardsFull = query(operationStore(gql.ListCardsFullDocument));
- const addCard = mutation(operationStore(gql.AddCardDocument));
+ const addBlankCard = mutation(operationStore(gql.AddBlankCardDocument));
  const deleteCard = mutation(operationStore(gql.DeleteCardDocument));
- const updateCard = mutation(operationStore(gql.UpdateCardDocument));
+ const recvSteps = mutation(operationStore(gql.RecvStepsDocument));
  const shuffleCards = mutation(operationStore(gql.ShuffleCardsDocument));
  // const cardStream = subscription(
  //  operationStore(gql.CardStreamDocument),
@@ -60,7 +60,7 @@
 
 <Button
  on:click={async () => {
-  await addCard({ content: '', answer: '' });
+  await addBlankCard();
   $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
  }}>
  Add Card
@@ -85,21 +85,9 @@
   {#each $listCardsFull.data.listCardsFull as card (card.rowid)}
    <Card
     {card}
-    on:changecontent={(newContent) => updateCard({
-      rowid: card.rowid,
-      content: newContent.detail,
-      answer: card.answer,
-     })}
-    on:changeanswer={(newAnswer) => updateCard({
-      rowid: card.rowid,
-      content: card.content,
-      answer: newAnswer.detail,
-     })}
     on:delete={(event) => {
      deleteCard({ rowid: event.detail.rowid });
      $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
-
-     // alert(`AAAHHHHHHHH ${event.detail.rowid}`);
     }} />
   {/each}
  </ul>

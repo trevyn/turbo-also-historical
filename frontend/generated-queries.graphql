@@ -13,19 +13,8 @@ mutation addBlankCard {
  }
 }
 
-mutation updateCard($rowid: i54!, $content: String!, $answer: String!) {
- updateCard(rowid: $rowid, content: $content, answer: $answer)
- {
-  rowid
-  content
-  answer
-  componentId
-  instantiationId
-  createdTime
-  modifiedTime
-  lastDisplayTime
-  nextDisplayTime
- }
+mutation recvSteps($instantiationId: String!, $steps: String!) {
+ recvSteps(instantiationId: $instantiationId, steps: $steps)
 }
 
 mutation deleteCard($rowid: i54!) {

@@ -1,4 +1,6 @@
-pub fn apply_steps(_document: String, _steps: String) -> anyhow::Result<String> {
+pub fn apply_steps(document: String, steps: String) -> anyhow::Result<String> {
+ dbg!(document, steps);
+
  // let mut runtime = JsRuntime::new(Default::default());
 
  // runtime.register_op("op_print", |_state, zero_copy| {
