@@ -1,7 +1,19 @@
-#[cfg(test)]
-mod tests {
- #[test]
- fn it_works() {
-  assert_eq!(2 + 2, 4);
- }
+pub fn apply_steps(_document: String, _steps: String) -> anyhow::Result<String> {
+ // let mut runtime = JsRuntime::new(Default::default());
+
+ // runtime.register_op("op_print", |_state, zero_copy| {
+ //  let mut out = std::io::stdout();
+ //  for buf in zero_copy {
+ //   out.write_all(&buf).unwrap();
+ //  }
+
+ //  Op::Sync(Box::new([])) // No meaningful result
+ // });
+
+ // runtime.execute(
+ //  "build/prosemirror-collab-server.js",
+ //  include_str!("../build/prosemirror-collab-server.js"),
+ // )?;
+
+ Ok("done!".to_string())
 }

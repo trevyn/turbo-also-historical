@@ -112,6 +112,8 @@ impl Mutation {
   let new_content = dbg!(content);
   let old_content = select!(Card "WHERE rowid = ?", rowid).unwrap().content.unwrap();
 
+  dbg!(prosemirror_collab_server::apply_steps(old_content.clone(), new_content.clone()))?;
+
   let patch = multipatch::create(&old_content, &new_content).unwrap();
   let rehydrated_new = multipatch::apply(&old_content, &patch).unwrap();
   assert!(dbg!(rehydrated_new == <String as AsRef<[u8]>>::as_ref(&new_content)));

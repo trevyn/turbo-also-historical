@@ -8,4 +8,4 @@ repository = "https://github.com/trevyn/turbo"
 version = "0.0.0"
 
 [dependencies]
-deno_core = "0.76" # waiting for >0.78.0
+anyhow = "1"
