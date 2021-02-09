@@ -1,7 +1,8 @@
-var addon = require("../native");
-const { autoUpdater, app, shell, BrowserWindow } = require("electron");
-var puppeteer = require("puppeteer-core");
-const isDev = require("electron-is-dev");
+const addon = require("../../../native");
+import { autoUpdater, app, shell, BrowserWindow } from "electron";
+import puppeteer from "puppeteer-core";
+import isDev from "electron-is-dev";
+import { applySteps } from "./prosemirror-collab-server/prosemirror-collab-server";
 
 app.commandLine.appendSwitch("force_low_power_gpu");
 
@@ -9,13 +10,17 @@ let v = `app version is ${app.getVersion()}, dev is ${isDev}`;
 console.log(v);
 addon.rustLog(v);
 
+applySteps("1", "2");
+
 console.log(addon.hello());
 
 function initAutoUpdater() {
  // https://update.electronjs.org/trevyn/turbo/darwin-x64/0.0.0
 
- autoUpdater.setFeedURL(
-  `https://update.electronjs.org/trevyn/turbo/darwin-x64/${app.getVersion()}`
+ autoUpdater.setFeedURL({
+  url:
+   `https://update.electronjs.org/trevyn/turbo/darwin-x64/${app.getVersion()}`
+ }
  );
 
  autoUpdater.on("error", err => {

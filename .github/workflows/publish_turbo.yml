@@ -38,12 +38,6 @@ jobs:
         working-directory: 'frontend'
 
       - run: npm install
-        working-directory: 'prosemirror_collab_server'
-
-      - run: npm run build
-        working-directory: 'prosemirror_collab_server'
-
-      - run: npm install
         working-directory: 'electron'
 
       - run: npm run build-neon-release

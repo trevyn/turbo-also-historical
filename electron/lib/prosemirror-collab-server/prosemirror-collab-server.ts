@@ -1,22 +1,23 @@
 // import { collab } from "prosemirror-collab";
 import { EditorState } from "prosemirror-state";
 import { Step } from "prosemirror-transform";
-import schema from "frontend/c/prosemirror-schema.js";
-
-Deno.core.ops();
-const _newline = new Uint8Array([10]);
-function print(value) {
- Deno.core.dispatchByName("op_print", Deno.core.encode(value.toString()), _newline);
-}
+import schema from "../../../frontend/c/prosemirror-schema";
 
 let editorState_json = JSON.parse(
  `{"doc":{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"The "},{"type":"text","marks":[{"type":"code"}],"text":"<audio>"},{"type":"text","text":" and "},{"type":"text","marks":[{"type":"code"}],"text":"<video>"},{"type":"text","text":" elements have several properties that you can [...] to."}]}]},"selection":{"type":"text","anchor":1,"head":1}}`
 );
-let steps = JSON.parse(
+let mySteps = JSON.parse(
  `[{"stepType":"replace","from":70,"to":70,"slice":{"content":[{"type":"text","text":"x"}]}}]`
 );
 
-let editorState = EditorState.fromJSON({ schema }, editorState_json);
-print(JSON.stringify(editorState));
-let doc = Step.fromJSON(schema, steps[0]).apply(editorState.doc);
-print(JSON.stringify(doc));
+export function applySteps(editorState: string, steps: string) {
+ console.log("in editorState:", editorState);
+ console.log("in steps:", steps);
+
+ let myEditorState = EditorState.fromJSON({ schema }, editorState_json);
+ let doc = Step.fromJSON(schema, mySteps[0]).apply(myEditorState.doc);
+
+ console.log("out doc:", JSON.stringify(doc));
+
+ return JSON.stringify(doc);
+}
