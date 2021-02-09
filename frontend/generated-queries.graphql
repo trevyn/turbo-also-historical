@@ -1,9 +1,11 @@
-mutation addCard($content: String!, $answer: String!) {
- addCard(content: $content, answer: $answer)
+mutation addBlankCard {
+ addBlankCard
  {
   rowid
   content
   answer
+  componentId
+  instantiationId
   createdTime
   modifiedTime
   lastDisplayTime
@@ -17,6 +19,8 @@ mutation updateCard($rowid: i54!, $content: String!, $answer: String!) {
   rowid
   content
   answer
+  componentId
+  instantiationId
   createdTime
   modifiedTime
   lastDisplayTime
@@ -38,6 +42,8 @@ subscription cardStream {
   rowid
   content
   answer
+  componentId
+  instantiationId
   createdTime
   modifiedTime
   lastDisplayTime
@@ -58,6 +64,8 @@ query listCardsFull {
   rowid
   content
   answer
+  componentId
+  instantiationId
   createdTime
   modifiedTime
   lastDisplayTime

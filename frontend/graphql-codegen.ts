@@ -19,6 +19,8 @@ export type Card = {
   rowid?: Maybe<Scalars['i54']>;
   content?: Maybe<Scalars['String']>;
   answer?: Maybe<Scalars['String']>;
+  componentId?: Maybe<Scalars['String']>;
+  instantiationId?: Maybe<Scalars['String']>;
   createdTime?: Maybe<Scalars['i54']>;
   modifiedTime?: Maybe<Scalars['i54']>;
   lastDisplayTime?: Maybe<Scalars['i54']>;
@@ -27,16 +29,10 @@ export type Card = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addCard: Card;
+  addBlankCard: Card;
   updateCard: Card;
   deleteCard: Scalars['Boolean'];
   shuffleCards: Scalars['Boolean'];
-};
-
-
-export type MutationAddCardArgs = {
-  content: Scalars['String'];
-  answer: Scalars['String'];
 };
 
 
@@ -68,17 +64,14 @@ export type Query = {
 };
 
 
-export type AddCardMutationVariables = Exact<{
-  content: Scalars['String'];
-  answer: Scalars['String'];
-}>;
+export type AddBlankCardMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AddCardMutation = (
+export type AddBlankCardMutation = (
   { __typename?: 'Mutation' }
-  & { addCard: (
+  & { addBlankCard: (
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'content' | 'answer' | 'componentId' | 'instantiationId' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
   ) }
 );
 
@@ -93,7 +86,7 @@ export type UpdateCardMutation = (
   { __typename?: 'Mutation' }
   & { updateCard: (
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'content' | 'answer' | 'componentId' | 'instantiationId' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
   ) }
 );
 
@@ -122,7 +115,7 @@ export type CardStreamSubscription = (
   { __typename?: 'Subscription' }
   & { cardStream: (
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'content' | 'answer' | 'componentId' | 'instantiationId' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
   ) }
 );
 
@@ -144,15 +137,15 @@ export type ListCardsFullQuery = (
   { __typename?: 'Query' }
   & { listCardsFull: Array<(
     { __typename?: 'Card' }
-    & Pick<Card, 'rowid' | 'content' | 'answer' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
+    & Pick<Card, 'rowid' | 'content' | 'answer' | 'componentId' | 'instantiationId' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
   )> }
 );
 
 
-export const AddCardDocument: DocumentNode<AddCardMutation, AddCardMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"answer"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}},{"kind":"Argument","name":{"kind":"Name","value":"answer"},"value":{"kind":"Variable","name":{"kind":"Name","value":"answer"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rowid"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"createdTime"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedTime"}},{"kind":"Field","name":{"kind":"Name","value":"lastDisplayTime"}},{"kind":"Field","name":{"kind":"Name","value":"nextDisplayTime"}}]}}]}}]};
-export const UpdateCardDocument: DocumentNode<UpdateCardMutation, UpdateCardMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rowid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"i54"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"answer"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"rowid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rowid"}}},{"kind":"Argument","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}},{"kind":"Argument","name":{"kind":"Name","value":"answer"},"value":{"kind":"Variable","name":{"kind":"Name","value":"answer"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rowid"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"createdTime"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedTime"}},{"kind":"Field","name":{"kind":"Name","value":"lastDisplayTime"}},{"kind":"Field","name":{"kind":"Name","value":"nextDisplayTime"}}]}}]}}]};
+export const AddBlankCardDocument: DocumentNode<AddBlankCardMutation, AddBlankCardMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addBlankCard"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addBlankCard"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rowid"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"componentId"}},{"kind":"Field","name":{"kind":"Name","value":"instantiationId"}},{"kind":"Field","name":{"kind":"Name","value":"createdTime"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedTime"}},{"kind":"Field","name":{"kind":"Name","value":"lastDisplayTime"}},{"kind":"Field","name":{"kind":"Name","value":"nextDisplayTime"}}]}}]}}]};
+export const UpdateCardDocument: DocumentNode<UpdateCardMutation, UpdateCardMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rowid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"i54"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"answer"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"rowid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rowid"}}},{"kind":"Argument","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}},{"kind":"Argument","name":{"kind":"Name","value":"answer"},"value":{"kind":"Variable","name":{"kind":"Name","value":"answer"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rowid"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"componentId"}},{"kind":"Field","name":{"kind":"Name","value":"instantiationId"}},{"kind":"Field","name":{"kind":"Name","value":"createdTime"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedTime"}},{"kind":"Field","name":{"kind":"Name","value":"lastDisplayTime"}},{"kind":"Field","name":{"kind":"Name","value":"nextDisplayTime"}}]}}]}}]};
 export const DeleteCardDocument: DocumentNode<DeleteCardMutation, DeleteCardMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rowid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"i54"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"rowid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rowid"}}}]}]}}]};
 export const ShuffleCardsDocument: DocumentNode<ShuffleCardsMutation, ShuffleCardsMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"shuffleCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shuffleCards"}}]}}]};
-export const CardStreamDocument: DocumentNode<CardStreamSubscription, CardStreamSubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"cardStream"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cardStream"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rowid"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"createdTime"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedTime"}},{"kind":"Field","name":{"kind":"Name","value":"lastDisplayTime"}},{"kind":"Field","name":{"kind":"Name","value":"nextDisplayTime"}}]}}]}}]};
+export const CardStreamDocument: DocumentNode<CardStreamSubscription, CardStreamSubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"cardStream"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cardStream"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rowid"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"componentId"}},{"kind":"Field","name":{"kind":"Name","value":"instantiationId"}},{"kind":"Field","name":{"kind":"Name","value":"createdTime"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedTime"}},{"kind":"Field","name":{"kind":"Name","value":"lastDisplayTime"}},{"kind":"Field","name":{"kind":"Name","value":"nextDisplayTime"}}]}}]}}]};
 export const ListCardsShortDocument: DocumentNode<ListCardsShortQuery, ListCardsShortQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"listCardsShort"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"listCardsShort"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rowid"}}]}}]}}]};
-export const ListCardsFullDocument: DocumentNode<ListCardsFullQuery, ListCardsFullQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"listCardsFull"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"listCardsFull"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rowid"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"createdTime"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedTime"}},{"kind":"Field","name":{"kind":"Name","value":"lastDisplayTime"}},{"kind":"Field","name":{"kind":"Name","value":"nextDisplayTime"}}]}}]}}]};
+export const ListCardsFullDocument: DocumentNode<ListCardsFullQuery, ListCardsFullQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"listCardsFull"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"listCardsFull"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rowid"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"componentId"}},{"kind":"Field","name":{"kind":"Name","value":"instantiationId"}},{"kind":"Field","name":{"kind":"Name","value":"createdTime"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedTime"}},{"kind":"Field","name":{"kind":"Name","value":"lastDisplayTime"}},{"kind":"Field","name":{"kind":"Name","value":"nextDisplayTime"}}]}}]}}]};

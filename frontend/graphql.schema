@@ -2,6 +2,8 @@ type Card {
   rowid: i54
   content: String
   answer: String
+  componentId: String
+  instantiationId: String
   createdTime: i54
   modifiedTime: i54
   lastDisplayTime: i54
@@ -14,7 +16,7 @@ i54: 54-bit signed integer abstraction; represented as `i54`/`i64` in Rust, `Flo
 scalar i54
 
 type Mutation {
-  addCard(content: String!, answer: String!): Card!
+  addBlankCard: Card!
   updateCard(rowid: i54!, content: String!, answer: String!): Card!
   deleteCard(rowid: i54!): Boolean!
   shuffleCards: Boolean!

@@ -4,18 +4,33 @@ use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
 use std::convert::TryInto;
 use std::pin::Pin;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
-use turbosql::{execute, select, Turbosql};
+use turbosql::{execute, select, Blob, Turbosql};
 
 #[derive(juniper::GraphQLObject, Turbosql, Default, Debug)]
 pub struct Card {
  // Remember: you can mark these as deprecated at any time! (or maybe delete them entirely? Is the schema a semi-hidden implementation detail?)
  pub rowid: Option<i54>,
- pub content: Option<String>,
- pub answer: Option<String>,
+ pub content: Option<String>, // deprecated
+ pub answer: Option<String>,  // deprecated
+ pub component_id: Option<String>,
+ pub instantiation_id: Option<String>, // currently just the multihash of content, as returned by turbocafe
  pub created_time: Option<i54>,
  pub modified_time: Option<i54>,
  pub last_display_time: Option<i54>,
  pub next_display_time: Option<i54>,
+}
+
+#[allow(non_camel_case_types)]
+#[derive(juniper::GraphQLObject, Turbosql, Default, Debug)]
+pub struct Component_Instantiation_Data {
+ pub rowid: Option<i54>,
+ pub component_id: Option<String>,
+ pub instantiation_id: Option<String>,
+ pub data_string_1: Option<String>,
+ #[graphql(skip)]
+ pub data_blob_1: Option<Blob>,
+ pub data_i54_1: Option<i54>,
+ pub data_i54_2: Option<i54>,
 }
 
 #[derive(Turbosql, Default, Debug)]
@@ -85,24 +100,27 @@ pub struct Mutation;
 
 #[graphql_object]
 impl Mutation {
- async fn add_card(content: String, answer: String) -> FieldResult<Card> {
+ async fn add_blank_card() -> FieldResult<Card> {
   let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
-  let card = Card {
-   content: Some(content),
-   answer: Some(answer),
+  let new_hash = dbg!(turbocafe::put("i'm a new card from turbocafe!"))?;
+
+  let mut card = Card {
+   instantiation_id: Some(new_hash),
    created_time: Some(now),
    modified_time: Some(now),
    ..Default::default()
   };
 
-  let rowid = card.insert()?;
+  card.rowid = Some(card.insert()?.try_into()?);
+
+  // add to top of current cardlist
 
   execute!(
    "
     REPLACE INTO cardlist(rowid, list)
      VALUES(1, ? || ',' || (SELECT list FROM cardlist))
    ",
-   rowid
+   card.rowid
   )?;
 
   Ok(card)
@@ -112,7 +130,7 @@ impl Mutation {
   let new_content = dbg!(content);
   let old_content = select!(Card "WHERE rowid = ?", rowid).unwrap().content.unwrap();
 
-  dbg!(prosemirror_collab_server::apply_steps(old_content.clone(), new_content.clone()))?;
+  dbg!(prosemirror_collab_server::apply_steps(old_content.clone(), new_content.clone()))?; // no-op for now
 
   let patch = multipatch::create(&old_content, &new_content).unwrap();
   let rehydrated_new = multipatch::apply(&old_content, &patch).unwrap();
@@ -120,36 +138,42 @@ impl Mutation {
 
   dbg!(patch.len());
 
-  let old_hash = dbg!(turbocafe::hash(&old_content));
-  let new_hash = dbg!(turbocafe::hash(&new_content));
-  let _patch_hash = dbg!(turbocafe::hash(&patch));
+  // let old_hash = dbg!(turbocafe::hash(&old_content));
+  // let new_hash = dbg!(turbocafe::hash(&new_content));
+  // let _patch_hash = dbg!(turbocafe::hash(&patch));
 
-  dbg!(turbocafe::get_string(&old_hash)).ok();
-  dbg!(turbocafe::get_string(&new_hash)).ok();
+  // dbg!(turbocafe::get_string(&old_hash)).ok();
+  // dbg!(turbocafe::get_string(&new_hash)).ok();
   // dbg!(turbocafe::get(&patch_hash)).ok();
 
-  dbg!(turbocafe::put(&old_content)).ok();
-  dbg!(turbocafe::put(&new_content)).ok();
-  dbg!(turbocafe::put(&patch)).ok();
+  // dbg!(turbocafe::put(&old_content)).ok();
+  let new_hash = dbg!(turbocafe::put(&new_content))?;
+  // dbg!(turbocafe::put(&patch)).ok();
 
-  dbg!(turbocafe::get_string(old_hash)).ok();
-  dbg!(turbocafe::get_string(new_hash)).ok();
+  // dbg!(turbocafe::get_string(&old_hash)).ok();
+  // dbg!(turbocafe::get_string(&new_hash)).ok();
   // dbg!(turbocafe::get(patch_hash)).ok();
 
   let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
+
   execute!(
    "
     UPDATE card SET
      content = ?,
      answer = ?,
+     instantiation_id = ?,
      modified_time = ?
      WHERE rowid = ?
    ",
    new_content,
    answer,
+   new_hash,
    now,
    rowid
   )?;
+
+  // return prosemirror instead
+
   Ok(select!(Card "WHERE rowid = ?", rowid)?)
  }
 
