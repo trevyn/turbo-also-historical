@@ -35,10 +35,10 @@ jobs:
         working-directory: 'frontend'
 
       - run: npm install
-        working-directory: 'prosemirror-server'
+        working-directory: 'prosemirror_collab_server'
 
       - run: npm run build
-        working-directory: 'prosemirror-server'
+        working-directory: 'prosemirror_collab_server'
 
       - run: npm install
         working-directory: 'electron'
