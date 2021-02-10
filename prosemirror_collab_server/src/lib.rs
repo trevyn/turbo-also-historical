@@ -1,4 +1,4 @@
-pub fn apply_steps(document: String, steps: String) -> anyhow::Result<String> {
+pub fn apply_steps(document: &str, steps: &str) -> anyhow::Result<String> {
  dbg!(document, steps);
 
  // let mut runtime = JsRuntime::new(Default::default());

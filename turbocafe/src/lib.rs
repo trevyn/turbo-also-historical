@@ -50,6 +50,6 @@ pub fn get<T: AsRef<str>>(hash: T) -> Result<Vec<u8>, TurbocafeError> {
  )
 }
 
-pub fn get_string<T: AsRef<str>>(hash: T) -> Result<String, TurbocafeError> {
+pub fn get_as_string<T: AsRef<str>>(hash: T) -> Result<String, TurbocafeError> {
  Ok(std::str::from_utf8(&get(hash)?)?.to_string())
 }

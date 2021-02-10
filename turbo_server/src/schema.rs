@@ -137,10 +137,11 @@ impl Mutation {
    r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
   ))?;
 
-  let old_content = turbocafe::get_string(instantiation_id).unwrap();
+  let old_content = turbocafe::get_as_string(instantiation_id).unwrap();
 
-  let new_content =
-   dbg!(prosemirror_collab_server::apply_steps(old_content.clone(), steps.clone()))?; // no-op for now
+  let new_content = prosemirror_collab_server::apply_steps(&old_content, &steps)?; // no-op for now
+
+  dbg!(&new_content);
 
   // let patch = multipatch::create(&old_content, &new_content).unwrap();
   // let rehydrated_new = multipatch::apply(&old_content, &patch).unwrap();
