@@ -23,23 +23,26 @@ fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
 
 async fn do_thing() {
  eprintln!("do thing");
+ my_fut().await;
 }
 
-// fn helper(cx: FunctionContext) -> JsResult<JsUndefined> {
-//  Ok(cx.undefined())
-// }
+fn my_fut() -> Pin<Box<dyn Future<Output = String>>> {
+ Box::pin(MyFut)
+}
+
+#[allow(clippy::unnecessary_wraps)]
+fn helper(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+ Ok(cx.undefined())
+}
 
 struct MyFut;
 
 impl Future for MyFut {
  type Output = String;
- fn poll(self: Pin<&mut Self>, cx: &mut futures::task::Context) -> Poll<Self::Output> {
+ fn poll(self: Pin<&mut Self>, cx: &mut core::task::Context) -> Poll<Self::Output> {
+  cx.waker();
   Poll::Ready("42".to_string())
  }
-}
-
-fn my_fut() -> Pin<Box<dyn Future<Output = String>>> {
- Box::pin(MyFut)
 }
 
 fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUndefined> {
@@ -52,12 +55,12 @@ fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUn
  let execute = move |old: String, patch: String| -> Pin<Box<dyn Future<Output = String>>> {
   // let mut output: Option<String> = None;
 
-  cb.schedule(move |cx| {
+  cb.schedule(move |cx: &mut neon::context::TaskContext| {
    eprintln!("in scheduled");
+   let success = neon::types::JsFunction::new(cx, helper).unwrap();
 
-   // let success = neon::types::JsFunction::new(&mut cx, helper);
-
-   let args: Vec<Handle<JsValue>> = vec![cx.string(old).upcast(), cx.string(patch).upcast()];
+   let args: Vec<Handle<JsValue>> =
+    vec![success.upcast(), cx.string(old).upcast(), cx.string(patch).upcast()];
    args
   });
 
