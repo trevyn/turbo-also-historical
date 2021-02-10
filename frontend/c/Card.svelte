@@ -77,7 +77,9 @@
     on:change={(event) => {
      console.log('onchange', event);
      editorState = event.detail.editorState;
-     dispatch('changecontent', toHTML(editorState));
+     dispatch('changecontent', JSON.stringify(sendableSteps(editorState)?.steps.map(
+        (s) => s.toJSON()
+       )));
      console.log(JSON.stringify(sendableSteps(editorState)?.steps.map((s) =>
         s.toJSON()
        )));
