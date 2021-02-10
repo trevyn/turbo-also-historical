@@ -17,6 +17,7 @@ neon-build = "=0.7.1"
 
 [dependencies]
 log = "0.4"
-neon = {version = "=0.7.1", features = ["proc-macros", "event-handler-api"]}
 # when bumping neon, remember to bump neon-cli in electron/package.json too
+neon = {version = "=0.7.1", features = ["proc-macros", "event-handler-api"]}
+once_cell = "1"
 turbo_server = {path = "../../turbo_server"}

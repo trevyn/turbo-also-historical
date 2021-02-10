@@ -14,6 +14,7 @@ applySteps("1", "2");
 
 console.log(addon.hello());
 console.log(addon.registerProsemirrorApplyCallback(applySteps));
+console.log(addon.hello());
 
 function initAutoUpdater() {
  // https://update.electronjs.org/trevyn/turbo/darwin-x64/0.0.0

@@ -2054,6 +2054,7 @@ dependencies = [
  "log",
  "neon",
  "neon-build",
+ "once_cell",
  "turbo_server",
 ]
 

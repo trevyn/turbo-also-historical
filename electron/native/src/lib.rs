@@ -1,28 +1,44 @@
+use neon::event::EventHandler;
 use neon::prelude::*;
+use once_cell::sync::Lazy;
+use std::sync::Mutex;
 
+#[allow(clippy::type_complexity)]
+static PROSEMIRROR_CALLBACK: Lazy<Mutex<Option<Box<dyn Fn() + Send>>>> =
+ Lazy::new(|| Mutex::new(None));
+
+#[allow(clippy::unnecessary_wraps)]
 fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
+ if let Some(c) = PROSEMIRROR_CALLBACK.lock().unwrap().as_ref() {
+  eprintln!("calling c()");
+  c();
+ } else {
+  eprintln!("c not ready yet!");
+ };
+
  Ok(cx.string("hello node 2"))
 }
 
-fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsString> {
+fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+ let undefined = cx.undefined();
+
  let this = cx.this();
  let func = cx.argument::<JsFunction>(0)?;
- let cb = neon::event::EventHandler::new(&cx, this, func);
- std::thread::spawn(move || {
-  for i in 0..100 {
-   // do some work ....
-   std::thread::sleep(std::time::Duration::from_millis(40));
-   // schedule a call into javascript
-   cb.schedule(move |cx| {
-    // return the arguments of the function call
-    let args: Vec<Handle<JsValue>> =
-     vec![cx.string("progress").upcast(), cx.string(i.to_string()).upcast()];
-    args
-   })
-  }
- });
+ let cb = EventHandler::new(&cx, this, func);
 
- Ok(cx.string("hello register_prosemirror_apply_callback"))
+ let execute = move || {
+  cb.schedule(move |cx| {
+   eprintln!("in scheduled");
+   let args: Vec<Handle<JsValue>> =
+    vec![cx.string("progress").upcast(), cx.string("1".to_string()).upcast()];
+   args
+  })
+ };
+
+ let mut cb_ref = PROSEMIRROR_CALLBACK.lock().unwrap();
+ *cb_ref = Some(Box::new(execute));
+
+ Ok(undefined)
 }
 
 fn rust_log(mut cx: FunctionContext) -> JsResult<JsUndefined> {
