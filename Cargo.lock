@@ -2051,6 +2051,7 @@ dependencies = [
 name = "turbo"
 version = "0.0.0"
 dependencies = [
+ "futures",
  "log",
  "neon",
  "neon-build",
