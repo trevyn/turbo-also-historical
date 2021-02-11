@@ -10,7 +10,7 @@ let v = `app version is ${app.getVersion()}, dev is ${isDev}`;
 console.log(v);
 addon.rustLog(v);
 
-applySteps("1", "2");
+applySteps(() => {}, 0, "1", "2");
 
 console.log(addon.hello());
 console.log(addon.registerProsemirrorApplyCallback(applySteps));
@@ -20,10 +20,8 @@ function initAutoUpdater() {
  // https://update.electronjs.org/trevyn/turbo/darwin-x64/0.0.0
 
  autoUpdater.setFeedURL({
-  url:
-   `https://update.electronjs.org/trevyn/turbo/darwin-x64/${app.getVersion()}`
- }
- );
+  url: `https://update.electronjs.org/trevyn/turbo/darwin-x64/${app.getVersion()}`,
+ });
 
  autoUpdater.on("error", err => {
   console.log("updater error");

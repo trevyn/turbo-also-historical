@@ -2,19 +2,18 @@ use neon::{event::EventHandler, prelude::*};
 use once_cell::sync::Lazy;
 use std::{collections::HashMap, future::Future, pin::Pin, sync::Mutex, task::Poll};
 
-#[allow(clippy::type_complexity)]
-static PROSEMIRROR_CALLBACK: Lazy<
- Mutex<Option<Box<dyn Fn(String, String) -> Pin<Box<dyn Future<Output = String>>> + Send>>>,
-> = Lazy::new(|| Mutex::new(None));
+type ApplyStepsFn = Box<dyn Fn(String, String) -> Pin<Box<dyn Future<Output = String>>> + Send>;
+
+static PROSEMIRROR_CALLBACK: Lazy<Mutex<Option<ApplyStepsFn>>> = Lazy::new(|| Mutex::new(None));
 
 static RESULTWAKERS: Lazy<Mutex<HashMap<u8, ResultWaker>>> =
  Lazy::new(|| Mutex::new(HashMap::new()));
 
 #[allow(clippy::unnecessary_wraps)]
 fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
- if let Some(c) = PROSEMIRROR_CALLBACK.lock().unwrap().as_ref() {
-  eprintln!("calling c()");
-  c("10".to_string(), "20".to_string());
+ if let Some(_c) = PROSEMIRROR_CALLBACK.lock().unwrap().as_ref() {
+  eprintln!("c is ready!");
+  // async { c("10".to_string(), "20".to_string()).await };
  } else {
   eprintln!("c not ready yet!");
  };
@@ -128,9 +127,17 @@ fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
  cx.export_function("rustLog", rust_log)?;
  cx.export_function("registerProsemirrorApplyCallback", register_prosemirror_apply_callback)?;
 
+ let apply_steps = |old: String, patch: String| -> Option<Pin<Box<dyn Future<Output = String>>>> {
+  if let Some(c) = PROSEMIRROR_CALLBACK.lock().unwrap().as_ref() {
+   Some(c(old, patch))
+  } else {
+   None
+  }
+ };
+
  // launch the server
- std::thread::spawn(|| {
-  turbo_server::run();
+ std::thread::spawn(move || {
+  turbo_server::run(Box::new(apply_steps));
  });
 
  Ok(())

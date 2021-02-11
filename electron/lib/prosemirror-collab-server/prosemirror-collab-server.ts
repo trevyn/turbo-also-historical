@@ -10,7 +10,13 @@ let mySteps = JSON.parse(
  `[{"stepType":"replace","from":70,"to":70,"slice":{"content":[{"type":"text","text":"x"}]}}]`
 );
 
-export function applySteps(editorState: string, steps: string) {
+export function applySteps(
+ callback: (slot: number, result: string) => void,
+ slot: number,
+ editorState: string,
+ steps: string
+) {
+ console.log("slot:", slot);
  console.log("in editorState:", editorState);
  console.log("in steps:", steps);
 
@@ -19,5 +25,7 @@ export function applySteps(editorState: string, steps: string) {
 
  console.log("out doc:", JSON.stringify(doc));
 
- return JSON.stringify(doc);
+ callback(slot, JSON.stringify(doc));
+
+ console.log("callback called");
 }
