@@ -1,4 +1,4 @@
-use futures::prelude::*;
+// use futures::prelude::*;
 use neon::event::EventHandler;
 use neon::prelude::*;
 use once_cell::sync::Lazy;
@@ -82,53 +82,37 @@ fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUn
 
  let this = cx.this();
  let func = cx.argument::<JsFunction>(0)?;
- let cb = EventHandler::new(&cx, this, func);
+ let eventhandler = EventHandler::new(&cx, this, func);
 
  let execute = move |old: String, patch: String| -> Pin<Box<dyn Future<Output = String>>> {
-  // let mut output: Option<String> = None;
+  let slot = {
+   let mut resultwakers = RESULTWAKERS.lock().unwrap();
+   let slot = (1..100).find(|n| !resultwakers.contains_key(n)).unwrap();
+   assert!(resultwakers.insert(slot, ResultWakers { result: None, waker: None }).is_none());
+   slot
+  };
 
-  // let myfut = futs.get_mut(&slot).unwrap();
-
-  let mut resultwakers = RESULTWAKERS.lock().unwrap();
-  let slot = (1..100).find(|n| !resultwakers.contains_key(n)).unwrap();
   let fut = MyFut { slot };
-  assert!(resultwakers.insert(slot, ResultWakers { result: None, waker: None }).is_none());
 
-  // let myfut = futs.get_mut(&slot).unwrap();
-
-  // let closure = Box::new(|result: String| {
-  //  let mut futs = FUTS.lock().unwrap();
-  //  let slot = (1..100).find(|n| !futs.contains_key(n)).unwrap();
-  //  let myfut = *futs.get_mut(&slot).unwrap();
-  //  myfut.result = Some(result);
-  //  let waker = myfut.waker.take();
-  //  if let Some(w) = waker {
-  //   w.wake()
-  //  }
-  // });
-
-  // fut.closure = Some(closure);
-
-  cb.schedule(move |cx: &mut neon::context::TaskContext| {
+  eventhandler.schedule(move |cx: &mut neon::context::TaskContext| {
    eprintln!("in scheduled");
+
    let helper = neon::types::JsFunction::new(cx, helper).unwrap();
 
    let args: Vec<Handle<JsValue>> = vec![
     helper.upcast(),
-    // cx.number(slot).upcast(),
+    cx.number(slot).upcast(),
     cx.string(old).upcast(),
     cx.string(patch).upcast(),
    ];
+
    args
   });
 
   Box::pin(fut)
-  // Box::pin(MyFut { slot: 0, result: None })
  };
 
- let mut cb_ref = PROSEMIRROR_CALLBACK.lock().unwrap();
- *cb_ref = Some(Box::new(execute));
-
+ *PROSEMIRROR_CALLBACK.lock().unwrap() = Some(Box::new(execute));
  Ok(undefined)
 }
 
