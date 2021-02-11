@@ -7,7 +7,7 @@ static PROSEMIRROR_CALLBACK: Lazy<
  Mutex<Option<Box<dyn Fn(String, String) -> Pin<Box<dyn Future<Output = String>>> + Send>>>,
 > = Lazy::new(|| Mutex::new(None));
 
-static RESULTWAKERS: Lazy<Mutex<HashMap<i32, ResultWaker>>> =
+static RESULTWAKERS: Lazy<Mutex<HashMap<u8, ResultWaker>>> =
  Lazy::new(|| Mutex::new(HashMap::new()));
 
 #[allow(clippy::unnecessary_wraps)]
@@ -31,10 +31,9 @@ fn my_fut() -> Pin<Box<dyn Future<Output = String>>> {
  Box::pin(MyFut { slot: 0 })
 }
 
-#[allow(clippy::unnecessary_wraps)]
 fn helper(mut cx: FunctionContext) -> JsResult<JsUndefined> {
- let slot = cx.argument::<JsNumber>(0)?.value() as i32;
- let result = cx.argument::<JsString>(0)?.value();
+ let slot = cx.argument::<JsNumber>(0)?.value() as u8;
+ let result = cx.argument::<JsString>(1)?.value();
 
  let mut resultwakers = RESULTWAKERS.lock().unwrap();
  let resultwaker = resultwakers.get_mut(&slot).unwrap();
@@ -54,11 +53,12 @@ struct ResultWaker {
 }
 
 struct MyFut {
- slot: i32,
+ slot: u8,
 }
 
 impl Future for MyFut {
  type Output = String;
+
  fn poll(self: Pin<&mut Self>, cx: &mut core::task::Context) -> Poll<Self::Output> {
   let slot = &self.slot;
   let mut resultwakers = RESULTWAKERS.lock().unwrap();
@@ -85,7 +85,7 @@ fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUn
  let execute = move |old: String, patch: String| -> Pin<Box<dyn Future<Output = String>>> {
   let slot = {
    let mut resultwakers = RESULTWAKERS.lock().unwrap();
-   let slot = (1..100).find(|n| !resultwakers.contains_key(n)).unwrap();
+   let slot = (1..200).find(|n| !resultwakers.contains_key(n)).unwrap();
    assert!(resultwakers.insert(slot, ResultWaker { result: None, waker: None }).is_none());
    slot
   };
