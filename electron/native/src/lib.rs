@@ -34,6 +34,8 @@ fn helper(mut cx: FunctionContext) -> JsResult<JsUndefined> {
  let slot = cx.argument::<JsNumber>(0)?.value() as u8;
  let result = cx.argument::<JsString>(1)?.value();
 
+ dbg!(slot, &result);
+
  let mut resultwakers = RESULTWAKERS.lock().unwrap();
  let resultwaker = resultwakers.get_mut(&slot).unwrap();
 
@@ -69,6 +71,7 @@ impl Future for MyFut {
     Poll::Pending
    }
    Some(result) => {
+    dbg!("removing", slot, &result);
     resultwakers.remove(slot);
     Poll::Ready(result)
    }
