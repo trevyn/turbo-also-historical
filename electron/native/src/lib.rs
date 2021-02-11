@@ -1,21 +1,13 @@
-// use futures::prelude::*;
-use neon::event::EventHandler;
-use neon::prelude::*;
+use neon::{event::EventHandler, prelude::*};
 use once_cell::sync::Lazy;
-use std::{
- collections::HashMap,
- future::Future,
- pin::Pin,
- sync::Mutex,
- task::{Poll, Waker},
-};
+use std::{collections::HashMap, future::Future, pin::Pin, sync::Mutex, task::Poll};
 
 #[allow(clippy::type_complexity)]
 static PROSEMIRROR_CALLBACK: Lazy<
  Mutex<Option<Box<dyn Fn(String, String) -> Pin<Box<dyn Future<Output = String>>> + Send>>>,
 > = Lazy::new(|| Mutex::new(None));
 
-static RESULTWAKERS: Lazy<Mutex<HashMap<i32, ResultWakers>>> =
+static RESULTWAKERS: Lazy<Mutex<HashMap<i32, ResultWaker>>> =
  Lazy::new(|| Mutex::new(HashMap::new()));
 
 #[allow(clippy::unnecessary_wraps)]
@@ -41,45 +33,51 @@ fn my_fut() -> Pin<Box<dyn Future<Output = String>>> {
 
 #[allow(clippy::unnecessary_wraps)]
 fn helper(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+ let slot = cx.argument::<JsNumber>(0)?.value() as i32;
+ let result = cx.argument::<JsString>(0)?.value();
+
+ let mut resultwakers = RESULTWAKERS.lock().unwrap();
+ let resultwaker = resultwakers.get_mut(&slot).unwrap();
+
+ resultwaker.result = Some(result);
+ if let Some(waker) = resultwaker.waker.take() {
+  waker.wake();
+ }
+
  Ok(cx.undefined())
 }
 
 #[derive(Debug)]
-struct ResultWakers {
+struct ResultWaker {
  result: Option<String>,
  waker: Option<std::task::Waker>,
 }
 
 struct MyFut {
  slot: i32,
- // result: Option<String>,
- // waker: Option<std::task::Waker>,
- // closure: Option<Box<dyn FnMut(String) + Send>>,
 }
 
 impl Future for MyFut {
  type Output = String;
  fn poll(self: Pin<&mut Self>, cx: &mut core::task::Context) -> Poll<Self::Output> {
+  let slot = &self.slot;
   let mut resultwakers = RESULTWAKERS.lock().unwrap();
-  let r = resultwakers.get_mut(&self.slot).unwrap().result.take();
+  let resultwaker = resultwakers.get_mut(slot).unwrap();
 
-  match r {
+  match resultwaker.result.take() {
    None => {
-    let waker: Waker = cx.waker().clone();
-    resultwakers.get_mut(&self.slot).unwrap().waker = Some(waker);
+    resultwaker.waker = Some(cx.waker().clone());
     Poll::Pending
    }
-   Some(r) => {
-    resultwakers.remove(&self.slot);
-    Poll::Ready(r)
+   Some(result) => {
+    resultwakers.remove(slot);
+    Poll::Ready(result)
    }
   }
  }
 }
 
 fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUndefined> {
- let undefined = cx.undefined();
-
  let this = cx.this();
  let func = cx.argument::<JsFunction>(0)?;
  let eventhandler = EventHandler::new(&cx, this, func);
@@ -88,7 +86,7 @@ fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUn
   let slot = {
    let mut resultwakers = RESULTWAKERS.lock().unwrap();
    let slot = (1..100).find(|n| !resultwakers.contains_key(n)).unwrap();
-   assert!(resultwakers.insert(slot, ResultWakers { result: None, waker: None }).is_none());
+   assert!(resultwakers.insert(slot, ResultWaker { result: None, waker: None }).is_none());
    slot
   };
 
@@ -113,7 +111,7 @@ fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUn
  };
 
  *PROSEMIRROR_CALLBACK.lock().unwrap() = Some(Box::new(execute));
- Ok(undefined)
+ Ok(cx.undefined())
 }
 
 fn rust_log(mut cx: FunctionContext) -> JsResult<JsUndefined> {
