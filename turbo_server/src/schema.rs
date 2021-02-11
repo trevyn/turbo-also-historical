@@ -1,10 +1,15 @@
 use futures::Stream;
 use i54_::i54;
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
-use std::convert::TryInto;
-use std::pin::Pin;
+use once_cell::sync::Lazy;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::{convert::TryInto, future::Future, pin::Pin, sync::Mutex};
 use turbosql::{execute, select, Blob, Turbosql};
+
+pub type ApplyStepsFn =
+ Box<dyn Fn(String, String) -> Pin<Box<dyn Future<Output = String> + Send>> + Send>;
+
+pub static APPLY_STEPS_FN: Lazy<Mutex<Option<ApplyStepsFn>>> = Lazy::new(|| Mutex::new(None));
 
 #[derive(juniper::GraphQLObject, Turbosql, Default, Debug)]
 pub struct Card {

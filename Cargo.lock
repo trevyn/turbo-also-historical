@@ -2074,6 +2074,7 @@ dependencies = [
  "log",
  "mime_guess",
  "multipatch",
+ "once_cell",
  "prosemirror_collab_server",
  "rust-embed",
  "rustc_version",

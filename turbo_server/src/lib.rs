@@ -1,5 +1,5 @@
 use futures::FutureExt as _;
-use std::{future::Future, pin::Pin, sync::Arc};
+use std::sync::Arc;
 use warp::{http, Filter};
 
 mod asset_server;
@@ -7,11 +7,13 @@ mod schema;
 
 pub use schema::rust_log;
 
+pub use schema::ApplyStepsFn;
+use schema::APPLY_STEPS_FN;
+
 // @mark server
 #[tokio::main]
-pub async fn run(
- _apply_steps: Box<dyn Fn(String, String) -> Option<Pin<Box<dyn Future<Output = String>>>>>,
-) {
+pub async fn run(apply_steps: ApplyStepsFn) {
+ *APPLY_STEPS_FN.lock().unwrap() = Some(apply_steps);
  std::env::set_var("RUST_LOG", "warp_subscriptions");
  env_logger::init();
 

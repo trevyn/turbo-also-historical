@@ -23,6 +23,7 @@ juniper_warp = {version = "=0.6.2", features = ["subscriptions"]}
 log = "0.4" 
 mime_guess = "2" 
 multipatch = {path = "../multipatch"} 
+once_cell = "1" 
 prosemirror_collab_server = {path = "../prosemirror_collab_server"} 
 rust-embed = "5" 
 tokio = {version = "0.2", features = ["rt-core", "macros"]} 

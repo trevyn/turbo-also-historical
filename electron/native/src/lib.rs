@@ -2,7 +2,7 @@ use neon::{event::EventHandler, prelude::*};
 use once_cell::sync::Lazy;
 use std::{collections::HashMap, future::Future, pin::Pin, sync::Mutex, task::Poll};
 
-type ApplyStepsFn = Box<dyn Fn(String, String) -> Pin<Box<dyn Future<Output = String>>> + Send>;
+use turbo_server::ApplyStepsFn;
 
 static PROSEMIRROR_CALLBACK: Lazy<Mutex<Option<ApplyStepsFn>>> = Lazy::new(|| Mutex::new(None));
 
@@ -23,10 +23,10 @@ fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
 
 async fn do_thing() {
  eprintln!("do thing");
- my_fut().await;
+ null_fut().await;
 }
 
-fn my_fut() -> Pin<Box<dyn Future<Output = String>>> {
+fn null_fut() -> Pin<Box<dyn Future<Output = String> + Send>> {
  Box::pin(MyFut { slot: 0 })
 }
 
@@ -81,7 +81,7 @@ fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUn
  let func = cx.argument::<JsFunction>(0)?;
  let eventhandler = EventHandler::new(&cx, this, func);
 
- let execute = move |old: String, patch: String| -> Pin<Box<dyn Future<Output = String>>> {
+ let execute = move |old: String, patch: String| -> Pin<Box<dyn Future<Output = String> + Send>> {
   let slot = {
    let mut resultwakers = RESULTWAKERS.lock().unwrap();
    let slot = (1..200).find(|n| !resultwakers.contains_key(n)).unwrap();
@@ -127,11 +127,11 @@ fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
  cx.export_function("rustLog", rust_log)?;
  cx.export_function("registerProsemirrorApplyCallback", register_prosemirror_apply_callback)?;
 
- let apply_steps = |old: String, patch: String| -> Option<Pin<Box<dyn Future<Output = String>>>> {
+ let apply_steps = |old: String, patch: String| -> Pin<Box<dyn Future<Output = String> + Send>> {
   if let Some(c) = PROSEMIRROR_CALLBACK.lock().unwrap().as_ref() {
-   Some(c(old, patch))
+   c(old, patch)
   } else {
-   None
+   null_fut()
   }
  };
 
