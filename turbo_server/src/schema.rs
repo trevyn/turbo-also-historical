@@ -146,6 +146,14 @@ impl Mutation {
 
   let new_content = prosemirror_collab_server::apply_steps(&old_content, &steps)?; // no-op for now
 
+  match (*APPLY_STEPS_FN.lock().unwrap()).take() {
+   None => eprintln!("none"),
+   Some(f) => {
+    eprintln!("some");
+    f(old_content, steps);
+   }
+  }
+
   dbg!(&new_content);
 
   // let patch = multipatch::create(&old_content, &new_content).unwrap();
