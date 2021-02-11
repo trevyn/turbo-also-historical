@@ -146,7 +146,7 @@ impl Mutation {
 
   let new_content = prosemirror_collab_server::apply_steps(&old_content, &steps)?; // no-op for now
 
-  match (*APPLY_STEPS_FN.lock().unwrap()).take() {
+  match (*APPLY_STEPS_FN.lock().unwrap()).as_ref() {
    None => eprintln!("none"),
    Some(f) => {
     eprintln!("some");
