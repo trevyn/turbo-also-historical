@@ -146,21 +146,9 @@ impl Mutation {
 
   let new_content = prosemirror_collab_server::apply_steps(&old_content, &steps)?; // no-op for now
 
-  let asf = APPLY_STEPS_FN.lock().unwrap();
-  if (*asf).is_some() {
-   dbg!("some");
-  } else {
-   dbg!("none");
-  }
-  // let f = match (*asf).as_ref() {
-  //  None => panic!("none"),
-  //  Some(f) => {
-  //   eprintln!("some");
-  //   f.clone()
-  //  }
-  // };
+  let fut = (*APPLY_STEPS_FN.lock().unwrap()).as_ref().unwrap()(old_content, steps);
 
-  // f(old_content, steps).await;
+  dbg!(fut.await);
 
   dbg!(&new_content);
 
