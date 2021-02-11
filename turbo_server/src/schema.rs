@@ -7,7 +7,7 @@ use std::{convert::TryInto, future::Future, pin::Pin, sync::Mutex};
 use turbosql::{execute, select, Blob, Turbosql};
 
 pub type ApplyStepsFn =
- Box<dyn Fn(String, String) -> Pin<Box<dyn Future<Output = String> + Send>> + Send>;
+ Box<dyn Fn(String, String) -> Pin<Box<dyn Future<Output = String> + Send + Sync>> + Send + Sync>;
 
 pub static APPLY_STEPS_FN: Lazy<Mutex<Option<ApplyStepsFn>>> = Lazy::new(|| Mutex::new(None));
 
@@ -146,13 +146,21 @@ impl Mutation {
 
   let new_content = prosemirror_collab_server::apply_steps(&old_content, &steps)?; // no-op for now
 
-  match (*APPLY_STEPS_FN.lock().unwrap()).as_ref() {
-   None => eprintln!("none"),
-   Some(f) => {
-    eprintln!("some");
-    f(old_content, steps);
-   }
+  let asf = APPLY_STEPS_FN.lock().unwrap();
+  if (*asf).is_some() {
+   dbg!("some");
+  } else {
+   dbg!("none");
   }
+  // let f = match (*asf).as_ref() {
+  //  None => panic!("none"),
+  //  Some(f) => {
+  //   eprintln!("some");
+  //   f.clone()
+  //  }
+  // };
+
+  // f(old_content, steps).await;
 
   dbg!(&new_content);
 

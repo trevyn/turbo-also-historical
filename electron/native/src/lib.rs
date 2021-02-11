@@ -26,7 +26,7 @@ async fn do_thing() {
  null_fut().await;
 }
 
-fn null_fut() -> Pin<Box<dyn Future<Output = String> + Send>> {
+fn null_fut() -> Pin<Box<dyn Future<Output = String> + Send + Sync>> {
  Box::pin(MyFut { slot: 0 })
 }
 
@@ -84,33 +84,34 @@ fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUn
  let func = cx.argument::<JsFunction>(0)?;
  let eventhandler = EventHandler::new(&cx, this, func);
 
- let execute = move |old: String, patch: String| -> Pin<Box<dyn Future<Output = String> + Send>> {
-  let slot = {
-   let mut resultwakers = RESULTWAKERS.lock().unwrap();
-   let slot = (1..200).find(|n| !resultwakers.contains_key(n)).unwrap();
-   assert!(resultwakers.insert(slot, ResultWaker { result: None, waker: None }).is_none());
-   slot
+ let execute =
+  move |old: String, patch: String| -> Pin<Box<dyn Future<Output = String> + Send + Sync>> {
+   let slot = {
+    let mut resultwakers = RESULTWAKERS.lock().unwrap();
+    let slot = (1..200).find(|n| !resultwakers.contains_key(n)).unwrap();
+    assert!(resultwakers.insert(slot, ResultWaker { result: None, waker: None }).is_none());
+    slot
+   };
+
+   let fut = MyFut { slot };
+
+   eventhandler.schedule(move |cx: &mut neon::context::TaskContext| {
+    eprintln!("in scheduled");
+
+    let helper = neon::types::JsFunction::new(cx, helper).unwrap();
+
+    let args: Vec<Handle<JsValue>> = vec![
+     helper.upcast(),
+     cx.number(slot).upcast(),
+     cx.string(old).upcast(),
+     cx.string(patch).upcast(),
+    ];
+
+    args
+   });
+
+   Box::pin(fut)
   };
-
-  let fut = MyFut { slot };
-
-  eventhandler.schedule(move |cx: &mut neon::context::TaskContext| {
-   eprintln!("in scheduled");
-
-   let helper = neon::types::JsFunction::new(cx, helper).unwrap();
-
-   let args: Vec<Handle<JsValue>> = vec![
-    helper.upcast(),
-    cx.number(slot).upcast(),
-    cx.string(old).upcast(),
-    cx.string(patch).upcast(),
-   ];
-
-   args
-  });
-
-  Box::pin(fut)
- };
 
  *PROSEMIRROR_CALLBACK.lock().unwrap() = Some(Box::new(execute));
  Ok(cx.undefined())
@@ -130,13 +131,14 @@ fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
  cx.export_function("rustLog", rust_log)?;
  cx.export_function("registerProsemirrorApplyCallback", register_prosemirror_apply_callback)?;
 
- let apply_steps = |old: String, patch: String| -> Pin<Box<dyn Future<Output = String> + Send>> {
-  if let Some(c) = PROSEMIRROR_CALLBACK.lock().unwrap().as_ref() {
-   c(old, patch)
-  } else {
-   null_fut()
-  }
- };
+ let apply_steps =
+  |old: String, patch: String| -> Pin<Box<dyn Future<Output = String> + Send + Sync>> {
+   if let Some(c) = PROSEMIRROR_CALLBACK.lock().unwrap().as_ref() {
+    c(old, patch)
+   } else {
+    null_fut()
+   }
+  };
 
  // launch the server
  std::thread::spawn(move || {
