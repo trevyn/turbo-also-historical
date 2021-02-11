@@ -1,7 +1,7 @@
+use d_macro::*;
 use neon::{event::EventHandler, prelude::*};
 use once_cell::sync::Lazy;
 use std::{collections::HashMap, future::Future, pin::Pin, sync::Mutex, task::Poll};
-
 use turbo_server::ApplyStepsFn;
 
 static PROSEMIRROR_CALLBACK: Lazy<Mutex<Option<ApplyStepsFn>>> = Lazy::new(|| Mutex::new(None));
@@ -13,7 +13,7 @@ static RESULTWAKERS: Lazy<Mutex<HashMap<u8, ResultWaker>>> =
 fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
  if let Some(_c) = PROSEMIRROR_CALLBACK.lock().unwrap().as_ref() {
   eprintln!("c is ready!");
-  // async { c("10".to_string(), "20".to_string()).await };
+ // async { c("10".to_string(), "20".to_string()).await };
  } else {
   eprintln!("c not ready yet!");
  };
@@ -34,7 +34,7 @@ fn helper(mut cx: FunctionContext) -> JsResult<JsUndefined> {
  let slot = cx.argument::<JsNumber>(0)?.value() as u8;
  let result = cx.argument::<JsString>(1)?.value();
 
- dbg!(slot, &result);
+ d!(#? (slot, &result));
 
  let mut resultwakers = RESULTWAKERS.lock().unwrap();
  let resultwaker = resultwakers.get_mut(&slot).unwrap();
@@ -71,7 +71,7 @@ impl Future for MyFut {
     Poll::Pending
    }
    Some(result) => {
-    dbg!("removing", slot, &result);
+    d!(#? ("removing", slot, &result));
     resultwakers.remove(slot);
     Poll::Ready(result)
    }

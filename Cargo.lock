@@ -342,6 +342,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "697c714f50560202b1f4e2e09cd50a421881c83e9025db75d15f276616f04f40"
 
 [[package]]
+name = "d-macro"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4787669d51745b425471cedfc52f27bba7656f0bef8237581b2737c0d766d1de"
+
+[[package]]
 name = "derive_utils"
 version = "0.11.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2051,6 +2057,7 @@ dependencies = [
 name = "turbo"
 version = "0.0.0"
 dependencies = [
+ "d-macro",
  "log",
  "neon",
  "neon-build",
@@ -2063,6 +2070,7 @@ name = "turbo_server"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "d-macro",
  "env_logger",
  "fold_impls",
  "futures",

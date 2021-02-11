@@ -1,3 +1,4 @@
+use d_macro::*;
 use futures::Stream;
 use i54_::i54;
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
@@ -107,7 +108,7 @@ pub struct Mutation;
 impl Mutation {
  async fn add_blank_card() -> FieldResult<Card> {
   let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
-  let new_hash = dbg!(turbocafe::put(
+  let new_hash = d!(#? turbocafe::put(
    r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
   ))?;
 
@@ -138,7 +139,7 @@ impl Mutation {
   //  turbocafe::get_string(select!(Card "WHERE rowid = ?", rowid).unwrap().instantiation_id.unwrap())
   //   .unwrap();
 
-  dbg!(turbocafe::put(
+  d!(#? turbocafe::put(
    r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
   ))?;
 
@@ -148,9 +149,9 @@ impl Mutation {
 
   let fut = (*APPLY_STEPS_FN.lock().unwrap()).as_ref().unwrap()(old_content, steps);
 
-  dbg!(fut.await);
+  d!(fut.await);
 
-  dbg!(&new_content);
+  d!(&new_content);
 
   // let patch = multipatch::create(&old_content, &new_content).unwrap();
   // let rehydrated_new = multipatch::apply(&old_content, &patch).unwrap();

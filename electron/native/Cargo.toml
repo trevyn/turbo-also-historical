@@ -16,6 +16,7 @@ name = "turbo"
 neon-build = "=0.7.1"
 
 [dependencies]
+d-macro = "=0.1.0"
 log = "0.4"
 # when bumping neon, remember to bump neon-cli in electron/package.json too
 neon = {version = "=0.7.1", features = ["proc-macros", "event-handler-api"]}

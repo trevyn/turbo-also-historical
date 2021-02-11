@@ -12,6 +12,7 @@ rustc_version = "0.3"
 
 [dependencies]
 anyhow = "1" 
+d-macro = "=0.1.0" 
 env_logger = "0.8" 
 fold_impls = {path = "../fold_impls"} 
 futures = "0.3" 
