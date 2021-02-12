@@ -43,6 +43,8 @@ jobs:
       - run: npm run build-neon-release
         working-directory: 'electron'
 
+      - run: cargo test
+
       - name: Add macOS certs
         run: chmod +x add-macos-cert.sh && ./add-macos-cert.sh > /dev/null
         working-directory: 'electron'

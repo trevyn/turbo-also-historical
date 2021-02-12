@@ -43,5 +43,7 @@ jobs:
       - run: npm run build-neon
         working-directory: 'electron'
 
+      - run: cargo test
+
       - run: npm run make
         working-directory: 'electron'
