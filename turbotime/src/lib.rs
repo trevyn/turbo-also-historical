@@ -1,6 +1,5 @@
 use i54_::i54;
 use std::convert::TryInto;
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
 use turbosql::{select, Turbosql};
 
 #[derive(thiserror::Error, Debug)]
@@ -51,14 +50,20 @@ mod tests {
  }
 }
 
-pub fn insert_steps(instantiation_id: String, steps: String) -> Result<(), TurbotimeError> {
- let now: i54 =
-  SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_millis().try_into().unwrap();
+pub fn now() -> i54 {
+ std::time::SystemTime::now()
+  .duration_since(std::time::UNIX_EPOCH)
+  .unwrap()
+  .as_millis()
+  .try_into()
+  .unwrap()
+}
 
+pub fn insert_steps(instantiation_id: String, steps: String) -> Result<(), TurbotimeError> {
  _Turbotime_Entry {
   instantiation_id: Some(instantiation_id),
   steps: Some(steps),
-  timestamp: Some(now),
+  timestamp: Some(now()),
 
   ..Default::default()
  }

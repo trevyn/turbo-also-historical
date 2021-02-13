@@ -3,7 +3,7 @@ use futures::Stream;
 use i54_::i54;
 use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
 use once_cell::sync::Lazy;
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::time::Duration;
 use std::{convert::TryInto, future::Future, pin::Pin, sync::Mutex};
 use turbosql::{execute, select, Blob, Turbosql};
 
@@ -107,7 +107,7 @@ pub struct Mutation;
 #[graphql_object]
 impl Mutation {
  async fn add_blank_card() -> FieldResult<Card> {
-  let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
+  let now = turbotime::now();
   let new_hash = d!(#? turbocafe::put(
    r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
   ))?;
@@ -176,7 +176,7 @@ impl Mutation {
   // dbg!(turbocafe::get_string(&new_hash)).ok();
   // dbg!(turbocafe::get(patch_hash)).ok();
 
-  // let now: i54 = SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis().try_into()?;
+  // let now = turbotime::now();
 
   // execute!(
   //  "
