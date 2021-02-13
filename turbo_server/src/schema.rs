@@ -143,13 +143,14 @@ impl Mutation {
    r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
   ))?;
 
-  let old_content = turbocafe::get_as_string(instantiation_id).unwrap();
+  let old_content = turbocafe::get_as_string(&instantiation_id).unwrap();
 
   let new_content = prosemirror_collab_server::apply_steps(&old_content, &steps)?; // no-op for now
 
-  let fut = (*APPLY_STEPS_FN.lock().unwrap()).as_ref().unwrap()(old_content, steps);
-
+  let fut = (*APPLY_STEPS_FN.lock().unwrap()).as_ref().unwrap()(old_content, steps.clone());
   d!(fut.await);
+
+  turbotime::insert_steps(instantiation_id, steps)?;
 
   d!(&new_content);
 

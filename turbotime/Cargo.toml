@@ -8,3 +8,6 @@ repository = "https://github.com/trevyn/turbo"
 version = "0.0.0"
 
 [dependencies]
+i54_ = {version = "0.1", features = ["rusqlite", "juniper"]}
+thiserror = "1"
+turbosql = "0.1"
