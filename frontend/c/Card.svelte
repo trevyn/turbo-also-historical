@@ -34,11 +34,16 @@
  node.innerHTML = card.content;
  const doc = parser.parse(node);
 
+ console.log(JSON.stringify(doc.toJSON()));
+
  let editorState = EditorState.create({
   schema,
   doc,
-  plugins: [...corePlugins, ...richTextPlugins, collab()],
+  plugins: [...corePlugins, ...richTextPlugins, collab({ clientID: 999 })],
  });
+
+ console.log(JSON.stringify(editorState.toJSON()));
+
  // let view = new EditorView(place, {
  //  state: EditorState.create({
  //   doc: authority.doc,
@@ -56,6 +61,7 @@
  let answerEditorState = createRichTextEditor(card.answer);
 
  let revealed = false;
+ let view;
 
  if (toPlainText(answerEditorState).length === 0) revealed = true;
 </script>
@@ -67,6 +73,7 @@
    <ProsemirrorEditor
     placeholder="Go ahead and type something"
     {editorState}
+    bind:view
     on:transaction={(event) => {
      console.log('transaction', event);
      editorState = event.detail.editorState;
@@ -77,9 +84,10 @@
     on:change={(event) => {
      console.log('onchange', event);
      editorState = event.detail.editorState;
-     dispatch('changecontent', JSON.stringify(sendableSteps(editorState)?.steps.map(
-        (s) => s.toJSON()
-       )));
+     let steps = sendableSteps(editorState)?.steps;
+     dispatch('changecontent', JSON.stringify(steps.map((s) => s.toJSON())));
+     view.dispatch(receiveTransaction(editorState, steps, [999]));
+
      console.log(JSON.stringify(sendableSteps(editorState)?.steps.map((s) =>
         s.toJSON()
        )));
