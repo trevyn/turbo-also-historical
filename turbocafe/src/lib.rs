@@ -43,11 +43,9 @@ pub fn put<T: AsRef<[u8]>>(content: T) -> Result<String, TurbocafeError> {
 }
 
 pub fn get<T: AsRef<str>>(hash: T) -> Result<Vec<u8>, TurbocafeError> {
- Ok(
-  select!(_Turbocafe_Entry "WHERE hash = ?", hash.as_ref())?
-   .content
-   .ok_or(TurbocafeError::DataNotAvailable)?,
- )
+ select!(_Turbocafe_Entry "WHERE hash = ?", hash.as_ref())?
+  .content
+  .ok_or(TurbocafeError::DataNotAvailable)
 }
 
 pub fn get_as_string<T: AsRef<str>>(hash: T) -> Result<String, TurbocafeError> {
