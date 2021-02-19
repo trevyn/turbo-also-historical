@@ -30,9 +30,16 @@ export type Card = {
 export type Mutation = {
   __typename?: 'Mutation';
   addBlankCard: Card;
+  putKv: Scalars['Boolean'];
   recvSteps: Scalars['String'];
   deleteCard: Scalars['Boolean'];
   shuffleCards: Scalars['Boolean'];
+};
+
+
+export type MutationPutKvArgs = {
+  key: Scalars['String'];
+  value: Scalars['String'];
 };
 
 
@@ -72,6 +79,17 @@ export type AddBlankCardMutation = (
     { __typename?: 'Card' }
     & Pick<Card, 'rowid' | 'content' | 'answer' | 'componentId' | 'instantiationId' | 'createdTime' | 'modifiedTime' | 'lastDisplayTime' | 'nextDisplayTime'>
   ) }
+);
+
+export type PutKvMutationVariables = Exact<{
+  key: Scalars['String'];
+  value: Scalars['String'];
+}>;
+
+
+export type PutKvMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'putKv'>
 );
 
 export type RecvStepsMutationVariables = Exact<{
@@ -138,6 +156,7 @@ export type ListCardsFullQuery = (
 
 
 export const AddBlankCardDocument: DocumentNode<AddBlankCardMutation, AddBlankCardMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addBlankCard"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addBlankCard"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rowid"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"componentId"}},{"kind":"Field","name":{"kind":"Name","value":"instantiationId"}},{"kind":"Field","name":{"kind":"Name","value":"createdTime"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedTime"}},{"kind":"Field","name":{"kind":"Name","value":"lastDisplayTime"}},{"kind":"Field","name":{"kind":"Name","value":"nextDisplayTime"}}]}}]}}]};
+export const PutKvDocument: DocumentNode<PutKvMutation, PutKvMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"putKv"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"key"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"value"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"putKv"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"key"},"value":{"kind":"Variable","name":{"kind":"Name","value":"key"}}},{"kind":"Argument","name":{"kind":"Name","value":"value"},"value":{"kind":"Variable","name":{"kind":"Name","value":"value"}}}]}]}}]};
 export const RecvStepsDocument: DocumentNode<RecvStepsMutation, RecvStepsMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"recvSteps"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"instantiationId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"steps"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recvSteps"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"instantiationId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"instantiationId"}}},{"kind":"Argument","name":{"kind":"Name","value":"steps"},"value":{"kind":"Variable","name":{"kind":"Name","value":"steps"}}}]}]}}]};
 export const DeleteCardDocument: DocumentNode<DeleteCardMutation, DeleteCardMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rowid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"i54"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"rowid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rowid"}}}]}]}}]};
 export const ShuffleCardsDocument: DocumentNode<ShuffleCardsMutation, ShuffleCardsMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"shuffleCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shuffleCards"}}]}}]};

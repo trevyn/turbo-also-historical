@@ -1,7 +1,8 @@
 // Turbocafe, the content-addressable file eyrie. :)
 
+use d_macro::*;
 use multihash::{Code::Blake3_256, MultihashDigest};
-use turbosql::{select, Blob, Turbosql};
+use turbosql::{execute, select, Blob, Turbosql};
 
 #[derive(thiserror::Error, Debug)]
 pub enum TurbocafeError {
@@ -21,15 +22,15 @@ struct _Turbocafe_Entry {
  content: Option<Blob>,
 }
 
-fn hash_impl<T: AsRef<[u8]>>(content: T) -> Vec<u8> {
+fn hash_impl<U: AsRef<[u8]>>(content: U) -> Vec<u8> {
  Blake3_256.digest(content.as_ref()).to_bytes()
 }
 
-pub fn hash<T: AsRef<[u8]>>(content: T) -> String {
+pub fn hash<U: AsRef<[u8]>>(content: U) -> String {
  bs58::encode(hash_impl(content)).into_string()
 }
 
-pub fn put<T: AsRef<[u8]>>(content: T) -> Result<String, TurbocafeError> {
+pub fn put_hash<U: AsRef<[u8]>>(content: U) -> Result<String, TurbocafeError> {
  let hash = hash(&content);
 
  _Turbocafe_Entry {
@@ -42,12 +43,31 @@ pub fn put<T: AsRef<[u8]>>(content: T) -> Result<String, TurbocafeError> {
  Ok(hash)
 }
 
-pub fn get<T: AsRef<str>>(hash: T) -> Result<Vec<u8>, TurbocafeError> {
+pub fn put_kv<S: AsRef<str>, U: AsRef<[u8]>>(key: S, content: U) -> Result<(), TurbocafeError> {
+ if dbg!(execute!(
+  "UPDATE _turbocafe_entry SET content = ? WHERE hash = ?",
+  content.as_ref(),
+  key.as_ref()
+ ))?
+  == 0
+ {
+  _Turbocafe_Entry {
+   hash: Some(key.as_ref().to_owned()),
+   content: Some(content.as_ref().to_owned()),
+   ..Default::default()
+  }
+  .insert()?;
+ }
+
+ Ok(())
+}
+
+pub fn get<S: AsRef<str>>(hash: S) -> Result<Vec<u8>, TurbocafeError> {
  select!(_Turbocafe_Entry "WHERE hash = ?", hash.as_ref())?
   .content
   .ok_or(TurbocafeError::DataNotAvailable)
 }
 
-pub fn get_as_string<T: AsRef<str>>(hash: T) -> Result<String, TurbocafeError> {
+pub fn get_as_string<S: AsRef<str>>(hash: S) -> Result<String, TurbocafeError> {
  Ok(std::str::from_utf8(&get(hash)?)?.to_string())
 }

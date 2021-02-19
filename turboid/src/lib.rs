@@ -1,7 +1,7 @@
 use multihash::{Code::Identity, MultihashDigest};
 
 pub fn random_id() -> String {
- let data: [u8; 32] = rand::random();
+ let data: [u8; 16] = rand::random();
  bs58::encode(Identity.digest(&data).to_bytes()).into_string()
 }
 

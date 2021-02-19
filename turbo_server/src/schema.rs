@@ -108,7 +108,7 @@ pub struct Mutation;
 impl Mutation {
  async fn add_blank_card() -> FieldResult<Card> {
   let now = turbotime::now();
-  let new_hash = d!(#? turbocafe::put(
+  let new_hash = d!(#? turbocafe::put_hash(
    r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
   ))?;
 
@@ -134,12 +134,17 @@ impl Mutation {
   Ok(card)
  }
 
+ async fn put_kv(key: String, value: String) -> FieldResult<bool> {
+  d!(#? turbocafe::put_kv(key, value))?;
+  Ok(true)
+ }
+
  async fn recv_steps(instantiation_id: String, steps: String) -> FieldResult<String> {
   // let old_content =
   //  turbocafe::get_string(select!(Card "WHERE rowid = ?", rowid).unwrap().instantiation_id.unwrap())
   //   .unwrap();
 
-  d!(#? turbocafe::put(
+  d!(#? turbocafe::put_hash(
    r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
   ))?;
 

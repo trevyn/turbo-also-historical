@@ -13,6 +13,10 @@ mutation addBlankCard {
  }
 }
 
+mutation putKv($key: String!, $value: String!) {
+ putKv(key: $key, value: $value)
+}
+
 mutation recvSteps($instantiationId: String!, $steps: String!) {
  recvSteps(instantiationId: $instantiationId, steps: $steps)
 }

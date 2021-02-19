@@ -17,6 +17,7 @@ scalar i54
 
 type Mutation {
   addBlankCard: Card!
+  putKv(key: String!, value: String!): Boolean!
   recvSteps(instantiationId: String!, steps: String!): String!
   deleteCard(rowid: i54!): Boolean!
   shuffleCards: Boolean!

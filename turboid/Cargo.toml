@@ -12,6 +12,7 @@ quickcheck = "1"
 
 [dependencies]
 bs58 = "0.4"
+d-macro = "=0.1.0"
 ed25519-dalek = "1"
 multihash = {version = "0.13", default-features = false, features = ["std", "multihash-impl", "identity"]}
 rand = "0.8"
