@@ -139,6 +139,10 @@ impl Mutation {
   Ok(true)
  }
 
+ async fn get(key: String) -> FieldResult<String> {
+  Ok(d!(#? turbocafe::get_as_string(key))?)
+ }
+
  async fn recv_steps(instantiation_id: String, steps: String) -> FieldResult<String> {
   // let old_content =
   //  turbocafe::get_string(select!(Card "WHERE rowid = ?", rowid).unwrap().instantiation_id.unwrap())
