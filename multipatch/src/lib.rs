@@ -1,4 +1,6 @@
 const MAGIC_BSDIFF: u8 = 1;
+const _MAGIC_FOSSIL_DELTA: u8 = 2;
+const _MAGIC_PROSEMIRROR_BASIC: u8 = 3;
 
 /// Compares `old` and `new` and returns a multipatch blob that can transform old -> new.
 pub fn create<O: AsRef<[u8]>, N: AsRef<[u8]>>(old: O, new: N) -> anyhow::Result<Vec<u8>> {
