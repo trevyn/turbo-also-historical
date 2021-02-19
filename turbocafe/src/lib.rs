@@ -1,6 +1,5 @@
 // Turbocafe, the content-addressable file eyrie. :)
 
-use d_macro::*;
 use multihash::{Code::Blake3_256, MultihashDigest};
 use turbosql::{execute, select, Blob, Turbosql};
 

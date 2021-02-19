@@ -21,7 +21,7 @@ fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
  Ok(cx.string("hello node 2"))
 }
 
-async fn do_thing() {
+async fn _do_thing() {
  eprintln!("do thing");
  null_fut().await;
 }

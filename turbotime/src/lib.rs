@@ -1,6 +1,6 @@
 use i54_::i54;
 use std::convert::TryInto;
-use turbosql::{select, Turbosql};
+use turbosql::Turbosql;
 
 #[derive(thiserror::Error, Debug)]
 pub enum TurbotimeError {
