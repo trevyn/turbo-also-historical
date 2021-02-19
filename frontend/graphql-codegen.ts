@@ -30,7 +30,7 @@ export type Card = {
 export type Mutation = {
   __typename?: 'Mutation';
   addBlankCard: Card;
-  putKv: Scalars['Boolean'];
+  putKv: Scalars['String'];
   get: Scalars['String'];
   recvSteps: Scalars['String'];
   deleteCard: Scalars['Boolean'];
@@ -39,7 +39,7 @@ export type Mutation = {
 
 
 export type MutationPutKvArgs = {
-  key: Scalars['String'];
+  key?: Maybe<Scalars['String']>;
   value: Scalars['String'];
 };
 

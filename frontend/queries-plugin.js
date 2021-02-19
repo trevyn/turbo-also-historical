@@ -17,9 +17,9 @@ module.exports = {
      case "Subscription":
      case "Mutation":
       let queries = type.fields.map(field => {
-       let name = field.name;
+       // let name = field.name;
        let params1 = field.args.map(arg => {
-        return `$${arg.name}: ${arg.type.ofType.name}!`;
+        return `$${arg.name}: ${arg.type.ofType ? arg.type.ofType.name : arg.type.name}!`; // arg.type.ofType.name??
        });
        let params2 = field.args.map(arg => {
         return `${arg.name}: $${arg.name}`;

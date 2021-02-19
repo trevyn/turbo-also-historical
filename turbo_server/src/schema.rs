@@ -134,9 +134,10 @@ impl Mutation {
   Ok(card)
  }
 
- async fn put_kv(key: String, value: String) -> FieldResult<bool> {
-  d!(#? turbocafe::put_kv(key, value))?;
-  Ok(true)
+ async fn put_kv(key: Option<String>, value: String) -> FieldResult<String> {
+  let key = key.unwrap_or_else(turboid::random_id);
+  d!(#? turbocafe::put_kv(&key, value))?;
+  Ok(key)
  }
 
  async fn get(key: String) -> FieldResult<String> {
