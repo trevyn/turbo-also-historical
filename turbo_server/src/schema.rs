@@ -78,6 +78,10 @@ fn _query_impls() {
   async fn list_cards_short() -> FieldResult<Vec<ShortCard>> {
    Ok(select!(Vec<ShortCard> "rowid FROM card")?)
   }
+
+  async fn get(key: String) -> FieldResult<String> {
+   Ok(turbocafe::get_as_string(key)?)
+  }
  }
 
  #[graphql_object]
@@ -136,12 +140,8 @@ impl Mutation {
 
  async fn put_kv(key: Option<String>, value: String) -> FieldResult<String> {
   let key = key.unwrap_or_else(turboid::random_id);
-  d!(#? turbocafe::put_kv(&key, value))?;
+  turbocafe::put_kv(&key, value)?;
   Ok(key)
- }
-
- async fn get(key: String) -> FieldResult<String> {
-  Ok(d!(#? turbocafe::get_as_string(key))?)
  }
 
  async fn recv_steps(instantiation_id: String, steps: String) -> FieldResult<String> {
@@ -149,9 +149,9 @@ impl Mutation {
   //  turbocafe::get_string(select!(Card "WHERE rowid = ?", rowid).unwrap().instantiation_id.unwrap())
   //   .unwrap();
 
-  d!(#? turbocafe::put_hash(
-   r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
-  ))?;
+  turbocafe::put_hash(
+   r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#,
+  )?;
 
   let old_content = turbocafe::get_as_string(&instantiation_id).unwrap();
 

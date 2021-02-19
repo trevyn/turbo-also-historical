@@ -17,10 +17,6 @@ mutation putKv($key: String!, $value: String!) {
  putKv(key: $key, value: $value)
 }
 
-mutation get($key: String!) {
- get(key: $key)
-}
-
 mutation recvSteps($instantiationId: String!, $steps: String!) {
  recvSteps(instantiationId: $instantiationId, steps: $steps)
 }
@@ -53,6 +49,10 @@ query listCardsShort {
  {
   rowid
  }
+}
+
+query get($key: String!) {
+ get(key: $key)
 }
 
 query listCardsFull {

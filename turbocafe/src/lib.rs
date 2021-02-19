@@ -43,11 +43,11 @@ pub fn put_hash<U: AsRef<[u8]>>(content: U) -> Result<String, TurbocafeError> {
 }
 
 pub fn put_kv<S: AsRef<str>, U: AsRef<[u8]>>(key: S, content: U) -> Result<(), TurbocafeError> {
- if dbg!(execute!(
+ if execute!(
   "UPDATE _turbocafe_entry SET content = ? WHERE hash = ?",
   content.as_ref(),
   key.as_ref()
- ))?
+ )?
   == 0
  {
   _Turbocafe_Entry {

@@ -18,7 +18,6 @@ scalar i54
 type Mutation {
   addBlankCard: Card!
   putKv(key: String, value: String!): String!
-  get(key: String!): String!
   recvSteps(instantiationId: String!, steps: String!): String!
   deleteCard(rowid: i54!): Boolean!
   shuffleCards: Boolean!
@@ -26,6 +25,7 @@ type Mutation {
 
 type Query {
   listCardsShort: [ShortCard!]!
+  get(key: String!): String!
   listCardsFull: [Card!]!
 }
 
