@@ -21,8 +21,7 @@
 
  let theme =
   localStorage.theme === "dark" ||
-  (!("theme" in localStorage) &&
-   window.matchMedia("(prefers-color-scheme: dark)").matches)
+  (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
    ? "dark"
    : "light";
 
@@ -45,32 +44,36 @@
 
 <Button
  on:click={() => {
-  localStorage.theme = 'light';
-  theme = 'light';
- }}>
+  localStorage.theme = "light";
+  theme = "light";
+ }}
+>
  Light
 </Button>
 <Button
  on:click={() => {
-  localStorage.theme = 'dark';
-  theme = 'dark';
- }}>
+  localStorage.theme = "dark";
+  theme = "dark";
+ }}
+>
  Dark
 </Button>
 
 <Button
  on:click={async () => {
   await addBlankCard();
-  $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
- }}>
+  $listCardsFull.context = { requestPolicy: "cache-and-network", forceUpdate: Date.now() };
+ }}
+>
  Add Card
 </Button>
 
 <Button
  on:click={async () => {
   await shuffleCards();
-  $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
- }}>
+  $listCardsFull.context = { requestPolicy: "cache-and-network", forceUpdate: Date.now() };
+ }}
+>
  Shuffle Cards
 </Button>
 
@@ -85,16 +88,17 @@
   {#each $listCardsFull.data.listCardsFull as card (card.rowid)}
    <Card
     {card}
-    on:changecontent={(steps) => {
+    on:changecontent={steps => {
      recvSteps({
-      instantiationId: 'gW1agQGSbsxM4B7F5CSFGo5y2XD9JpMxoEGwrJZCvApRso',
+      instantiationId: "gW1agQGSbsxM4B7F5CSFGo5y2XD9JpMxoEGwrJZCvApRso",
       steps: steps.detail,
      });
     }}
-    on:delete={(event) => {
+    on:delete={event => {
      deleteCard({ rowid: event.detail.rowid });
-     $listCardsFull.context = { requestPolicy: 'cache-and-network', forceUpdate: Date.now() };
-    }} />
+     $listCardsFull.context = { requestPolicy: "cache-and-network", forceUpdate: Date.now() };
+    }}
+   />
   {/each}
  </ul>
 {/if}
