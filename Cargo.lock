@@ -2176,8 +2176,11 @@ dependencies = [
 name = "turboid"
 version = "0.0.0"
 dependencies = [
+ "bs58",
  "ed25519-dalek",
+ "multihash",
  "quickcheck",
+ "rand 0.8.3",
 ]
 
 [[package]]

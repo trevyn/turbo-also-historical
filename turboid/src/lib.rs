@@ -1,8 +1,16 @@
+use multihash::{Code::Identity, MultihashDigest};
+
+pub fn random_id() -> String {
+ let data: [u8; 32] = rand::random();
+ bs58::encode(Identity.digest(&data).to_bytes()).into_string()
+}
+
 #[cfg(test)]
 mod tests {
  #[test]
  fn it_works() {
   assert_eq!(2 + 2, 4);
+  println!("{:#?}", super::random_id());
  }
 
  fn reverse<T: Clone>(xs: &[T]) -> Vec<T> {
