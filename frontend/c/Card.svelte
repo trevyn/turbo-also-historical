@@ -112,12 +112,12 @@
   <div class="flex-1 text-gray-300 dark:text-gray-700 text-xs">
    Created
    {card.createdTime &&
-    `${DateTime.fromSeconds(card.createdTime).toRelative()} (${DateTime.fromSeconds(
+    `${DateTime.fromMillis(card.createdTime).toRelative()} (${DateTime.fromMillis(
      card.createdTime
     ).toFormat("MMM d, yyyy")})`}<br />
    Modified
    {card.modifiedTime &&
-    `${DateTime.fromSeconds(card.modifiedTime).toRelative()} (${DateTime.fromSeconds(
+    `${DateTime.fromMillis(card.modifiedTime).toRelative()} (${DateTime.fromMillis(
      card.modifiedTime
     ).toFormat("MMM d, yyyy")})`}
   </div>
