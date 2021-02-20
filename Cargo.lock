@@ -2171,6 +2171,7 @@ dependencies = [
  "d-macro",
  "multihash",
  "thiserror",
+ "turboid",
  "turbosql",
 ]
 

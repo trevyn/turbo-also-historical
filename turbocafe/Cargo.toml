@@ -12,4 +12,5 @@ bs58 = "0.4"
 d-macro = "=0.1.0"
 multihash = {version = "0.13", default-features = false, features = ["std", "multihash-impl", "blake3"]}
 thiserror = "1"
+turboid = {path = "../turboid"}
 turbosql = "0.1"

@@ -120,6 +120,8 @@ impl Mutation {
    instantiation_id: Some(new_hash),
    created_time: Some(now),
    modified_time: Some(now),
+   content: Some(turbocafe::put_kv_new("")?),
+   answer: Some(turbocafe::put_kv_new("")?),
    ..Default::default()
   };
 

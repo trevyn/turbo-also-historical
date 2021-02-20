@@ -42,17 +42,20 @@ pub fn put_hash<U: AsRef<[u8]>>(content: U) -> Result<String, TurbocafeError> {
  Ok(hash)
 }
 
+pub fn put_kv_new<U: AsRef<[u8]>>(content: U) -> Result<String, TurbocafeError> {
+ let key = turboid::random_id();
+ put_kv(&key, content)?;
+ Ok(key)
+}
+
 pub fn put_kv<S: AsRef<str>, U: AsRef<[u8]>>(key: S, content: U) -> Result<(), TurbocafeError> {
- if execute!(
-  "UPDATE _turbocafe_entry SET content = ? WHERE hash = ?",
-  content.as_ref(),
-  key.as_ref()
- )?
-  == 0
- {
+ let key = key.as_ref();
+ let content = content.as_ref();
+
+ if execute!("UPDATE _turbocafe_entry SET content = ? WHERE hash = ?", content, key)? == 0 {
   _Turbocafe_Entry {
-   hash: Some(key.as_ref().to_owned()),
-   content: Some(content.as_ref().to_owned()),
+   hash: Some(key.to_owned()),
+   content: Some(content.to_owned()),
    ..Default::default()
   }
   .insert()?;
