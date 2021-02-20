@@ -1,11 +1,13 @@
 <script lang="ts">
+ export let card: gql.Card;
+
  import { DateTime } from "luxon";
  import { createEventDispatcher } from "svelte";
  const dispatch = createEventDispatcher();
 
  import * as gql from "../graphql-codegen";
 
- export let card: gql.Card;
+ import Editor from "./Editor.svelte";
 
  import ProsemirrorEditor from "../prosemirror-svelte/ProsemirrorEditor.svelte";
  import { createRichTextEditor, toHTML, toPlainText } from "../prosemirror-svelte/state";
@@ -62,25 +64,7 @@
 >
  <div class="w-full flex justify-center p-6 space-x-6">
   <div class="flex-1 text-gray-500 text-sm prose">
-   <ProsemirrorEditor
-    placeholder="Go ahead and type something"
-    {editorState}
-    bind:view
-    on:transaction={event => {
-     console.log("transaction", event);
-     editorState = event.detail.editorState;
-     console.log(JSON.stringify(sendableSteps(editorState)?.steps.map(s => s.toJSON())));
-    }}
-    on:change={event => {
-     console.log("onchange", event);
-     editorState = event.detail.editorState;
-     let steps = sendableSteps(editorState)?.steps;
-     dispatch("changecontent", JSON.stringify(steps.map(s => s.toJSON())));
-     view.dispatch(receiveTransaction(editorState, steps, [999]));
-
-     console.log(JSON.stringify(sendableSteps(editorState)?.steps.map(s => s.toJSON())));
-    }}
-   />
+   <Editor placeholder="Go ahead and type something" turbocafeId={card.content} />
   </div>
  </div>
  <div class="w-full flex justify-center p-6 space-x-6">
