@@ -2193,8 +2193,7 @@ version = "0.0.0"
 [[package]]
 name = "turbosql"
 version = "0.1.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f6f13bad9f3767c56dc579f2c86a73d8bfbe3ca6201f93c84bfc4a7527aa7e72"
+source = "git+https://github.com/trevyn/turbosql?branch=main#a47d445770f4bb07b8b33f6f5f49e80e697c7d6b"
 dependencies = [
  "anyhow",
  "cfg-if 1.0.0",
@@ -2211,8 +2210,7 @@ dependencies = [
 [[package]]
 name = "turbosql-impl"
 version = "0.1.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "104d8c42793fd8bb97eb20492f7f7704664af6a9b7b46bcca019300349905d1b"
+source = "git+https://github.com/trevyn/turbosql?branch=main#a47d445770f4bb07b8b33f6f5f49e80e697c7d6b"
 dependencies = [
  "fs2",
  "indoc",
