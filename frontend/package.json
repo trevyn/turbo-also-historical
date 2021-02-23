@@ -9,7 +9,8 @@
   "dev": "snowpack dev",
   "graphql-codegen": "node run-codegen.mjs && npx get-graphql-schema http://localhost:8080/graphql -h Authorization=\"Bearer foo\" > ./graphql.schema",
   "build": "snowpack build",
-  "svelte-check": "svelte-check"
+  "svelte-check": "svelte-check",
+  "reinstall-deps": "rm -rf node_modules && rm -rf package-lock.json && npm install"
  },
  "devDependencies": {
   "@graphql-codegen/cli": "^1.20.1",
@@ -36,7 +37,7 @@
   "postcss": "^8.2.6",
   "postcss-cli": "^8.3.1",
   "prosemirror-collab": "^1.2.2",
-  "prosemirror-commands": "^1.1.6",
+  "prosemirror-commands": "^1.1.7",
   "prosemirror-dropcursor": "^1.3.3",
   "prosemirror-gapcursor": "^1.1.5",
   "prosemirror-history": "^1.1.3",
@@ -46,8 +47,8 @@
   "prosemirror-schema-basic": "^1.1.2",
   "prosemirror-schema-list": "^1.1.4",
   "prosemirror-state": "^1.3.4",
-  "prosemirror-view": "^1.17.6",
-  "snowpack": "^3.0.11",
+  "prosemirror-view": "^1.17.7",
+  "snowpack": "^3.0.12",
   "subscriptions-transport-ws": "^0.9.18",
   "svelte": "^3.32.3",
   "svelte-check": "^1.1.35",

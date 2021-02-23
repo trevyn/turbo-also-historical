@@ -6,13 +6,14 @@
   "url": "https://github.com/trevyn/turbo"
  },
  "scripts": {
-  "build": "node esbuild-run.js"
+  "build": "node esbuild-run.js",
+  "reinstall-deps": "rm -rf node_modules && rm -rf package-lock.json && npm install"
  },
  "devDependencies": {
   "@types/prosemirror-collab": "^1.1.1",
   "@types/prosemirror-schema-basic": "^1.0.2",
   "@types/prosemirror-schema-list": "^1.0.3",
-  "esbuild": "^0.8.48",
+  "esbuild": "^0.8.51",
   "prosemirror-collab": "^1.2.2",
   "prosemirror-model": "^1.13.3",
   "prosemirror-schema-basic": "^1.1.2",
