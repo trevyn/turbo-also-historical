@@ -15,6 +15,23 @@
 
  import { corePlugins } from "../prosemirror-svelte/helpers/plugins";
  import { richTextPlugins } from "../prosemirror-svelte/helpers";
+ // import { createRichTextEditor, toHTML, toPlainText } from "../prosemirror-svelte/state";
+ // let editorState = createRichTextEditor(card.content);
+ // console.log(JSON.stringify(editorState.toJSON()));
+
+ // let view = new EditorView(place, {
+ //  state: EditorState.create({
+ //   doc: authority.doc,
+ //   plugins: [collab.collab({ version: authority.steps.length })],
+ //  }),
+ //  dispatchTransaction(transaction) {
+ //   let newState = view.state.apply(transaction);
+ //   view.updateState(newState);
+ //   let sendable = collab.sendableSteps(newState);
+ //   if (sendable)
+ //    authority.receiveSteps(sendable.version, sendable.steps, sendable.clientID);
+ //  },
+ // });
 
  let editorState: EditorState;
 
@@ -24,10 +41,8 @@
  const getQuery = query(operationStore(gql.GetDocument, { key: turbocafeId }));
 
  let view: EditorView;
- // console.log("id is:", turbocafeId);
 
  $: if ($getQuery.data) {
-  // console.log("data is:", getQuery.data.get);
   const parser = DOMParser.fromSchema(schema);
   const node = document.createElement("div");
   node.innerHTML = getQuery.data.get;
@@ -53,6 +68,8 @@
  on:change={event => {
   console.log("onchange", event);
   editorState = event.detail.editorState;
+  // dispatch("change", toHTML(editorState));
+
   let steps = sendableSteps(editorState)?.steps;
   dispatch("changecontent", JSON.stringify(steps.map(s => s.toJSON())));
   view.dispatch(receiveTransaction(editorState, steps, [999]));

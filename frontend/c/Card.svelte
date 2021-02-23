@@ -9,62 +9,6 @@
 
  import Editor from "./Editor.svelte";
 
- // import ProsemirrorEditor from "../prosemirror-svelte/ProsemirrorEditor.svelte";
- // import { createRichTextEditor, toHTML, toPlainText } from "../prosemirror-svelte/state";
-
- // import schema from "./prosemirror-schema";
- // import { collab, receiveTransaction, sendableSteps, getVersion } from "prosemirror-collab";
- // import { DOMParser, DOMSerializer } from "prosemirror-model";
- // import { EditorState, TextSelection } from "prosemirror-state";
-
- // import { corePlugins } from "../prosemirror-svelte/helpers/plugins";
- // import { richTextPlugins } from "../prosemirror-svelte/helpers";
-
- // let editorState = createRichTextEditor(card.content);
-
- // const parser = DOMParser.fromSchema(schema);
- // const node = document.createElement("div");
- // node.innerHTML = card.content;
- // const doc = parser.parse(node);
-
- // console.log(JSON.stringify(doc.toJSON()));
-
- // let editorState = EditorState.create({
- //  schema,
- //  doc,
- //  plugins: [...corePlugins, ...richTextPlugins, collab({ clientID: 999 })],
- // });
-
- // console.log(JSON.stringify(editorState.toJSON()));
-
- // let view = new EditorView(place, {
- //  state: EditorState.create({
- //   doc: authority.doc,
- //   plugins: [collab.collab({ version: authority.steps.length })],
- //  }),
- //  dispatchTransaction(transaction) {
- //   let newState = view.state.apply(transaction);
- //   view.updateState(newState);
- //   let sendable = collab.sendableSteps(newState);
- //   if (sendable)
- //    authority.receiveSteps(sendable.version, sendable.steps, sendable.clientID);
- //  },
- // });
-
- //  <ProsemirrorEditor
- //  placeholder="Answer goes here"
- //  editorState={answerEditorState}
- //  on:transaction={event => {
- //   answerEditorState = event.detail.editorState;
- //  }}
- //  on:change={event => {
- //   answerEditorState = event.detail.editorState;
- //   dispatch("changeanswer", toHTML(answerEditorState));
- //  }}
- // />
-
- // let answerEditorState = createRichTextEditor(card.answer);
-
  let revealed = false;
  let view;
 
