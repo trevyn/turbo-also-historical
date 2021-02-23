@@ -9,33 +9,33 @@
 
  import Editor from "./Editor.svelte";
 
- import ProsemirrorEditor from "../prosemirror-svelte/ProsemirrorEditor.svelte";
- import { createRichTextEditor, toHTML, toPlainText } from "../prosemirror-svelte/state";
+ // import ProsemirrorEditor from "../prosemirror-svelte/ProsemirrorEditor.svelte";
+ // import { createRichTextEditor, toHTML, toPlainText } from "../prosemirror-svelte/state";
 
- import schema from "./prosemirror-schema";
- import { collab, receiveTransaction, sendableSteps, getVersion } from "prosemirror-collab";
- import { DOMParser, DOMSerializer } from "prosemirror-model";
- import { EditorState, TextSelection } from "prosemirror-state";
+ // import schema from "./prosemirror-schema";
+ // import { collab, receiveTransaction, sendableSteps, getVersion } from "prosemirror-collab";
+ // import { DOMParser, DOMSerializer } from "prosemirror-model";
+ // import { EditorState, TextSelection } from "prosemirror-state";
 
- import { corePlugins } from "../prosemirror-svelte/helpers/plugins";
- import { richTextPlugins } from "../prosemirror-svelte/helpers";
+ // import { corePlugins } from "../prosemirror-svelte/helpers/plugins";
+ // import { richTextPlugins } from "../prosemirror-svelte/helpers";
 
  // let editorState = createRichTextEditor(card.content);
 
- const parser = DOMParser.fromSchema(schema);
- const node = document.createElement("div");
- node.innerHTML = card.content;
- const doc = parser.parse(node);
+ // const parser = DOMParser.fromSchema(schema);
+ // const node = document.createElement("div");
+ // node.innerHTML = card.content;
+ // const doc = parser.parse(node);
 
- console.log(JSON.stringify(doc.toJSON()));
+ // console.log(JSON.stringify(doc.toJSON()));
 
- let editorState = EditorState.create({
-  schema,
-  doc,
-  plugins: [...corePlugins, ...richTextPlugins, collab({ clientID: 999 })],
- });
+ // let editorState = EditorState.create({
+ //  schema,
+ //  doc,
+ //  plugins: [...corePlugins, ...richTextPlugins, collab({ clientID: 999 })],
+ // });
 
- console.log(JSON.stringify(editorState.toJSON()));
+ // console.log(JSON.stringify(editorState.toJSON()));
 
  // let view = new EditorView(place, {
  //  state: EditorState.create({
@@ -51,12 +51,24 @@
  //  },
  // });
 
- let answerEditorState = createRichTextEditor(card.answer);
+ //  <ProsemirrorEditor
+ //  placeholder="Answer goes here"
+ //  editorState={answerEditorState}
+ //  on:transaction={event => {
+ //   answerEditorState = event.detail.editorState;
+ //  }}
+ //  on:change={event => {
+ //   answerEditorState = event.detail.editorState;
+ //   dispatch("changeanswer", toHTML(answerEditorState));
+ //  }}
+ // />
+
+ // let answerEditorState = createRichTextEditor(card.answer);
 
  let revealed = false;
  let view;
 
- if (toPlainText(answerEditorState).length === 0) revealed = true;
+ // if (toPlainText(answerEditorState).length === 0) revealed = true;
 </script>
 
 <li
@@ -77,17 +89,7 @@
    </div>
   {:else}
    <div class="flex-1 text-gray-500 text-sm prose">
-    <ProsemirrorEditor
-     placeholder="Answer goes here"
-     editorState={answerEditorState}
-     on:transaction={event => {
-      answerEditorState = event.detail.editorState;
-     }}
-     on:change={event => {
-      answerEditorState = event.detail.editorState;
-      dispatch("changeanswer", toHTML(answerEditorState));
-     }}
-    />
+    <Editor placeholder="Answer goes here" turbocafeId={card.answer} />
    </div>
   {/if}
  </div>
@@ -122,7 +124,8 @@
     <span
      href="#"
      on:mousedown|capture|stopPropagation|preventDefault={() =>
-      console.log(editorState.selection.content().content.toJSON())}
+      // console.log(editorState.selection.content().content.toJSON())
+      false}
      class="cursor-pointer relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 dark:text-gray-400 font-medium border-t border-l border-gray-200 dark:border-gray-800 rounded-br-lg hover:bg-gray-50 dark:hover:bg-gray-800"
     >
      <span class="ml-3">Extract Selection</span>
