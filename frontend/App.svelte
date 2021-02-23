@@ -1,13 +1,11 @@
 <script lang="ts">
- import "./index.css";
- import { initTurboClient } from "./src/TurboClient.svelte";
- import Button from "./c/Button.svelte";
- import Card from "./c/Card.svelte";
-
  import * as gql from "./graphql-codegen";
  import { operationStore, query, mutation, subscription } from "@urql/svelte";
-
+ import "./index.css";
+ import { initTurboClient } from "./src/TurboClient.svelte";
  initTurboClient();
+ import Button from "./c/Button.svelte";
+ import Card from "./c/Card.svelte";
 
  const listCardsFull = query(operationStore(gql.ListCardsFullDocument));
  const addBlankCard = mutation(operationStore(gql.AddBlankCardDocument));
@@ -19,11 +17,15 @@
  //  (messages = [], data) => [data.cardStream, ...messages]
  // );
 
+ // ---
+
  let theme =
   localStorage.theme === "dark" ||
   (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
    ? "dark"
    : "light";
+
+ // ---
 
  $: if (theme === "dark") {
   document.documentElement.classList.add("dark");
@@ -50,6 +52,7 @@
 >
  Light
 </Button>
+
 <Button
  on:click={() => {
   localStorage.theme = "dark";
