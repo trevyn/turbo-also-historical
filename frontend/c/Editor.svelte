@@ -1,20 +1,42 @@
 <script lang="ts">
- export let placeholder: string;
- export let turbocafeId: string;
-
+ import * as gql from "../graphql-codegen";
  import { createEventDispatcher } from "svelte";
  const dispatch = createEventDispatcher();
-
+ import { operationStore, query, mutation, subscription } from "@urql/svelte";
  import ProsemirrorEditor from "../prosemirror-svelte/ProsemirrorEditor.svelte";
-
+ import { corePlugins } from "../prosemirror-svelte/helpers/plugins";
+ import { richTextPlugins } from "../prosemirror-svelte/helpers";
  import schema from "./prosemirror-schema";
  import { collab, receiveTransaction, sendableSteps, getVersion } from "prosemirror-collab";
  import { DOMParser, DOMSerializer } from "prosemirror-model";
  import { EditorState, TextSelection } from "prosemirror-state";
  import { EditorView } from "prosemirror-view";
 
- import { corePlugins } from "../prosemirror-svelte/helpers/plugins";
- import { richTextPlugins } from "../prosemirror-svelte/helpers";
+ // ---
+
+ export let placeholder: string;
+ export let turbocafeId: string;
+
+ let editorState: EditorState;
+ let view: EditorView;
+
+ const getQuery = query(operationStore(gql.GetDocument, { key: turbocafeId }));
+
+ // ---
+
+ $: if ($getQuery.data) {
+  const parser = DOMParser.fromSchema(schema);
+  const node = document.createElement("div");
+  node.innerHTML = getQuery.data.get;
+  const doc = parser.parse(node);
+
+  editorState = EditorState.create({
+   schema,
+   doc,
+   plugins: [...corePlugins, ...richTextPlugins, collab({ clientID: 999 })],
+  });
+ }
+
  // import { createRichTextEditor, toHTML, toPlainText } from "../prosemirror-svelte/state";
  // let editorState = createRichTextEditor(card.content);
  // console.log(JSON.stringify(editorState.toJSON()));
@@ -32,28 +54,6 @@
  //    authority.receiveSteps(sendable.version, sendable.steps, sendable.clientID);
  //  },
  // });
-
- let editorState: EditorState;
-
- import { operationStore, query, mutation, subscription } from "@urql/svelte";
- import * as gql from "../graphql-codegen";
-
- const getQuery = query(operationStore(gql.GetDocument, { key: turbocafeId }));
-
- let view: EditorView;
-
- $: if ($getQuery.data) {
-  const parser = DOMParser.fromSchema(schema);
-  const node = document.createElement("div");
-  node.innerHTML = getQuery.data.get;
-  const doc = parser.parse(node);
-
-  editorState = EditorState.create({
-   schema,
-   doc,
-   plugins: [...corePlugins, ...richTextPlugins, collab({ clientID: 999 })],
-  });
- }
 </script>
 
 <ProsemirrorEditor

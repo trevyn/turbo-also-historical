@@ -1,16 +1,18 @@
 <script lang="ts">
- export let card: gql.Card;
-
- import { DateTime } from "luxon";
+ import * as gql from "../graphql-codegen";
  import { createEventDispatcher } from "svelte";
  const dispatch = createEventDispatcher();
-
- import * as gql from "../graphql-codegen";
+ import { DateTime } from "luxon";
 
  import Editor from "./Editor.svelte";
 
+ // ---
+
+ export let card: gql.Card;
+
  let revealed = false;
- let view;
+
+ // ---
 
  // if (toPlainText(answerEditorState).length === 0) revealed = true;
 </script>
