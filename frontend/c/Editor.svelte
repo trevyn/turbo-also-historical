@@ -1,6 +1,6 @@
 <script lang="ts">
- export let placeholder;
- export let turbocafeId;
+ export let placeholder: string;
+ export let turbocafeId: string;
 
  import { createEventDispatcher } from "svelte";
  const dispatch = createEventDispatcher();
@@ -11,18 +11,19 @@
  import { collab, receiveTransaction, sendableSteps, getVersion } from "prosemirror-collab";
  import { DOMParser, DOMSerializer } from "prosemirror-model";
  import { EditorState, TextSelection } from "prosemirror-state";
+ import { EditorView } from "prosemirror-view";
 
  import { corePlugins } from "../prosemirror-svelte/helpers/plugins";
  import { richTextPlugins } from "../prosemirror-svelte/helpers";
 
- let editorState;
+ let editorState: EditorState;
 
  import { operationStore, query, mutation, subscription } from "@urql/svelte";
  import * as gql from "../graphql-codegen";
 
  const getQuery = query(operationStore(gql.GetDocument, { key: turbocafeId }));
 
- let view;
+ let view: EditorView;
  // console.log("id is:", turbocafeId);
 
  $: if ($getQuery.data) {
