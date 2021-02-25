@@ -11,7 +11,7 @@
   "url": "https://github.com/trevyn/turbo"
  },
  "scripts": {
-  "start": "tsc && electron-build-env neon build && electron-forge start",
+  "start": "tsc && electron-build-env neon build && RUST_LOG=info electron-forge start",
   "build-neon": "tsc && electron-build-env neon build",
   "build-neon-release": "tsc && electron-build-env neon build --release",
   "make": "electron-forge make",
