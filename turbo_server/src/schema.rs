@@ -5,6 +5,7 @@ use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
 use once_cell::sync::Lazy;
 use std::time::Duration;
 use std::{convert::TryInto, future::Future, pin::Pin, sync::Mutex};
+use tokio::task::spawn_blocking;
 use turbosql::{execute, select, Blob, Turbosql};
 
 pub type ApplyStepsFn =
@@ -87,21 +88,26 @@ fn _query_impls() {
  #[graphql_object]
  impl Query {
   async fn list_cards_full() -> FieldResult<Vec<Card>> {
-   Ok(select!(Vec<Card>
-    "
-     WITH split(word, str) AS (
-      SELECT '', list FROM cardlist
-      UNION ALL SELECT
-       substr(str, 0, instr(str, ',')),
-       substr(str, instr(str, ',') + 1)
-       FROM split WHERE str != ''
+   Ok(
+    spawn_blocking(move || {
+     select!(Vec<Card>
+      "
+       WITH split(word, str) AS (
+        SELECT '', list FROM cardlist
+        UNION ALL SELECT
+         substr(str, 0, instr(str, ',')),
+         substr(str, instr(str, ',') + 1)
+         FROM split WHERE str != ''
+       )
+       SELECT DISTINCT card.*
+        FROM split
+        LEFT JOIN card ON card.rowid = word
+        WHERE word != '' AND card.rowid IS NOT NULL
+      "
      )
-     SELECT DISTINCT card.*
-      FROM split
-      LEFT JOIN card ON card.rowid = word
-      WHERE word != '' AND card.rowid IS NOT NULL
-    "
-   )?)
+    })
+    .await??,
+   )
   }
  }
 }
