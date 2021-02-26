@@ -299,28 +299,26 @@ dependencies = [
 
 [[package]]
 name = "crossbeam-epoch"
-version = "0.9.2"
+version = "0.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d60ab4a8dba064f2fbb5aa270c28da5cf4bbd0e72dae1140a6b0353a779dbe00"
+checksum = "2584f639eb95fea8c798496315b297cf81b9b58b6d30ab066a75455333cf4b12"
 dependencies = [
  "cfg-if 1.0.0",
  "crossbeam-utils",
  "lazy_static",
- "loom",
  "memoffset",
  "scopeguard",
 ]
 
 [[package]]
 name = "crossbeam-utils"
-version = "0.8.2"
+version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bae8f328835f8f5a6ceb6a7842a7f2d0c03692adb5c889347235d59194731fe3"
+checksum = "e7e9d99fa91428effe99c5c6d4634cdeba32b8cf784fc428a2a687f61a952c49"
 dependencies = [
  "autocfg",
  "cfg-if 1.0.0",
  "lazy_static",
- "loom",
 ]
 
 [[package]]
@@ -630,19 +628,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "generator"
-version = "0.6.24"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a9fed24fd1e18827652b4d55652899a1e9da8e54d91624dc3437a5bc3a9f9a9c"
-dependencies = [
- "cc",
- "libc",
- "log",
- "rustversion",
- "winapi 0.3.9",
-]
-
-[[package]]
 name = "generic-array"
 version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -914,8 +899,7 @@ checksum = "dd25036021b0de88a0aff6b850051563c6516d0bf53f8638938edbb9de732736"
 [[package]]
 name = "juniper"
 version = "0.15.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9ce9122e520b17ce7593f628d2b440318a5fd77b8923b1918e59ec28cf2c2815"
+source = "git+https://github.com/trevyn/juniper?branch=juniper-warp-log-body#4cc20096306c98b1039adffaf8dc1bf8a6cc02fd"
 dependencies = [
  "async-trait",
  "bson",
@@ -935,8 +919,7 @@ dependencies = [
 [[package]]
 name = "juniper_codegen"
 version = "0.15.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2aad9bb6febeb76eeb97aa39b1ec4e640ee0eb37db98379f89972b2d0da85d18"
+source = "git+https://github.com/trevyn/juniper?branch=juniper-warp-log-body#4cc20096306c98b1039adffaf8dc1bf8a6cc02fd"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",
@@ -947,8 +930,7 @@ dependencies = [
 [[package]]
 name = "juniper_graphql_ws"
 version = "0.2.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "663ccde56be908aa437b4af31b21bed8779e3426218332a995219121931fef57"
+source = "git+https://github.com/trevyn/juniper?branch=juniper-warp-log-body#4cc20096306c98b1039adffaf8dc1bf8a6cc02fd"
 dependencies = [
  "juniper",
  "juniper_subscriptions",
@@ -959,8 +941,7 @@ dependencies = [
 [[package]]
 name = "juniper_subscriptions"
 version = "0.15.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dcb4fae295ace2ece613f68cda8abb3a1364c25b842e7943699594d91c20c03c"
+source = "git+https://github.com/trevyn/juniper?branch=juniper-warp-log-body#4cc20096306c98b1039adffaf8dc1bf8a6cc02fd"
 dependencies = [
  "futures",
  "juniper",
@@ -969,14 +950,14 @@ dependencies = [
 [[package]]
 name = "juniper_warp"
 version = "0.6.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "878cd0ef7435e9a06f8dc9aa8cf4815e6a143ab456ea5f969661046854226f43"
+source = "git+https://github.com/trevyn/juniper?branch=juniper-warp-log-body#4cc20096306c98b1039adffaf8dc1bf8a6cc02fd"
 dependencies = [
  "anyhow",
  "bytes 0.5.6",
  "futures",
  "juniper",
  "juniper_graphql_ws",
+ "log",
  "serde",
  "serde_json",
  "thiserror",
@@ -1043,17 +1024,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "51b9bbe6c47d51fc3e1a9b945965946b4c44142ab8792c50835a980d362c2710"
 dependencies = [
  "cfg-if 1.0.0",
-]
-
-[[package]]
-name = "loom"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d44c73b4636e497b4917eb21c33539efa3816741a2d3ff26c6316f1b529481a4"
-dependencies = [
- "cfg-if 1.0.0",
- "generator",
- "scoped-tls",
 ]
 
 [[package]]
@@ -1738,12 +1708,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rustversion"
-version = "1.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cb5d2a036dc6d2d8fd16fde3498b04306e29bd193bf306a57427019b823d5acd"
-
-[[package]]
 name = "ryu"
 version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1840,9 +1804,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.62"
+version = "1.0.63"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ea1c6153794552ea7cf7cf63b1231a25de00ec90db326ba6264440fa08e31486"
+checksum = "43535db9747a4ba938c0ce0a98cc631a46ebf943c9e1d604e091df6007620bf6"
 dependencies = [
  "indexmap",
  "itoa",
