@@ -115,6 +115,47 @@ output_generated_schema_for_your_information_do_not_edit = '''
     filesize INTEGER
   )
 '''
+[output_generated_tables_do_not_edit._turbocafe_entry]
+name = '_turbocafe_entry'
+
+[[output_generated_tables_do_not_edit._turbocafe_entry.columns]]
+name = 'rowid'
+rust_type = 'Option < i64 >'
+sql_type = 'INTEGER PRIMARY KEY'
+
+[[output_generated_tables_do_not_edit._turbocafe_entry.columns]]
+name = 'hash'
+rust_type = 'Option < String >'
+sql_type = 'TEXT'
+
+[[output_generated_tables_do_not_edit._turbocafe_entry.columns]]
+name = 'content'
+rust_type = 'Option < Blob >'
+sql_type = 'BLOB'
+
+[output_generated_tables_do_not_edit._turbotime_entry]
+name = '_turbotime_entry'
+
+[[output_generated_tables_do_not_edit._turbotime_entry.columns]]
+name = 'rowid'
+rust_type = 'Option < i64 >'
+sql_type = 'INTEGER PRIMARY KEY'
+
+[[output_generated_tables_do_not_edit._turbotime_entry.columns]]
+name = 'timestamp'
+rust_type = 'Option < i54 >'
+sql_type = 'INTEGER'
+
+[[output_generated_tables_do_not_edit._turbotime_entry.columns]]
+name = 'instantiation_id'
+rust_type = 'Option < String >'
+sql_type = 'TEXT'
+
+[[output_generated_tables_do_not_edit._turbotime_entry.columns]]
+name = 'steps'
+rust_type = 'Option < String >'
+sql_type = 'TEXT'
+
 [output_generated_tables_do_not_edit.card]
 name = 'card'
 
@@ -162,24 +203,6 @@ sql_type = 'INTEGER'
 name = 'next_display_time'
 rust_type = 'Option < i54 >'
 sql_type = 'INTEGER'
-
-[output_generated_tables_do_not_edit.log]
-name = 'log'
-
-[[output_generated_tables_do_not_edit.log.columns]]
-name = 'rowid'
-rust_type = 'Option < i54 >'
-sql_type = 'INTEGER PRIMARY KEY'
-
-[[output_generated_tables_do_not_edit.log.columns]]
-name = 'entry'
-rust_type = 'Option < String >'
-sql_type = 'TEXT'
-
-[[output_generated_tables_do_not_edit.log.columns]]
-name = 'created_time'
-rust_type = 'Option < f64 >'
-sql_type = 'REAL'
 
 [output_generated_tables_do_not_edit.cardlist]
 name = 'cardlist'
@@ -236,3 +259,21 @@ sql_type = 'INTEGER'
 name = 'data_i54_2'
 rust_type = 'Option < i54 >'
 sql_type = 'INTEGER'
+
+[output_generated_tables_do_not_edit.log]
+name = 'log'
+
+[[output_generated_tables_do_not_edit.log.columns]]
+name = 'rowid'
+rust_type = 'Option < i54 >'
+sql_type = 'INTEGER PRIMARY KEY'
+
+[[output_generated_tables_do_not_edit.log.columns]]
+name = 'entry'
+rust_type = 'Option < String >'
+sql_type = 'TEXT'
+
+[[output_generated_tables_do_not_edit.log.columns]]
+name = 'created_time'
+rust_type = 'Option < f64 >'
+sql_type = 'REAL'
