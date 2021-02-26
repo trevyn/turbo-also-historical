@@ -13,11 +13,11 @@ members = [
 
 [patch.crates-io]
 # i54_ = {path = "/Users/eden/i54"}
-# turbosql = {path = "../turbosql/turbosql"}
 juniper = {git = "https://github.com/trevyn/juniper", branch = "juniper-warp-log-body"}
 juniper_codegen = {git = "https://github.com/trevyn/juniper", branch = "juniper-warp-log-body"}
 juniper_graphql_ws = {git = "https://github.com/trevyn/juniper", branch = "juniper-warp-log-body"}
 juniper_warp = {git = "https://github.com/trevyn/juniper", branch = "juniper-warp-log-body"}
+# turbosql = {path = "../turbosql/turbosql"}
 turbosql = {git = "https://github.com/trevyn/turbosql", branch = "main"}
 
 [profile.release]

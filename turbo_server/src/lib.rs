@@ -3,6 +3,7 @@ use std::sync::Arc;
 use warp::{http, Filter};
 
 mod asset_server;
+mod proc_migrations;
 mod schema;
 
 pub use schema::rust_log;
@@ -16,6 +17,8 @@ pub async fn run(apply_steps: ApplyStepsFn) {
  *APPLY_STEPS_FN.lock().unwrap() = Some(apply_steps);
  env_logger::Builder::from_default_env().format_timestamp_millis().init();
  dbg!(env!("RUST_VERSION"));
+
+ proc_migrations::run_proc_migrations();
 
  let log = warp::log("turbo_server");
 
