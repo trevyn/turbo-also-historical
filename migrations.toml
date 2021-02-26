@@ -60,6 +60,10 @@ migrations_append_only = [
   'ALTER TABLE _turbotime_entry ADD COLUMN timestamp INTEGER',
   'ALTER TABLE _turbotime_entry ADD COLUMN instantiation_id TEXT',
   'ALTER TABLE _turbotime_entry ADD COLUMN steps TEXT',
+  'DROP TABLE log',
+  'CREATE TABLE log (rowid INTEGER PRIMARY KEY)',
+  'ALTER TABLE log ADD COLUMN entry TEXT',
+  'ALTER TABLE log ADD COLUMN created_time INTEGER',
 ]
 output_generated_schema_for_your_information_do_not_edit = '''
   CREATE TABLE "card" (
@@ -105,7 +109,7 @@ output_generated_schema_for_your_information_do_not_edit = '''
   CREATE TABLE log (
     rowid INTEGER PRIMARY KEY,
     entry TEXT,
-    created_time REAL
+    created_time INTEGER
   )
   CREATE TABLE pdf (
     rowid INTEGER PRIMARY KEY,
@@ -275,5 +279,5 @@ sql_type = 'TEXT'
 
 [[output_generated_tables_do_not_edit.log.columns]]
 name = 'created_time'
-rust_type = 'Option < f64 >'
-sql_type = 'REAL'
+rust_type = 'Option < i54 >'
+sql_type = 'INTEGER'
