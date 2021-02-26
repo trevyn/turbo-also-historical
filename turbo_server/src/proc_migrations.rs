@@ -1,6 +1,7 @@
 use super::schema::Card;
 use turbosql::{execute, select, Blob, Turbosql};
 
+#[cfg(not(doctest))]
 pub fn run_proc_migrations() {
  log::info!("running proc migrations");
  execute!("BEGIN EXCLUSIVE TRANSACTION").unwrap();
