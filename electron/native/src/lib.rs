@@ -141,10 +141,7 @@ fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
    }
   };
 
- // launch the server
- std::thread::spawn(move || {
-  turbo_server::run(Box::new(apply_steps));
- });
+ turbo_server::run(Box::new(apply_steps)).unwrap();
 
  Ok(())
 }

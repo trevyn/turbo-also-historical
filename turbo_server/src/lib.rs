@@ -7,13 +7,27 @@ mod proc_migrations;
 mod schema;
 
 pub use schema::rust_log;
-
 pub use schema::ApplyStepsFn;
 use schema::APPLY_STEPS_FN;
 
-// @mark server
-#[tokio::main]
-pub async fn run(apply_steps: ApplyStepsFn) {
+/// Start the tokio runtime in a new spawned thread. Returns immediately after starting it.
+pub fn run(apply_steps: ApplyStepsFn) -> Result<(), Box<dyn std::error::Error>> {
+ let mut rt = tokio::runtime::Runtime::new()?;
+
+ std::thread::spawn(move || {
+  rt.block_on(async move { do_run(apply_steps).await });
+ });
+
+ Ok(())
+}
+
+/// Stop the tokio runtime, kill all task threads, and checkpoint the db.
+pub fn shutdown() -> anyhow::Result<()> {
+ turbosql::checkpoint()?;
+ Ok(())
+}
+
+async fn do_run(apply_steps: ApplyStepsFn) {
  *APPLY_STEPS_FN.lock().unwrap() = Some(apply_steps);
  env_logger::Builder::from_default_env().format_timestamp_millis().init();
  dbg!(env!("RUST_VERSION"));
@@ -66,10 +80,4 @@ pub async fn run(apply_steps: ApplyStepsFn) {
  .with(log);
 
  warp::serve(routes).run(([0, 0, 0, 0], 8080)).await;
-}
-
-/// Stop the tokio runtime, which kills all task threads, and checkpoint the db.
-pub fn shutdown() -> anyhow::Result<()> {
- turbosql::checkpoint()?;
- Ok(())
 }
