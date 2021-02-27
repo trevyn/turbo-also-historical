@@ -149,6 +149,6 @@ fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
 /// `before-quit` event from Electron
 #[allow(clippy::unnecessary_wraps)]
 fn before_quit(mut cx: FunctionContext) -> JsResult<JsUndefined> {
- turbo_server::shutdown().unwrap();
+ turbo_server::shutdown();
  Ok(cx.undefined())
 }
