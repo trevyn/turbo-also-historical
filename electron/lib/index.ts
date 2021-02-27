@@ -13,6 +13,8 @@ addon.rustLog(v);
 app.on("before-quit", event => {
  console.log("Caught `before-quit`.");
  addon.rustLog("Caught `before-quit`.");
+ addon.beforeQuit();
+ console.log("`before-quit` Electron handler exiting.");
 
  // event.preventDefault();
 

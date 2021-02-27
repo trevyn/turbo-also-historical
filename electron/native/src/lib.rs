@@ -129,6 +129,7 @@ fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
  log::debug!("neon module init");
  cx.export_function("hello", hello)?;
  cx.export_function("rustLog", rust_log)?;
+ cx.export_function("beforeQuit", before_quit)?;
  cx.export_function("registerProsemirrorApplyCallback", register_prosemirror_apply_callback)?;
 
  let apply_steps =
@@ -146,4 +147,11 @@ fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
  });
 
  Ok(())
+}
+
+/// `before-quit` event from Electron
+fn before_quit(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+ eprintln!("in before_quit");
+ // turbo_server::rust_log(s);
+ Ok(cx.undefined())
 }
