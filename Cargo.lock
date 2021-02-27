@@ -982,19 +982,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
-name = "lexical-core"
-version = "0.7.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "21f866863575d0e1d654fbeeabdc927292fdf862873dc3c96c6f753357e13374"
-dependencies = [
- "arrayvec",
- "bitflags",
- "cfg-if 1.0.0",
- "ryu",
- "static_assertions",
-]
-
-[[package]]
 name = "libc"
 version = "0.2.86"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1242,28 +1229,6 @@ dependencies = [
  "cfg-if 0.1.10",
  "libc",
  "winapi 0.3.9",
-]
-
-[[package]]
-name = "nom"
-version = "5.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ffb4262d26ed83a1c0a33a38fe2bb15797329c85770da05e6b828ddb782627af"
-dependencies = [
- "lexical-core",
- "memchr",
- "version_check",
-]
-
-[[package]]
-name = "nom-sql"
-version = "0.0.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c5266bcf166285da22fdc385d696725e7a9e7791b10af9baaeabc69428079730"
-dependencies = [
- "nom",
- "serde",
- "serde_derive",
 ]
 
 [[package]]
@@ -2228,7 +2193,7 @@ version = "0.0.0"
 [[package]]
 name = "turbosql"
 version = "0.1.5"
-source = "git+https://github.com/trevyn/turbosql?branch=main#ec7075c607a40934cb26bc8cef1e2bd2654bb2ef"
+source = "git+https://github.com/trevyn/turbosql?branch=main#66b1349c0438cc91ac1ee0e6147847aaf249e93c"
 dependencies = [
  "anyhow",
  "cfg-if 1.0.0",
@@ -2245,11 +2210,10 @@ dependencies = [
 [[package]]
 name = "turbosql-impl"
 version = "0.1.5"
-source = "git+https://github.com/trevyn/turbosql?branch=main#ec7075c607a40934cb26bc8cef1e2bd2654bb2ef"
+source = "git+https://github.com/trevyn/turbosql?branch=main#66b1349c0438cc91ac1ee0e6147847aaf249e93c"
 dependencies = [
  "fs2",
  "indoc",
- "nom-sql",
  "once_cell",
  "proc-macro-error",
  "proc-macro2",
