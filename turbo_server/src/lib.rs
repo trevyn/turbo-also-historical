@@ -67,3 +67,9 @@ pub async fn run(apply_steps: ApplyStepsFn) {
 
  warp::serve(routes).run(([0, 0, 0, 0], 8080)).await;
 }
+
+/// Stop the tokio runtime, which kills all task threads, and checkpoint the db.
+pub fn shutdown() -> anyhow::Result<()> {
+ turbosql::checkpoint()?;
+ Ok(())
+}

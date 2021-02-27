@@ -119,7 +119,7 @@ fn register_prosemirror_apply_callback(mut cx: FunctionContext) -> JsResult<JsUn
 
 fn rust_log(mut cx: FunctionContext) -> JsResult<JsUndefined> {
  let s = cx.argument::<JsString>(0)?.value();
- eprintln!("rust_log: {:#?}", s);
+ log::info!("rust_log: {:#?}", s);
  turbo_server::rust_log(s);
  Ok(cx.undefined())
 }
@@ -150,8 +150,8 @@ fn my_module(mut cx: ModuleContext) -> NeonResult<()> {
 }
 
 /// `before-quit` event from Electron
+#[allow(clippy::unnecessary_wraps)]
 fn before_quit(mut cx: FunctionContext) -> JsResult<JsUndefined> {
- eprintln!("in before_quit");
- // turbo_server::rust_log(s);
+ turbo_server::shutdown().unwrap();
  Ok(cx.undefined())
 }

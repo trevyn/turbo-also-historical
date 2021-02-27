@@ -7,20 +7,12 @@ import { applySteps } from "./prosemirror-collab-server/prosemirror-collab-serve
 app.commandLine.appendSwitch("force_low_power_gpu");
 
 let v = `app version is ${app.getVersion()}, dev is ${isDev}`;
-console.log(v);
 addon.rustLog(v);
 
 app.on("before-quit", event => {
- console.log("Caught `before-quit`.");
  addon.rustLog("Caught `before-quit`.");
  addon.beforeQuit();
- console.log("`before-quit` Electron handler exiting.");
-
- // event.preventDefault();
-
- // setTimeout(() => {
- //  process.exit(0);
- // }, 5000);
+ console.log("`before-quit` Electron handler exiting, safe to terminate.");
 });
 
 applySteps(() => {}, 0, "1", "2");
