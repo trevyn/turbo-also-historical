@@ -10,6 +10,17 @@ let v = `app version is ${app.getVersion()}, dev is ${isDev}`;
 console.log(v);
 addon.rustLog(v);
 
+app.on("before-quit", event => {
+ console.log("Caught `before-quit`.");
+ addon.rustLog("Caught `before-quit`.");
+
+ // event.preventDefault();
+
+ // setTimeout(() => {
+ //  process.exit(0);
+ // }, 5000);
+});
+
 applySteps(() => {}, 0, "1", "2");
 
 console.log(addon.hello());
