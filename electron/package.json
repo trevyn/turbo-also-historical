@@ -1,7 +1,7 @@
 {
  "name": "turbo",
  "productName": "Turbo",
- "version": "0.2.0-alpha.11",
+ "version": "0.2.0-alpha.12",
  "description": "turbo",
  "main": "build/electron/lib/index.js",
  "author": "Eden <github@eden2.com>",
