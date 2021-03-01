@@ -22,7 +22,7 @@ A platform for applying [optimization methods](https://en.wikipedia.org/wiki/Mat
 
 ## Status
 
-In active development, updated February 2021!
+In active development, updated March 2021!
 
 Not yet ready for out-of-the-box use.
 
