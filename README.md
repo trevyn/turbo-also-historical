@@ -14,7 +14,7 @@ A platform for applying [optimization methods](https://en.wikipedia.org/wiki/Mat
 
 ## Core Tech Stack (subject to change)
 
-- Svelte + Tailwind CSS 2.0
+- Svelte + [Windi CSS](https://windicss.netlify.app/)
 - Chrome / Chromium / iOS Safari
 - GraphQL, via urql + Juniper
 - [Rust, in the form of a Node.js native plugin](https://github.com/trevyn/turbo/discussions/1) ([optionally via Electron](https://github.com/trevyn/turbo/discussions/2))
