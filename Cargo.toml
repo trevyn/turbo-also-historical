@@ -18,7 +18,7 @@ juniper_codegen = {git = "https://github.com/trevyn/juniper", branch = "juniper-
 juniper_graphql_ws = {git = "https://github.com/trevyn/juniper", branch = "juniper-warp-log-body"}
 juniper_warp = {git = "https://github.com/trevyn/juniper", branch = "juniper-warp-log-body"}
 # turbosql = {path = "../turbosql/turbosql"}
-turbosql = {git = "https://github.com/trevyn/turbosql", branch = "main"}
+# turbosql = {git = "https://github.com/trevyn/turbosql", branch = "main"}
 
 [profile.release]
 codegen-units = 1 # Reduce number of codegen units to increase optimizations.
