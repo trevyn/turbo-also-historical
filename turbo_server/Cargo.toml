@@ -30,6 +30,6 @@ rust-embed = "5"
 tokio = {version = "0.2", features = ["full"]} 
 turbocafe = {path = "../turbocafe"} 
 turboid = {path = "../turboid"} 
-turbosql = "0.1.2" # we do require at least 0.1.2
+turbosql = "^0.1.2" # we do require at least 0.1.2
 turbotime = {path = "../turbotime"} 
 warp = {version = "0.2"}
