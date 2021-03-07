@@ -3,11 +3,7 @@ module.exports = {
  mount: {
   /* ... */
  },
- plugins: [
-  /* ... */
-  "@snowpack/plugin-svelte",
-  "@snowpack/plugin-postcss",
- ],
+ plugins: ["@snowpack/plugin-svelte"],
  exclude: [
   "**/node_modules/**/*",
   "queries-plugin.js",

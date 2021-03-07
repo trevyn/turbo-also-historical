@@ -1,9 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .ProseMirror {
- @apply p-1;
+ padding: 0.25rem;
 }
 
 .prose p {
