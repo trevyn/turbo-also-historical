@@ -44,7 +44,7 @@ async function run() {
    schema: schema,
    overwrite: true,
    generates: {
-    "./graphql-codegen.ts": {
+    "./src/graphql-codegen.ts": {
      documents: "./generated-queries.graphql",
      plugins: ["typescript", "typescript-operations", "typed-document-node"],
      config: {
