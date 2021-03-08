@@ -1,2 +1,2 @@
 frontend/graphql-codegen.ts linguist-generated
-frontend/prosemirror-svelte/* linguist-vendored
+frontend/src/prosemirror-svelte/* linguist-vendored
