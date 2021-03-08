@@ -27,18 +27,18 @@
   "@electron-forge/maker-squirrel": "6.0.0-beta.54",
   "@electron-forge/maker-zip": "6.0.0-beta.54",
   "@electron-forge/publisher-github": "6.0.0-beta.54",
+  "@types/puppeteer-core": "^5.4.0",
   "electron": "^12.0.0",
   "electron-build-env": "0.2.0",
   "neon-cli": "=0.7.1",
-  "patch-package": "^6.4.5",
-  "@types/puppeteer-core": "^5.4.0",
+  "patch-package": "^6.4.6",
   "typescript": "~4.2.3"
  },
  "//": "NOTE: puppeteer-core versions are specific to Chrome releases; 6.0 series is for chrome 89",
  "dependencies": {
   "electron-is-dev": "^2.0.0",
-  "puppeteer-core": "~6.0.0",
-  "prosemirror-collab-server": "file:./lib/prosemirror-collab-server"
+  "prosemirror-collab-server": "file:./lib/prosemirror-collab-server",
+  "puppeteer-core": "~6.0.0"
  },
  "config": {
   "forge": "forge.config.cjs"
