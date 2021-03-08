@@ -1,7 +1,7 @@
 // import { collab } from "prosemirror-collab";
 import { EditorState } from "prosemirror-state";
 import { Step } from "prosemirror-transform";
-import schema from "../../../frontend/c/prosemirror-schema";
+import schema from "../../../frontend/src/prosemirror-schema";
 
 let editorState_json = JSON.parse(
  `{"doc":{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"The "},{"type":"text","marks":[{"type":"code"}],"text":"<audio>"},{"type":"text","text":" and "},{"type":"text","marks":[{"type":"code"}],"text":"<video>"},{"type":"text","text":" elements have several properties that you can [...] to."}]}]},"selection":{"type":"text","anchor":1,"head":1}}`

@@ -7,7 +7,7 @@
  import { corePlugins } from "../prosemirror-svelte/helpers/plugins";
  import { richTextPlugins } from "../prosemirror-svelte/helpers";
  import { createRichTextEditor, toHTML, toPlainText } from "../prosemirror-svelte/state";
- import schema from "./prosemirror-schema";
+ import schema from "../prosemirror-schema";
  import { collab, receiveTransaction, sendableSteps, getVersion } from "prosemirror-collab";
  import { DOMParser, DOMSerializer } from "prosemirror-model";
  import { EditorState, TextSelection } from "prosemirror-state";
