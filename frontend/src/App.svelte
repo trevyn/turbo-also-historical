@@ -2,7 +2,7 @@
  import * as gql from "./graphql-codegen";
  import { operationStore, query, mutation, subscription } from "@urql/svelte";
  import "./index.css";
- import { initTurboClient } from "./src/TurboClient.svelte";
+ import { initTurboClient } from "./TurboClient.svelte";
  initTurboClient();
  import Button from "./c/Button.svelte";
  import Card from "./c/Card.svelte";

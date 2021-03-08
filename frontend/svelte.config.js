@@ -4,8 +4,8 @@ module.exports = {
   require("svelte-windicss-preprocess").preprocess({
    compile: false,
    config: "tailwind.config.js",
-   globalUtility: true,
-   globalPreflight: true,
+   silent: false,
+   debug: true,
   }),
  ],
 };
