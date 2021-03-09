@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use i54_::i54;
 use std::convert::TryInto;
 use turbosql::Turbosql;

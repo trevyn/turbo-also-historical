@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 pub fn apply_steps(document: &str, steps: &str) -> anyhow::Result<String> {
  dbg!(document, steps);
 

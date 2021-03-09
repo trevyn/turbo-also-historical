@@ -1,5 +1,7 @@
 // Turbocafe, the content-addressable file eyrie. :)
 
+#![forbid(unsafe_code)]
+
 use multihash::{Code::Blake3_256, MultihashDigest};
 use turbosql::{execute, select, Blob, Turbosql};
 

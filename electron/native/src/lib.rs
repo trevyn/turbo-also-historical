@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use d_macro::*;
 use neon::{event::EventHandler, prelude::*};
 use once_cell::sync::Lazy;

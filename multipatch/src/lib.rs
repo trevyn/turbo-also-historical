@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 const MAGIC_BSDIFF: u8 = 1;
 const _MAGIC_FOSSIL_DELTA: u8 = 2;
 const _MAGIC_PROSEMIRROR_BASIC: u8 = 3;

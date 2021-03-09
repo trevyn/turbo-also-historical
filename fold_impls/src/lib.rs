@@ -3,6 +3,8 @@
 // then coalesce all the substance ("meat"),
 // into a single `impl` block with that same form.
 
+#![forbid(unsafe_code)]
+
 use proc_macro_error::{abort_call_site, proc_macro_error};
 use std::{cell::RefCell, mem::take};
 use syn::{parse_macro_input, visit_mut::VisitMut};

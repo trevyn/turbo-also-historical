@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use futures::FutureExt as _;
 use once_cell::sync::Lazy;
 use std::sync::{Arc, Mutex};

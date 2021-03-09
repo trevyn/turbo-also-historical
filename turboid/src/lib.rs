@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use multihash::{Code::Identity, MultihashDigest};
 
 pub fn random_id() -> String {
