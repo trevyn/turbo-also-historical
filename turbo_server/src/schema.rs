@@ -5,7 +5,6 @@ use juniper::{graphql_object, graphql_subscription, FieldError, FieldResult};
 use once_cell::sync::Lazy;
 use std::time::Duration;
 use std::{convert::TryInto, future::Future, pin::Pin, sync::Mutex};
-use tokio::task::spawn_blocking;
 use turbosql::{execute, select, Blob, Turbosql};
 
 pub type ApplyStepsFn =
@@ -78,22 +77,20 @@ fn _query_impls() {
 
  #[graphql_object]
  impl Query {
-  async fn list_cards_short() -> FieldResult<Vec<ShortCard>> {
+  fn list_cards_short() -> FieldResult<Vec<ShortCard>> {
    Ok(select!(Vec<ShortCard> "rowid FROM card")?)
   }
 
-  async fn get(key: String) -> FieldResult<String> {
+  fn get(key: String) -> FieldResult<String> {
    Ok(turbocafe::get_as_string(key)?)
   }
  }
 
  #[graphql_object]
  impl Query {
-  async fn list_cards_full() -> FieldResult<Vec<Card>> {
-   Ok(
-    spawn_blocking(move || {
-     select!(Vec<Card>
-      "
+  fn list_cards_full() -> FieldResult<Vec<Card>> {
+   Ok(select!(Vec<Card>
+    "
        WITH split(word, str) AS (
         SELECT '', list FROM cardlist
         UNION ALL SELECT
@@ -106,10 +103,7 @@ fn _query_impls() {
         LEFT JOIN card ON card.rowid = word
         WHERE word != '' AND card.rowid IS NOT NULL
       "
-     )
-    })
-    .await??,
-   )
+   )?)
   }
  }
 }
@@ -118,7 +112,7 @@ pub struct Mutation;
 
 #[graphql_object]
 impl Mutation {
- async fn add_blank_card() -> FieldResult<Card> {
+ fn add_blank_card() -> FieldResult<Card> {
   let now = turbotime::now();
   let new_hash = d!(#? turbocafe::put_hash(
    r#"{"doc":{"type":"doc","content":[{"type":"paragraph"}]},"selection":{"type":"text","anchor":1,"head":1}}"#
@@ -148,13 +142,13 @@ impl Mutation {
   Ok(card)
  }
 
- async fn put_kv(key: Option<String>, value: String) -> FieldResult<String> {
+ fn put_kv(key: Option<String>, value: String) -> FieldResult<String> {
   let key = key.unwrap_or_else(turboid::random_id);
   turbocafe::put_kv(&key, value)?;
   Ok(key)
  }
 
- async fn recv_steps(instantiation_id: String, steps: String) -> FieldResult<String> {
+ fn recv_steps(instantiation_id: String, steps: String) -> FieldResult<String> {
   // let old_content =
   //  turbocafe::get_string(select!(Card "WHERE rowid = ?", rowid).unwrap().instantiation_id.unwrap())
   //   .unwrap();
@@ -167,8 +161,8 @@ impl Mutation {
 
   let new_content = prosemirror_collab_server::apply_steps(&old_content, &steps)?; // no-op for now
 
-  let fut = (*APPLY_STEPS_FN.lock().unwrap()).as_ref().unwrap()(old_content, steps.clone());
-  d!(fut.await);
+  let _fut = (*APPLY_STEPS_FN.lock().unwrap()).as_ref().unwrap()(old_content, steps.clone());
+  // d!(fut.await);
 
   turbotime::insert_steps(instantiation_id, steps)?;
 
@@ -217,12 +211,12 @@ impl Mutation {
   // Ok(select!(Card "WHERE rowid = ?", rowid)?)
  }
 
- async fn delete_card(rowid: i54) -> FieldResult<bool> {
+ fn delete_card(rowid: i54) -> FieldResult<bool> {
   execute!("DELETE FROM card WHERE rowid = ?", rowid)?;
   Ok(true)
  }
 
- async fn shuffle_cards() -> FieldResult<bool> {
+ fn shuffle_cards() -> FieldResult<bool> {
   execute!(
    "
     REPLACE INTO cardlist(rowid, list)

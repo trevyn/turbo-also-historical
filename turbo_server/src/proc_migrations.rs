@@ -1,5 +1,5 @@
 use super::schema::Card;
-use turbosql::{execute, select, Blob, Turbosql};
+use turbosql::{execute, select};
 
 #[cfg(not(doctest))]
 pub fn run_proc_migrations() {

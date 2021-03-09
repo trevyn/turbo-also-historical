@@ -76,11 +76,10 @@ async fn do_run(apply_steps: ApplyStepsFn) {
   // TODO#584: remove this workaround
   warp::reply::with_header(reply, "Sec-WebSocket-Protocol", "graphql-ws")
  })
- .or(
-  warp::post()
-   .and(warp::path("graphql"))
-   .and(juniper_warp::make_graphql_filter(schema::schema(), warp::any().map(move || ()).boxed())),
- )
+ .or(warp::post().and(warp::path("graphql")).and(juniper_warp::make_graphql_filter_sync(
+  schema::schema(),
+  warp::any().map(move || ()).boxed(),
+ )))
  .or(
   warp::get()
    .and(warp::path("playground"))
