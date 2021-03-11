@@ -13,17 +13,15 @@ jobs:
 
   checklinks:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
 
-      - name: Check links with lychee
-        uses: lycheeverse/lychee-action@v1
+      - uses: lycheeverse/lychee-action@v1
         id: lychee
-        with:
-          args: --verbose --no-progress --exclude=crates.io
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: --verbose --no-progress --headers="accept=text/html"
 
       - name: Fail if there were link-check errors
         run: exit ${{ steps.lychee.outputs.exit_code }}
